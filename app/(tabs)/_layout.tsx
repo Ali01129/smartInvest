@@ -64,7 +64,7 @@ const TabsLayout = () => {
                 name="(profile)"
                 options={{
                     headerShown: false,
-                    tabBarLabel: 'Subscriptions',
+                    tabBarLabel: 'Profile',
                     tabBarIcon: ({ color, focused }) => (
                         <Image
                             source={focused ? icons.store : icons.storeYellow}
