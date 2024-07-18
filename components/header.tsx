@@ -3,10 +3,12 @@ import { router } from "expo-router";
 import { ColorPalette } from "@/constants/Colors";
 import { AntDesign } from "@expo/vector-icons";
 import React from "react";
+
 interface PromptProps {
   title: string;
   onPress: () => void;
 }
+
 const Header: React.FC<PromptProps> = ({ title, onPress }) => {
   return (
     <View
@@ -29,6 +31,7 @@ const Header: React.FC<PromptProps> = ({ title, onPress }) => {
     </View>
   );
 };
+
 const styles = StyleSheet.create({
   title: {
     marginLeft: 15,
@@ -44,4 +47,6 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
 });
+
 export default Header;
+

@@ -1,9 +1,10 @@
-import React from 'react';
-import { Image, Text, View } from 'react-native';
-import { Tabs } from 'expo-router';
-import { ColorPalette } from '@/constants/Colors';
-import icons from '@/constants/Icons';
+import React from "react";
+import { Image, Text, View } from "react-native";
+import { Tabs } from "expo-router";
+import { ColorPalette } from "@/constants/Colors";
+import icons from "@/constants/Icons";
 const TabsLayout = () => {
+
     return (
         <Tabs
             screenOptions={{
@@ -46,20 +47,22 @@ const TabsLayout = () => {
                         />
                     ),
                 }}
+
             />
-            <Tabs.Screen
-                name="subscribtion"
-                options={{
-                    headerShown: false,
-                    tabBarLabel: 'Transactions',
-                    tabBarIcon: ({ color, focused }) => (
-                        <Image
-                            source={focused ? icons.send : icons.sendYellow}
-                            style={{ width: 24, height: 24, tintColor: color }}
-                        />
-                    ),
-                }}
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="subscribtion"
+        options={{
+          headerShown: false,
+          tabBarLabel: "Subscription",
+          tabBarIcon: ({ color, focused }) => (
+            <Image
+              source={focused ? icons.send : icons.sendYellow}
+              style={{ width: 24, height: 24, tintColor: color }}
             />
+
             <Tabs.Screen
                 name="(profile)"
                 options={{
@@ -74,8 +77,12 @@ const TabsLayout = () => {
                         />
                     ),
                 }}
+
             />
-        </Tabs>
-    )
-}
+          ),
+        }}
+      />
+    </Tabs>
+  );
+};
 export default TabsLayout;
