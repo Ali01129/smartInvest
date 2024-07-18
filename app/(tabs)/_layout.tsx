@@ -30,7 +30,7 @@ const TabsLayout = () => {
                     shadowOffset: { width: 0, height: 2 }, // iOS
                     shadowOpacity: 0.25, // iOS
                     shadowRadius: 3.5, // iOS
-                    margin: 20,
+                    margin: 16,
                 },
             }}
         >
@@ -64,10 +64,12 @@ const TabsLayout = () => {
                 name="(profile)"
                 options={{
                     headerShown: false,
-                    tabBarLabel: 'Subscriptions',
+
+                    tabBarLabel: 'Portfolio',
+
                     tabBarIcon: ({ color, focused }) => (
                         <Image
-                            source={focused ? icons.store : icons.storeYellow}
+                            source={focused ? icons.user : icons.userYellow}
                             style={{ width: 24, height: 24, tintColor: color }}
                         />
                     ),
