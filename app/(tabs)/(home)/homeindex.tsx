@@ -1,10 +1,10 @@
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import React from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ColorPalette } from '@/constants/Colors';
 import { FontAwesome6 } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
-
+import { router } from 'expo-router';
 
 const HomeIndex = () => {
   return (
@@ -28,13 +28,18 @@ const HomeIndex = () => {
             </View>
             <Text style={styles.menuText}>Send</Text>
           </View>
-
+          
           <View style={styles.menuItem}>
+            <TouchableOpacity onPress={()=>router.push('deposit')}>
             <View style={styles.menu1}>
               <MaterialIcons name="currency-exchange" size={20} color={ColorPalette.text} />
             </View>
+            </TouchableOpacity>
+            
             <Text style={styles.menuText}>Deposit</Text>
           </View>
+
+
           <View style={styles.menuItem}>
             <View style={styles.menu1}>
               <MaterialIcons name="currency-exchange" size={20} color={ColorPalette.text} />
