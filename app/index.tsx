@@ -20,7 +20,7 @@ const Index = () => {
         <TouchableOpacity
           style={styles.logInButton}
           onPress={() => {
-            router.push("subscribtion");
+            router.push("login");
           }}
         >
           <Text style={styles.logInText}>Get Started</Text>
