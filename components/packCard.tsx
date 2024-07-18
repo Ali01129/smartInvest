@@ -1,31 +1,31 @@
 import { Image, StyleSheet, Text, View } from 'react-native';
 import React from 'react';
 import { ColorPalette } from '@/constants/Colors';
+import { FontAwesome5 } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-interface PackCardProps {
-  name: string;
-  date: string;
-  price: number;
-  status: 'received' | 'sent';
-}
-
-const PackCard: React.FC<PackCardProps> = ({ name, date, price, status }) => {
+const PackCard = () => {
   return (
     <View style={styles.content}>
-      <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-        <View style={{ flexDirection: 'row' }}>
-          {status === 'received' ? (
-            <Image source={require('@/assets/icons/down.png')} style={styles.img} />
-          ) : (
-            <Image source={require('@/assets/icons/up.png')} style={styles.img} />
-          )}
-
-          <View>
-            <Text style={styles.text}>{name}</Text>
-            <Text style={styles.time}>{date}</Text>
+      <View style={styles.row}>
+        <View style={styles.packageInfo}>
+        <MaterialCommunityIcons name="package" size={24} color={ColorPalette.primary} />
+          <View style={styles.packageDetails}>
+            <Text style={styles.text}>Package Name</Text>
+            <Text style={styles.time}>10 days</Text>
           </View>
         </View>
-        <Text style={styles.payment}>${price}</Text>
+        <Text style={styles.payment}>20/Month</Text>
+      </View>
+      <View style={styles.divider}></View>
+      <View style={styles.row}>
+        <View style={styles.stakeInfo}>
+        <FontAwesome5 name="coins" size={24} color={ColorPalette.primary} />
+          <View style={styles.stakeDetails}>
+            <Text style={styles.text}>Stake: 500 Coins</Text>
+            <Text style={styles.time}>Validity: 25-7-2024</Text>
+          </View>
+        </View>
       </View>
     </View>
   );
@@ -39,16 +39,35 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 16,
     marginBottom: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    elevation: 5,
   },
-  img: {
-    alignSelf: 'center',
-    width: 40,
-    height: 40,
-    marginRight: 15,
+  row: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  packageInfo: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  packageDetails: {
+    marginLeft: 10,
+  },
+  stakeInfo: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  stakeDetails: {
+    marginLeft: 10,
   },
   text: {
     color: ColorPalette.text,
     fontSize: 16,
+    fontWeight: 'bold',
   },
   time: {
     color: ColorPalette.textGrey,
@@ -57,7 +76,18 @@ const styles = StyleSheet.create({
   },
   payment: {
     alignSelf: 'center',
-    color: ColorPalette.text,
+    color: ColorPalette.textBlack,
     fontSize: 16,
+    fontWeight: 'bold',
+    backgroundColor: ColorPalette.primary,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    borderRadius: 10,
+  },
+  divider: {
+    width: '100%',
+    backgroundColor: "white",
+    height: 1,
+    marginVertical: 10,
   },
 });
