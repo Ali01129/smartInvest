@@ -6,6 +6,7 @@ import { FontAwesome6 } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import TransCard from '@/components/transCard';
+import PackCard from '@/components/packCard';
 
 const HomeIndex = () => {
   const [activeTab, setActiveTab] = useState('Transactions');
@@ -13,25 +14,30 @@ const HomeIndex = () => {
   const renderContent = () => {
     if (activeTab === 'Transactions') {
       return (
-        <ScrollView>
+        <ScrollView style={{width:'100%',height:350}}>
           <TransCard name={'Ahmad'} date={'10-07-2024'} price={50} status={'sent'}/>
           <TransCard name={'Huzaifa'} date={'10-07-2024'} price={70} status={'received'}/>
+          <TransCard name={'Ali'} date={'10-07-2024'} price={60} status={'sent'}/>
+          <TransCard name={'Ali'} date={'10-07-2024'} price={60} status={'sent'}/>
           <TransCard name={'Ali'} date={'10-07-2024'} price={60} status={'sent'}/>
         </ScrollView>
       );
     } else {
       return (
-        <View style={styles.content}>
-          <Text style={styles.trans}>Package 1: Details</Text>
-          <Text style={styles.trans}>Package 2: Details</Text>
-          <Text style={styles.trans}>Package 3: Details</Text>
-        </View>
+        <ScrollView style={{width:'100%',height:350}}>
+          <PackCard/>
+          <PackCard/>
+          <PackCard/>
+          <PackCard/>
+          <PackCard/>
+          <PackCard/>
+        </ScrollView>
       );
     }
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <ScrollView style={styles.container}>
       {/* Header Section */}
       <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
         <View>
@@ -97,7 +103,7 @@ const HomeIndex = () => {
 
       {/* Content Section */}
       {renderContent()}
-    </SafeAreaView>
+    </ScrollView>
   );
 };
 
