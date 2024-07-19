@@ -83,15 +83,12 @@ const HomeIndex = () => {
           }}
         >
           <View style={styles.menuItem}>
-
-            <TouchableOpacity onPress={() => router.push('send')}>
-              <View style={styles.menu1}>
-                <FontAwesome6 name="money-bill-transfer" size={20} color={ColorPalette.text} />
-              </View>
-            </TouchableOpacity>
-
-
-
+           
+           <TouchableOpacity onPress={()=>router.push('send')}>
+           <View style={styles.menu1}>
+              <FontAwesome6 name="money-bill-transfer" size={20} color={ColorPalette.text} />
+            </View>
+           </TouchableOpacity>
             <Text style={styles.menuText}>Send</Text>
           </View>
           <View style={styles.menuItem}>
