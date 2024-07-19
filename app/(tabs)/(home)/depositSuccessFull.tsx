@@ -4,6 +4,7 @@ import { ColorPalette } from "@/constants/Colors";
 import transactionIcon from "@/assets/pic/transactionlogo.png";
 import CustomSolidButton from "@/components/CustomSolidButton";
 import { router } from "expo-router";
+import Images from "@/constants/Images";
 
 const depositSuccessFull = () => {
   return (
@@ -14,7 +15,7 @@ const depositSuccessFull = () => {
           Your fund are now available for use
         </Text>
         <Image
-          source={require("@/assets/pic/deposit.gif")}
+          source={Images.deposit}
           resizeMode="contain"
           style={styles.Picture}
         />

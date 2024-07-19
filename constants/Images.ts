@@ -5,4 +5,5 @@ export default {
     stripe: require('../assets/images/stripe.png'),
     transactionlogo: require('../assets/images/transactionlogo.png'),
     goku: require('../assets/images/goku.png'),
+    deposit: require('../assets/images/deposit.gif'),
 };
