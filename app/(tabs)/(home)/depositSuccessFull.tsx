@@ -4,6 +4,7 @@ import { ColorPalette } from "@/constants/Colors";
 import transactionIcon from "@/assets/pic/transactionlogo.png";
 import CustomSolidButton from "@/components/CustomSolidButton";
 import { router } from "expo-router";
+import Images from "@/constants/Images";
 
 const depositSuccessFull = () => {
   return (
@@ -14,7 +15,7 @@ const depositSuccessFull = () => {
           Your fund are now available for use
         </Text>
         <Image
-          source={require("@/assets/pic/deposit.gif")}
+          source={Images.deposit}
           resizeMode="contain"
           style={styles.Picture}
         />
@@ -31,7 +32,7 @@ const depositSuccessFull = () => {
           </Text>
         </View>
       </View>
-      <View style={{flexDirection:"row",justifyContent:"space-between",marginTop:50}}>
+      <View style={{ flexDirection: "row", justifyContent: "space-between", marginTop: 50 }}>
         <View>
           <Text style={styles.DetailText}>Reference ID</Text>
           <Text style={styles.DetailText}>Payment method</Text>
@@ -43,16 +44,16 @@ const depositSuccessFull = () => {
           <Text style={styles.DetailText}>$1000.00</Text>
         </View>
       </View>
-      
-      <View style={{flex:1,justifyContent:"center",alignContent:"flex-end"}}>
-      <CustomSolidButton
-        text={"Back to homepage".toUpperCase()}
-        onPress={() => router.push("homeindex")}
-        gradientColors={[ColorPalette.g2, ColorPalette.secondary]}
-        textColor={ColorPalette.textBlack}
-      />
+
+      <View style={{ flex: 1, justifyContent: "center", alignContent: "flex-end" }}>
+        <CustomSolidButton
+          text={"Back to homepage".toUpperCase()}
+          onPress={() => router.push("homeindex")}
+          gradientColors={[ColorPalette.g2, ColorPalette.secondary]}
+          textColor={ColorPalette.textBlack}
+        />
       </View>
-      
+
     </SafeAreaView>
   );
 };
