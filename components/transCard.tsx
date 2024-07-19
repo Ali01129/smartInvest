@@ -1,4 +1,4 @@
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { Image, StyleSheet,TouchableOpacity, Text, View } from 'react-native';
 import React from 'react';
 import { ColorPalette } from '@/constants/Colors';
 
@@ -6,15 +6,15 @@ interface TransCardProps {
   name: string;
   date: string;
   price: number;
-  status: 'received' | 'sent';
+  type: 'received' | 'sent';
 }
 
-const TransCard: React.FC<TransCardProps> = ({ name, date, price, status }) => {
+const TransCard: React.FC<TransCardProps> = ({ name, date, price, type }) => {
   return (
     <View style={styles.content}>
       <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
         <View style={{ flexDirection: 'row' }}>
-          {status === 'received' ? (
+          {type === 'received' ? (
             <Image source={require('@/assets/icons/down.png')} style={styles.img} />
           ) : (
             <Image source={require('@/assets/icons/up.png')} style={styles.img} />

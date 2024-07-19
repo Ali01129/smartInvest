@@ -3,18 +3,21 @@ import {
   Text,
   View,
   Dimensions,
+  TouchableOpacity,
 } from "react-native";
 import { ColorPalette } from "@/constants/Colors";
 import { FontAwesome6 } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 const { height } = Dimensions.get("window");
+
 interface SubscriptionProps {
   name: string;
   profit: number;
   coins: number;
   validity: string;
 }
-const PackCard: React.FC<SubscriptionProps> = ({
+
+const SubscriptionCard: React.FC<SubscriptionProps> = ({
   name,
   profit,
   coins,
@@ -37,27 +40,33 @@ const PackCard: React.FC<SubscriptionProps> = ({
       </View>
       <View style={styles.row}>
         <Text style={styles.validity}>Validity: {validity}</Text>
-        <LinearGradient
-          colors={[ColorPalette.g2, ColorPalette.secondary]}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 1, y: 0 }}
-          style={styles.gradient}
-        >
-          <View
-            style={{
-              //   backgroundColor: ColorPalette.primary,
-              padding: 8,
-              borderRadius: 8,
-              paddingHorizontal: 24,
-            }}
-          >
-            <Text style={{ fontWeight: "700" }}>12 days</Text>
-          </View>
-        </LinearGradient>
+        <SubscribeButton />
       </View>
     </View>
   );
 };
+
+const SubscribeButton: React.FC = () => {
+  return (
+    <LinearGradient
+      colors={[ColorPalette.g2, ColorPalette.secondary]}
+      start={{ x: 0, y: 0 }}
+      end={{ x: 1, y: 0 }}
+      style={styles.gradient}
+    >
+      <TouchableOpacity
+        style={{
+          padding: 8,
+          borderRadius: 8,
+          paddingHorizontal: 24,
+        }}
+      >
+        <Text style={{ fontWeight: "700" }}>Subscribe</Text>
+      </TouchableOpacity>
+    </LinearGradient>
+  );
+};
+
 const styles = StyleSheet.create({
   card: {
     height: height * 0.185,
@@ -65,7 +74,7 @@ const styles = StyleSheet.create({
     width: "100%",
     backgroundColor: ColorPalette.greyNav,
     borderRadius: 20,
-    marginBottom: 12,
+    marginBottom: 16,
     elevation: 5,
   },
   heading: {
@@ -74,7 +83,7 @@ const styles = StyleSheet.create({
     color: ColorPalette.text,
   },
   row: {
-    marginTop: 14,
+    marginTop: 16,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
@@ -93,4 +102,5 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
 });
-export default PackCard;
+
+export default SubscriptionCard;
