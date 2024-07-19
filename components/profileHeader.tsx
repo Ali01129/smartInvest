@@ -1,14 +1,15 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import Ionicons from "@expo/vector-icons/Ionicons";
+import { MaterialIcons } from '@expo/vector-icons';
 import SizedBox from "./sizedbox";
 import { ColorPalette } from '@/constants/Colors';
 
 interface PortfolioHeaderProps {
     title: string;
     settingsAction: () => void;
-    usd: number;
-    sc: number;
+    usd: string;
+    sc: string;
 }
 
 const PortfolioHeader: React.FC<PortfolioHeaderProps> = ({ title, settingsAction, usd, sc }) => {
@@ -17,7 +18,8 @@ const PortfolioHeader: React.FC<PortfolioHeaderProps> = ({ title, settingsAction
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: "center" }}>
                 <Text style={styles.title}>{title}</Text>
                 <TouchableOpacity onPress={settingsAction}>
-                    <Ionicons name="settings-sharp" size={24} color={ColorPalette.text} />
+                    <MaterialIcons name="logout" size={24} color={ColorPalette.text} />
+                    {/* <Ionicons name="settings-sharp" size={24} color={ColorPalette.text} /> */}
                 </TouchableOpacity>
             </View>
             <SizedBox height={16} />

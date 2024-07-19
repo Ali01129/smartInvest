@@ -4,7 +4,8 @@ import { router } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ColorPalette } from "../constants/Colors";
 import { AntDesign } from "@expo/vector-icons";
-import img from "../assets/pic/phone.png";
+import img from "../assets/images/onboard.png";
+import { LinearGradient } from 'expo-linear-gradient';
 
 const Index = () => {
   return (
@@ -17,15 +18,18 @@ const Index = () => {
       </View>
       <View style={{ width: "100%", justifyContent: "space-between", flex: 1 }}>
         <Text style={styles.text}>Your Personal crypto Wallet</Text>
-        <TouchableOpacity
-          style={styles.logInButton}
-          onPress={() => {
-            router.push("login");
-          }}
+
+        <LinearGradient colors={[ColorPalette.g2, ColorPalette.secondary]}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 0 }}
+          style={styles.gradient}
         >
-          <Text style={styles.logInText}>Get Started</Text>
-          <AntDesign name="arrowright" size={24} color="black" />
-        </TouchableOpacity>
+          <TouchableOpacity onPress={() => {
+            router.push("login");
+          }}>
+            <Text style={styles.logInText}>Get Started</Text>
+          </TouchableOpacity>
+        </LinearGradient>
       </View>
     </SafeAreaView>
   );
@@ -45,6 +49,7 @@ const styles = StyleSheet.create({
     color: ColorPalette.text,
     fontSize: 30,
     fontWeight: "bold",
+    textAlign: "center",
   },
   logInButton: {
     padding: 15,
@@ -60,4 +65,11 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
   },
+  gradient: {
+    borderRadius: 16,
+    marginTop: 10,
+    padding: 15,
+    width: '100%',
+    backgroundColor: ColorPalette.secondary,
+  }
 });

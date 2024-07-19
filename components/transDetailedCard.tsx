@@ -8,12 +8,12 @@ interface TransDetailsCardProps {
   amount: string;
   date: string;
   type: string;
-  onPress: (id?: string, name?: string, amount?: string, date?: string, type?: string) => void;
+  onPress: () => void;
 }
 
-const TransDetailsCard: React.FC<TransDetailsCardProps> = ({ id, name, amount, date, type }) => {
+const TransDetailsCard: React.FC<TransDetailsCardProps> = ({ id, name, amount, date, type, onPress }) => {
   return (
-    <TouchableOpacity style={styles.content}>
+    <TouchableOpacity style={styles.content} onPress={onPress}>
       <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
         <View style={{ flexDirection: 'row' }}>
           {type === 'received' ? (
