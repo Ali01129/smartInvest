@@ -7,6 +7,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import TransCard from '@/components/transCard';
 import PackCard from '@/components/packCard';
+import SizedBox from '@/components/sizedbox';
 
 const HomeIndex = () => {
   const [activeTab, setActiveTab] = useState('Transactions');
@@ -14,30 +15,29 @@ const HomeIndex = () => {
   const renderContent = () => {
     if (activeTab === 'Transactions') {
       return (
-        <ScrollView style={{width:'100%',height:350}}>
-          <TransCard name={'Ahmad'} date={'10-07-2024'} price={50} status={'sent'}/>
-          <TransCard name={'Huzaifa'} date={'10-07-2024'} price={70} status={'received'}/>
-          <TransCard name={'Ali'} date={'10-07-2024'} price={60} status={'sent'}/>
-          <TransCard name={'Ali'} date={'10-07-2024'} price={60} status={'sent'}/>
-          <TransCard name={'Ali'} date={'10-07-2024'} price={60} status={'sent'}/>
+        <ScrollView style={{width:'100%',height:150}}>
+          <TransCard name={'Ahmad'} date={'10-07-2024'} price={50} type={'sent'}/>
+          <TransCard name={'Huzaifa'} date={'10-07-2024'} price={70} type={'received'}/>
+          <TransCard name={'Ali'} date={'10-07-2024'} price={60} type={'sent'}/>
+          <TransCard name={'Ali'} date={'10-07-2024'} price={60} type={'sent'}/>
+          <TransCard name={'Ali'} date={'10-07-2024'} price={60} type={'sent'}/>
+          <SizedBox height={70}/>
         </ScrollView>
       );
     } else {
       return (
         <ScrollView style={{width:'100%',height:350}}>
-          <PackCard/>
-          <PackCard/>
-          <PackCard/>
-          <PackCard/>
-          <PackCard/>
-          <PackCard/>
+          <PackCard name='VIP' profit={20} coins={500} validity='4 months'/>
+          <PackCard name='VIP' profit={20} coins={500} validity='4 months'/>
+          <PackCard name='VIP' profit={20} coins={500} validity='4 months'/>
+          <SizedBox height={70}/>
         </ScrollView>
       );
     }
   };
 
   return (
-    <ScrollView style={styles.container}>
+    <SafeAreaView style={styles.container}>
       {/* Header Section */}
       <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
         <View>
@@ -68,8 +68,6 @@ const HomeIndex = () => {
             
             <Text style={styles.menuText}>Deposit</Text>
           </View>
-
-
           <View style={styles.menuItem}>
             <View style={styles.menu1}>
               <MaterialIcons name="currency-exchange" size={20} color={ColorPalette.text} />
@@ -103,7 +101,7 @@ const HomeIndex = () => {
 
       {/* Content Section */}
       {renderContent()}
-    </ScrollView>
+    </SafeAreaView>
   );
 };
 
@@ -113,7 +111,7 @@ const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
     backgroundColor: ColorPalette.background,
-    padding: 30,
+    padding: 16,
   },
   title: {
     marginLeft: 15,
