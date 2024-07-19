@@ -77,9 +77,15 @@ const HomeIndex = () => {
 
 
           <View style={styles.menuItem}>
+            
+            <TouchableOpacity onPress={()=>router.push('withdraw')}>
             <View style={styles.menu1}>
               <MaterialIcons name="currency-exchange" size={20} color={ColorPalette.text} />
             </View>
+            
+            </TouchableOpacity>
+            
+            
             <Text style={styles.menuText}>Withdraw</Text>
           </View>
           <View style={styles.menuItem}>
