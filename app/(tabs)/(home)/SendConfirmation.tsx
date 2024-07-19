@@ -4,18 +4,17 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { ColorPalette } from "@/constants/Colors";
 import SendCard from "@/components/SendCard";
 import Header from "@/components/header";
-import Send from "./send";
 import { router } from "expo-router";
 import CustomSolidButton from "@/components/CustomSolidButton";
-import profile from "@/assets/pic/profile.png"
+import Images from "@/constants/Images";
 
 
 const SendConfirmation = () => {
   return (
     <SafeAreaView style={styles.container}>
       <Header title="Confirmation" onPress={() => router.push("send")} />
-      <SendCard title="From" address="0x4564848..656" image={profile}/>
-      <SendCard title="To" address="0x4564848..656" image={profile}/>
+      <SendCard title="From" address="0x4564848..656" image={Images.amongus} />
+      <SendCard title="To" address="0x4564848..656" image={Images.amongus} />
       <Text style={styles.AmountText}>Amount :$300</Text>
       <View style={{ justifyContent: "center", alignContent: "flex-end" }}>
         <CustomSolidButton

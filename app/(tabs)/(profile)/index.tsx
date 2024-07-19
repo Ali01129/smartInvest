@@ -106,6 +106,8 @@ const ProfileIndex = () => {
               labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
               style: {
                 borderRadius: 16,
+                borderWidth: 10,
+                borderColor: ColorPalette.text,
               },
               propsForLabels: {
                 fontSize: 15,

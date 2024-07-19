@@ -2,17 +2,17 @@ import { TouchableOpacity, Image, StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { router } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { StatusBar } from "expo-status-bar";
 import { ColorPalette } from "../constants/Colors";
-import { AntDesign } from "@expo/vector-icons";
-import img from "../assets/images/onboard.png";
 import { LinearGradient } from 'expo-linear-gradient';
+import Images from "@/constants/Images";
 
 const Index = () => {
   return (
     <SafeAreaView style={styles.container}>
       <View>
         <Image
-          source={img}
+          source={Images.onboarding}
           style={{ width: 400, height: 500, resizeMode: "contain" }}
         />
       </View>
@@ -31,6 +31,7 @@ const Index = () => {
           </TouchableOpacity>
         </LinearGradient>
       </View>
+      <StatusBar backgroundColor={ColorPalette.background} style="light" />
     </SafeAreaView>
   );
 };

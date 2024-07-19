@@ -8,18 +8,19 @@ import { router } from 'expo-router';
 import TransCard from '@/components/transCard';
 import PackCard from '@/components/packCard';
 import SizedBox from '@/components/sizedbox';
+import Images from "@/constants/Images";
 
 
 const HomeIndex = () => {
 
   const [activeTab, setActiveTab] = useState('Transactions');
   const [modalVisible, setModalVisible] = useState(false);
-  const [mainImage, setMainImage] = useState(require('@/assets/pic/profile.png'));
+  const [mainImage, setMainImage] = useState(Images.amongus);
   const images = [
-    require('@/assets/pic/profile.png'),
-    require('@/assets/pic/goku.png'),
-    require('@/assets/pic/zoro.png'),
-    require('@/assets/pic/profile.png'),
+    Images.amongus,
+    Images.goku,
+    Images.zoro,
+    Images.amongus,
   ];
 
 
@@ -82,15 +83,15 @@ const HomeIndex = () => {
           }}
         >
           <View style={styles.menuItem}>
-           
-           <TouchableOpacity onPress={()=>router.push('send')}>
-           <View style={styles.menu1}>
-              <FontAwesome6 name="money-bill-transfer" size={20} color={ColorPalette.text} />
-            </View>
-           </TouchableOpacity>
-           
-           
-           
+
+            <TouchableOpacity onPress={() => router.push('send')}>
+              <View style={styles.menu1}>
+                <FontAwesome6 name="money-bill-transfer" size={20} color={ColorPalette.text} />
+              </View>
+            </TouchableOpacity>
+
+
+
             <Text style={styles.menuText}>Send</Text>
           </View>
           <View style={styles.menuItem}>
@@ -104,19 +105,19 @@ const HomeIndex = () => {
             <Text style={styles.menuText}>Deposit</Text>
           </View>
           <View style={styles.menuItem}>
-            
-            <TouchableOpacity onPress={()=>router.push('withdraw')}>
-            <View style={styles.menu1}>
-              <MaterialIcons
-                name="currency-exchange"
-                size={20}
-                color={ColorPalette.text}
-              />
-            </View>
-            
+
+            <TouchableOpacity onPress={() => router.push('withdraw')}>
+              <View style={styles.menu1}>
+                <MaterialIcons
+                  name="currency-exchange"
+                  size={20}
+                  color={ColorPalette.text}
+                />
+              </View>
+
             </TouchableOpacity>
-            
-            
+
+
             <Text style={styles.menuText}>Withdraw</Text>
           </View>
           <View style={styles.menuItem}>
@@ -248,7 +249,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
   modalContent: {
-    marginHorizontal:16,
+    marginHorizontal: 16,
     backgroundColor: ColorPalette.greyNav,
     padding: 20,
     borderRadius: 10,

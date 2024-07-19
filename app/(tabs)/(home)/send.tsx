@@ -7,11 +7,9 @@ import { router } from "expo-router";
 import * as Yup from "yup";
 import { Formik, FormikHelpers } from "formik";
 import InputField from "@/components/inputFieldSendCard";
-import { LinearGradient } from "expo-linear-gradient";
+import Images from "@/constants/Images";
 import SendCard from "@/components/SendCard";
 import CustomSolidButton from "@/components/CustomSolidButton";
-import profile from "@/assets/pic/profile.png"
-
 const validationSchema = Yup.object().shape({
   address: Yup.string().required("Address is required"),
   amount: Yup.string().required("Amount is required"),
@@ -31,7 +29,7 @@ const Send = () => {
   return (
     <SafeAreaView style={styles.container}>
       <Header title="Send" onPress={() => router.push("homeindex")} />
-      <SendCard title="From" address="0x4564879848..7878" image={profile} />
+      <SendCard title="From" address="0x4564879848..7878" image={Images.amongus} />
       <Formik
         initialValues={{ address: "", amount: "" }}
         validationSchema={validationSchema}

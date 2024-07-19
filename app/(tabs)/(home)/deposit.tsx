@@ -6,10 +6,10 @@ import Header from "@/components/header";
 import { router } from "expo-router";
 import CustomSolidButton from "@/components/CustomSolidButton";
 import { SendCard2 } from "@/components/SendCard";
-import stripe from "@/assets/pic/stripe.png";
 import { Formik, FormikHelpers } from "formik";
 import * as Yup from "yup";
 import InputField from "@/components/inputFieldSendCard";
+import Images from "@/constants/Images";
 
 // Define the validation schema using Yup
 const validationSchema = Yup.object().shape({
@@ -51,14 +51,14 @@ const Deposit = () => {
           touched,
         }) => (
           <>
-            <SendCard2 
-              BoxName="Payment Method" 
-              imageNoStyle={stripe} 
+            <SendCard2
+              BoxName="Payment Method"
+              imageNoStyle={Images.stripe}
               onPress={() => {
                 setSelectedCard(!selectedCard);
                 setFieldValue("selectedCard", !selectedCard);
-              }} 
-              selected={selectedCard} 
+              }}
+              selected={selectedCard}
             />
             {touched.selectedCard && errors.selectedCard && (
               <Text style={{ color: "red", marginBottom: 5 }}>
