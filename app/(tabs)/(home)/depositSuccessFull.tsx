@@ -1,7 +1,8 @@
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Text, StyleSheet, View, Image } from "react-native";
 import { ColorPalette } from "@/constants/Colors";
-import transactionIcon from "@/assets/pic/transactionlogo.png";
+// import transactionIcon from "@/assets/pic/transactionlogo.png";
+import Images from "@/constants/Images";
 import CustomSolidButton from "@/components/CustomSolidButton";
 import { router } from "expo-router";
 
@@ -14,14 +15,14 @@ const depositSuccessFull = () => {
           Your fund are now available for use
         </Text>
         <Image
-          source={require("@/assets/pic/deposit.gif")}
+          source={Images.deposit}
           resizeMode="contain"
           style={styles.Picture}
         />
       </View>
       <Text style={styles.AmountText}>USD 500.00</Text>
       <View style={styles.transactionDetail}>
-        <Image source={transactionIcon} />
+        <Image source={Images.transactionlogo} />
         <View style={{ marginLeft: 15 }}>
           <Text style={{ color: "white", fontWeight: "bold" }}>
             Successfully paid to UXUI Partner
@@ -31,7 +32,13 @@ const depositSuccessFull = () => {
           </Text>
         </View>
       </View>
-      <View style={{flexDirection:"row",justifyContent:"space-between",marginTop:50}}>
+      <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "space-between",
+          marginTop: 50,
+        }}
+      >
         <View>
           <Text style={styles.DetailText}>Reference ID</Text>
           <Text style={styles.DetailText}>Payment method</Text>
@@ -43,16 +50,17 @@ const depositSuccessFull = () => {
           <Text style={styles.DetailText}>$1000.00</Text>
         </View>
       </View>
-      
-      <View style={{flex:1,justifyContent:"center",alignContent:"flex-end"}}>
-      <CustomSolidButton
-        text={"Back to homepage".toUpperCase()}
-        onPress={() => router.push("homeindex")}
-        gradientColors={[ColorPalette.g2, ColorPalette.secondary]}
-        textColor={ColorPalette.textBlack}
-      />
+
+      <View
+        style={{ flex: 1, justifyContent: "center", alignContent: "flex-end" }}
+      >
+        <CustomSolidButton
+          text={"Back to homepage".toUpperCase()}
+          onPress={() => router.push("homeindex")}
+          gradientColors={[ColorPalette.g2, ColorPalette.secondary]}
+          textColor={ColorPalette.textBlack}
+        />
       </View>
-      
     </SafeAreaView>
   );
 };
