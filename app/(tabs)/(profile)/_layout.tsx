@@ -6,7 +6,6 @@ const _layout = () => {
     <Stack>
       <Stack.Screen name="index" options={{ headerShown: false, animation: 'ios' }} />
       <Stack.Screen name="settings" options={{ headerShown: false, animation: 'ios' }} />
-      <Stack.Screen name="transactiondetailspage" options={{ headerShown: false, animation: "slide_from_bottom" }} />
     </Stack>
   );
 };
