@@ -2,26 +2,21 @@ import { StyleSheet, Text, TextInput, TouchableOpacity, View, ScrollView } from 
 import React, { useState } from 'react';
 import { router } from 'expo-router';
 import { Fontisto } from '@expo/vector-icons';
-import { FontAwesome } from '@expo/vector-icons';
 import { ColorPalette } from '@/constants/Colors';
 import { AntDesign } from '@expo/vector-icons';
 import { Formik, FormikHelpers } from 'formik';
+import InputField from '@/components/inputFieldSendCard';
 import * as Yup from 'yup';
-
+import { LinearGradient } from 'expo-linear-gradient';
 interface FormValues {
   email: string;
   password: string;
 }
-
 const Login: React.FC = () => {
-  const [emailFocused, setEmailFocused] = useState(false);
-  const [passwordFocused, setPasswordFocused] = useState(false);
-
   const initialValues: FormValues = {
     email: '',
     password: '',
   };
-
   const validationSchema = Yup.object().shape({
     email: Yup.string()
       .email('Invalid email')
@@ -30,13 +25,11 @@ const Login: React.FC = () => {
       .min(6, 'Password must be at least 6 characters')
       .required('Password is required'),
   });
-
   const handleSubmit = (values: FormValues, actions: FormikHelpers<FormValues>) => {
     console.log(values);
     actions.resetForm();
     router.push('/homeindex');
   };
-
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Formik
@@ -52,9 +45,7 @@ const Login: React.FC = () => {
               </TouchableOpacity>
               <Text style={styles.title}>Login</Text>
             </View>
-
             <Text style={{ color: 'white', alignSelf: 'flex-start', marginBottom: 20 }}>Login with one of the following options</Text>
-
             <View style={{ flexDirection: 'row', marginBottom: 30 }}>
               <TouchableOpacity style={styles.box2} onPress={()=>{router.push('/homeindex')}}>
                 <Fontisto name="google" size={26} color="white" style={{ alignSelf: 'center' }} />
@@ -63,47 +54,39 @@ const Login: React.FC = () => {
                 <AntDesign name="apple1" size={26} color="white" style={{ alignSelf: 'center' }} />
               </TouchableOpacity>
             </View>
-
-            <Text style={{ color: 'white', marginBottom: 10, fontSize: 18 }}>Email</Text>
-
-            <View style={[styles.inputContainer2,emailFocused?{borderWidth:1,borderColor:ColorPalette.secondary}:{}]}>
-              <Fontisto name="person" size={24} style={styles.icon} color="white" />
-              <TextInput
-                style={styles.input}
-                placeholder="Enter your Email"
-                placeholderTextColor="white"
-                onChangeText={handleChange('email')}
-                onFocus={() => setEmailFocused(true)}
-                onBlur={()=>{handleBlur('email'); setEmailFocused(false)}}
-                value={values.email}
-              />
-            </View>
+            <InputField
+              name="Email"
+              placeholder="Enter your Email"
+              onChangeText={handleChange('email')}
+              onBlur={() => handleBlur('email')}
+              onFocus={() => console.log('Input focused')}
+              value={values.email}
+              icon={'person'}
+            />
             {touched.email && errors.email &&
               <Text style={{ color: 'red', marginBottom: 10 }}>{errors.email}</Text>
             }
-
-            <Text style={{ color: 'white', marginBottom: 10, fontSize: 18 }}>Password</Text>
-            <View style={[styles.inputContainer2,passwordFocused?{borderWidth:1,borderColor:ColorPalette.secondary}:{}]}>
-              <FontAwesome name="lock" size={24} style={styles.icon} color="white" />
-              <TextInput
-                style={styles.input}
-                placeholder="Enter your Password"
-                placeholderTextColor="white"
-                onChangeText={handleChange('password')}
-                onFocus={() => setPasswordFocused(true)}
-                onBlur={()=>{handleBlur('password'); setPasswordFocused(false)}}
-                value={values.password}
-                secureTextEntry
-              />
-            </View>
+            <InputField
+              name="Password"
+              placeholder="Enter your Password"
+              onChangeText={handleChange('password')}
+              onBlur={() => handleBlur('password')}
+              onFocus={() => console.log('Input focused')}
+              value={values.password}
+              icon={'locked'}
+            />
             {touched.password && errors.password &&
               <Text style={{ color: 'red', marginBottom: 10 }}>{errors.password}</Text>
             }
-
-            <TouchableOpacity style={styles.logInButton} onPress={() => handleSubmit()}>
+            <LinearGradient colors={[ColorPalette.g2, ColorPalette.secondary]}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 0 }}
+            style={styles.gradient}
+            >
+            <TouchableOpacity onPress={() => handleSubmit()}>
               <Text style={styles.logInText}>Login</Text>
             </TouchableOpacity>
-
+            </LinearGradient>
             <View>
               <Text style={{ color: 'white', alignSelf: 'center', marginTop: 20 }}>Don't have an account?
                 <Text style={{ color: ColorPalette.secondary }}> Sign Up</Text>
@@ -115,9 +98,7 @@ const Login: React.FC = () => {
     </ScrollView>
   );
 }
-
 export default Login;
-
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
@@ -147,34 +128,17 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     marginRight: 10,
   },
-  icon: {
-    marginRight: 10,
-    fontWeight: 'bold',
-  },
-  input: {
-    flex: 1,
-    height: '100%',
-  },
-  inputContainer2: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    height: 55,
-    backgroundColor: '#636363',
-    borderRadius: 8,
-    paddingHorizontal: 10,
-    marginBottom: 20,
-  },
-  logInButton: {
-    marginTop: 10,
-    padding: 15,
-    width: '100%',
-    borderRadius: 16,
-    backgroundColor: ColorPalette.secondary,
-  },
   logInText: {
     color: ColorPalette.background,
     textAlign: 'center',
     fontSize: 18,
     fontWeight: 'bold',
   },
+  gradient: {
+    borderRadius: 16,
+    marginTop: 10,
+    padding: 15,
+    width: '100%',
+    backgroundColor: ColorPalette.secondary,
+  }
 });

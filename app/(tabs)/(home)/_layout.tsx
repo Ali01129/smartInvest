@@ -10,6 +10,7 @@ const _layout = () => {
         <Stack.Screen name="send" options={{ headerShown: false,animation:'ios' }} />
         <Stack.Screen name="withdraw" options={{ headerShown: false,animation:'ios' }} />
         <Stack.Screen name="depositSuccessFull" options={{ headerShown: false,animation:'ios' }} />
+        <Stack.Screen name="SendConfirmation" options={{ headerShown: false,animation:'ios' }} />
       </Stack>
   );
 };

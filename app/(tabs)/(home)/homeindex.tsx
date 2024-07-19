@@ -54,9 +54,15 @@ const HomeIndex = () => {
 
         <View style={{ justifyContent: 'space-between', flexDirection: 'row', marginTop: 20 }}>
           <View style={styles.menuItem}>
-            <View style={styles.menu1}>
+           
+           <TouchableOpacity onPress={()=>router.push('send')}>
+           <View style={styles.menu1}>
               <FontAwesome6 name="money-bill-transfer" size={20} color={ColorPalette.text} />
             </View>
+           </TouchableOpacity>
+           
+           
+           
             <Text style={styles.menuText}>Send</Text>
           </View>
           <View style={styles.menuItem}>
