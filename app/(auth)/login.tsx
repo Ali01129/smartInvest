@@ -2,11 +2,12 @@ import { StyleSheet, Text, TextInput, TouchableOpacity, View, ScrollView } from 
 import React, { useState } from 'react';
 import { router } from 'expo-router';
 import { Fontisto } from '@expo/vector-icons';
-import { FontAwesome } from '@expo/vector-icons';
 import { ColorPalette } from '@/constants/Colors';
 import { AntDesign } from '@expo/vector-icons';
 import { Formik, FormikHelpers } from 'formik';
+import InputField from '@/components/inputField';
 import * as Yup from 'yup';
+import { LinearGradient } from 'expo-linear-gradient';
 
 interface FormValues {
   email: string;
@@ -14,8 +15,6 @@ interface FormValues {
 }
 
 const Login: React.FC = () => {
-  const [emailFocused, setEmailFocused] = useState(false);
-  const [passwordFocused, setPasswordFocused] = useState(false);
 
   const initialValues: FormValues = {
     email: '',
@@ -64,49 +63,46 @@ const Login: React.FC = () => {
               </TouchableOpacity>
             </View>
 
-            <Text style={{ color: 'white', marginBottom: 10, fontSize: 18 }}>Email</Text>
+            <InputField
+              name="Email"
+              placeholder="Enter your Email"
+              onChangeText={handleChange('email')}
+              onBlur={() => handleBlur('email')}
+              onFocus={() => console.log('Input focused')}
+              value={values.email}
+              icon={'email'}
+            />
 
-            <View style={[styles.inputContainer2,emailFocused?{borderWidth:1,borderColor:ColorPalette.secondary}:{}]}>
-              <Fontisto name="person" size={24} style={styles.icon} color="white" />
-              <TextInput
-                style={styles.input}
-                placeholder="Enter your Email"
-                placeholderTextColor="white"
-                onChangeText={handleChange('email')}
-                onFocus={() => setEmailFocused(true)}
-                onBlur={()=>{handleBlur('email'); setEmailFocused(false)}}
-                value={values.email}
-              />
-            </View>
             {touched.email && errors.email &&
               <Text style={{ color: 'red', marginBottom: 10 }}>{errors.email}</Text>
             }
-
-            <Text style={{ color: 'white', marginBottom: 10, fontSize: 18 }}>Password</Text>
-            <View style={[styles.inputContainer2,passwordFocused?{borderWidth:1,borderColor:ColorPalette.secondary}:{}]}>
-              <FontAwesome name="lock" size={24} style={styles.icon} color="white" />
-              <TextInput
-                style={styles.input}
-                placeholder="Enter your Password"
-                placeholderTextColor="white"
-                onChangeText={handleChange('password')}
-                onFocus={() => setPasswordFocused(true)}
-                onBlur={()=>{handleBlur('password'); setPasswordFocused(false)}}
-                value={values.password}
-                secureTextEntry
-              />
-            </View>
+            <InputField
+              name="Password"
+              placeholder="Enter your Password"
+              onChangeText={handleChange('password')}
+              onBlur={() => handleBlur('password')}
+              onFocus={() => console.log('Input focused')}
+              value={values.password}
+              icon={'locked'}
+            />
             {touched.password && errors.password &&
               <Text style={{ color: 'red', marginBottom: 10 }}>{errors.password}</Text>
             }
-
-            <TouchableOpacity style={styles.logInButton} onPress={() => handleSubmit()}>
-              <Text style={styles.logInText}>Login</Text>
-            </TouchableOpacity>
-
+            <View>
+              <Text style={{ color: 'white', alignSelf: 'flex-end', marginBottom: 20 }} onPress={()=>{router.push('forgetPassword')}}>Forgot Password?</Text>
+            </View>
+            <LinearGradient colors={[ColorPalette.g2, ColorPalette.secondary]}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 0 }}
+            style={styles.gradient}
+            >
+              <TouchableOpacity onPress={() => handleSubmit()}>
+                <Text style={styles.logInText}>Login</Text>
+              </TouchableOpacity>
+            </LinearGradient>
             <View>
               <Text style={{ color: 'white', alignSelf: 'center', marginTop: 20 }}>Don't have an account?
-                <Text style={{ color: ColorPalette.secondary }}> Sign Up</Text>
+                <Text style={{ color: ColorPalette.secondary }} onPress={()=>{router.replace('signup')}}> Sign Up</Text>
               </Text>
             </View>
           </View>
@@ -147,34 +143,17 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     marginRight: 10,
   },
-  icon: {
-    marginRight: 10,
-    fontWeight: 'bold',
-  },
-  input: {
-    flex: 1,
-    height: '100%',
-  },
-  inputContainer2: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    height: 55,
-    backgroundColor: '#636363',
-    borderRadius: 8,
-    paddingHorizontal: 10,
-    marginBottom: 20,
-  },
-  logInButton: {
-    marginTop: 10,
-    padding: 15,
-    width: '100%',
-    borderRadius: 16,
-    backgroundColor: ColorPalette.secondary,
-  },
   logInText: {
     color: ColorPalette.background,
     textAlign: 'center',
     fontSize: 18,
     fontWeight: 'bold',
   },
+  gradient: {
+    borderRadius: 16,
+    marginTop: 10,
+    padding: 15,
+    width: '100%',
+    backgroundColor: ColorPalette.secondary,
+  }
 });

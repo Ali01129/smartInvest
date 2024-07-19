@@ -1,93 +1,96 @@
-import { Image, StyleSheet, Text, View } from 'react-native';
-import React from 'react';
-import { ColorPalette } from '@/constants/Colors';
-import { FontAwesome5 } from '@expo/vector-icons';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-
-const PackCard = () => {
+import {
+  StyleSheet,
+  Text,
+  View,
+  Dimensions,
+} from "react-native";
+import { ColorPalette } from "@/constants/Colors";
+import { FontAwesome6 } from "@expo/vector-icons";
+import { LinearGradient } from "expo-linear-gradient";
+const { height } = Dimensions.get("window");
+interface SubscriptionProps {
+  name: string;
+  profit: number;
+  coins: number;
+  validity: string;
+}
+const PackCard: React.FC<SubscriptionProps> = ({
+  name,
+  profit,
+  coins,
+  validity,
+}) => {
   return (
-    <View style={styles.content}>
+    <View style={styles.card}>
+      <Text style={styles.heading}>{name}</Text>
       <View style={styles.row}>
-        <View style={styles.packageInfo}>
-        <MaterialCommunityIcons name="package" size={24} color={ColorPalette.primary} />
-          <View style={styles.packageDetails}>
-            <Text style={styles.text}>Package Name</Text>
-            <Text style={styles.time}>10 days</Text>
-          </View>
+        <Text style={styles.profit}>Profit: {profit}%</Text>
+        <View style={{ flexDirection: "row" }}>
+          <FontAwesome6
+            name="coins"
+            style={{ marginRight: 8 }}
+            size={18}
+            color={ColorPalette.primary}
+          />
+          <Text style={styles.coins}>{coins} coins</Text>
         </View>
-        <Text style={styles.payment}>20/Month</Text>
       </View>
-      <View style={styles.divider}></View>
       <View style={styles.row}>
-        <View style={styles.stakeInfo}>
-        <FontAwesome5 name="coins" size={24} color={ColorPalette.primary} />
-          <View style={styles.stakeDetails}>
-            <Text style={styles.text}>Stake: 500 Coins</Text>
-            <Text style={styles.time}>Validity: 25-7-2024</Text>
+        <Text style={styles.validity}>Validity: {validity}</Text>
+        <LinearGradient
+          colors={[ColorPalette.g2, ColorPalette.secondary]}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 0 }}
+          style={styles.gradient}
+        >
+          <View
+            style={{
+              //   backgroundColor: ColorPalette.primary,
+              padding: 8,
+              borderRadius: 8,
+              paddingHorizontal: 24,
+            }}
+          >
+            <Text style={{ fontWeight: "700" }}>12 days</Text>
           </View>
-        </View>
+        </LinearGradient>
       </View>
     </View>
   );
-}
-
-export default PackCard;
-
+};
 const styles = StyleSheet.create({
-  content: {
-    backgroundColor: ColorPalette.greyNav,
-    borderRadius: 10,
+  card: {
+    height: height * 0.185,
     padding: 16,
-    marginBottom: 10,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.8,
-    shadowRadius: 2,
+    width: "100%",
+    backgroundColor: ColorPalette.greyNav,
+    borderRadius: 20,
+    marginBottom: 12,
     elevation: 5,
   },
-  row: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  packageInfo: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  packageDetails: {
-    marginLeft: 10,
-  },
-  stakeInfo: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  stakeDetails: {
-    marginLeft: 10,
-  },
-  text: {
+  heading: {
+    fontSize: 22,
+    fontWeight: "500",
     color: ColorPalette.text,
-    fontSize: 16,
-    fontWeight: 'bold',
   },
-  time: {
-    color: ColorPalette.textGrey,
+  row: {
+    marginTop: 14,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  profit: {
+    fontSize: 16,
+    color: ColorPalette.text,
+    fontWeight: "500",
+  },
+  coins: { color: ColorPalette.text, fontSize: 16, fontWeight: "500" },
+  validity: {
     fontSize: 12,
-    marginTop: 5,
+    color: ColorPalette.textGrey,
   },
-  payment: {
-    alignSelf: 'center',
-    color: ColorPalette.textBlack,
-    fontSize: 16,
-    fontWeight: 'bold',
-    backgroundColor: ColorPalette.primary,
-    paddingHorizontal: 10,
-    paddingVertical: 5,
+  gradient: {
     borderRadius: 10,
   },
-  divider: {
-    width: '100%',
-    backgroundColor: "white",
-    height: 1,
-    marginVertical: 10,
-  },
 });
+export default PackCard;
