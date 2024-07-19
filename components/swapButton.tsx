@@ -11,7 +11,7 @@ const SwapButton: React.FC<SwapButtonProps> = ({ onPress }) => {
       <View
         style={{
           backgroundColor: "#101010",
-          borderRadius: 50,
+          borderRadius: 25,
           height: 50,
           width: 50,
           alignItems: "center",
