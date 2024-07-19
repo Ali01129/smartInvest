@@ -110,9 +110,6 @@ const WithDraw = () => {
                 <Text>+ Add Beneficiary</Text>
               </View>
               </TouchableOpacity>
-             
-
-
             </View>
 
             {/* Add SendCard2 here */}
