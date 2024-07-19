@@ -9,7 +9,9 @@ import TransCard from '@/components/transCard';
 import PackCard from '@/components/packCard';
 import SizedBox from '@/components/sizedbox';
 
+
 const HomeIndex = () => {
+
   const [activeTab, setActiveTab] = useState('Transactions');
   const [modalVisible, setModalVisible] = useState(false);
   const [mainImage, setMainImage] = useState(require('@/assets/pic/profile.png'));
@@ -20,8 +22,9 @@ const HomeIndex = () => {
     require('@/assets/pic/profile.png'),
   ];
 
+
   const renderContent = () => {
-    if (activeTab === 'Transactions') {
+    if (activeTab === "Transactions") {
       return (
         <ScrollView style={{ width: '100%', height: 150 }}>
           <TransCard name={'Ahmad'} date={'10-07-2024'} price={50} type={'sent'} />
@@ -52,46 +55,72 @@ const HomeIndex = () => {
   return (
     <SafeAreaView style={styles.container}>
       {/* Header Section */}
-      <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+      <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
         <View>
           <Text style={styles.title}>Wallet</Text>
           <Text style={styles.subtitle}>Active</Text>
         </View>
+
         <TouchableOpacity onPress={() => setModalVisible(true)}>
           <Image source={mainImage} style={styles.pic} />
         </TouchableOpacity>
+
       </View>
 
       {/* Card Section */}
       <View style={styles.card}>
-        <Text style={[styles.subtitle, { color: 'black', fontSize: 14 }]}>Balance</Text>
-        <Text style={[styles.title, { color: 'black' }]}>$500</Text>
+        <Text style={[styles.subtitle, { color: "black", fontSize: 14 }]}>
+          Balance
+        </Text>
+        <Text style={[styles.title, { color: "black" }]}>$500</Text>
 
-        <View style={{ justifyContent: 'space-between', flexDirection: 'row', marginTop: 20 }}>
+        <View
+          style={{
+            justifyContent: "space-between",
+            flexDirection: "row",
+            marginTop: 20,
+          }}
+        >
           <View style={styles.menuItem}>
             <View style={styles.menu1}>
-              <FontAwesome6 name="money-bill-transfer" size={20} color={ColorPalette.text} />
+              <FontAwesome6
+                name="money-bill-transfer"
+                size={20}
+                color={ColorPalette.text}
+              />
             </View>
             <Text style={styles.menuText}>Send</Text>
           </View>
           <View style={styles.menuItem}>
+
             <TouchableOpacity onPress={() => router.push('deposit')}>
               <View style={styles.menu1}>
                 <MaterialIcons name="currency-exchange" size={20} color={ColorPalette.text} />
               </View>
             </TouchableOpacity>
+
             <Text style={styles.menuText}>Deposit</Text>
           </View>
           <View style={styles.menuItem}>
             <View style={styles.menu1}>
-              <MaterialIcons name="currency-exchange" size={20} color={ColorPalette.text} />
+              <MaterialIcons
+                name="currency-exchange"
+                size={20}
+                color={ColorPalette.text}
+              />
             </View>
             <Text style={styles.menuText}>Withdraw</Text>
           </View>
           <View style={styles.menuItem}>
-            <View style={styles.menu1}>
-              <MaterialIcons name="currency-exchange" size={20} color={ColorPalette.text} />
-            </View>
+            <TouchableOpacity onPress={() => router.push("conversion")}>
+              <View style={styles.menu1}>
+                <MaterialIcons
+                  name="currency-exchange"
+                  size={20}
+                  color={ColorPalette.text}
+                />
+              </View>
+            </TouchableOpacity>
             <Text style={styles.menuText}>Convert</Text>
           </View>
         </View>
@@ -100,14 +129,14 @@ const HomeIndex = () => {
       {/* Tabs Section */}
       <View style={styles.tabContainer}>
         <TouchableOpacity
-          style={[styles.tab, activeTab === 'Transactions' && styles.activeTab]}
-          onPress={() => setActiveTab('Transactions')}
+          style={[styles.tab, activeTab === "Transactions" && styles.activeTab]}
+          onPress={() => setActiveTab("Transactions")}
         >
           <Text style={styles.tabText}>Transactions</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={[styles.tab, activeTab === 'Packages' && styles.activeTab]}
-          onPress={() => setActiveTab('Packages')}
+          style={[styles.tab, activeTab === "Packages" && styles.activeTab]}
+          onPress={() => setActiveTab("Packages")}
         >
           <Text style={styles.tabText}>Packages</Text>
         </TouchableOpacity>
@@ -149,11 +178,11 @@ const styles = StyleSheet.create({
     marginLeft: 15,
     color: ColorPalette.text,
     fontSize: 25,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   subtitle: {
     marginLeft: 15,
-    color: 'grey',
+    color: "grey",
     fontSize: 15,
   },
   pic: {
@@ -169,7 +198,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   menuItem: {
-    alignItems: 'center',
+    alignItems: "center",
     flex: 1,
   },
   menu1: {
@@ -177,19 +206,19 @@ const styles = StyleSheet.create({
     height: 40,
     borderRadius: 25,
     backgroundColor: ColorPalette.textBlack,
-    justifyContent: 'center',
+    justifyContent: "center",
     elevation: 5,
-    alignItems: 'center',
+    alignItems: "center",
   },
   menuText: {
     color: ColorPalette.textBlack,
-    textAlign: 'center',
+    textAlign: "center",
     marginTop: 5,
     fontSize: 10,
   },
   tabContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
+    flexDirection: "row",
+    justifyContent: "space-around",
     marginVertical: 20,
   },
   tab: {
