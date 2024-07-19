@@ -43,7 +43,7 @@ const Otp: React.FC = () => {
                 <TouchableOpacity style={styles.box} onPress={() => router.back()}>
                   <AntDesign name="left" size={26} color="white" />
                 </TouchableOpacity>
-                <Text style={styles.title}>Enter OTP</Text>
+                <Text style={styles.title}>Verification</Text>
               </View>
               <InputField
                 name="OTP"
@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     alignItems: 'center',
     backgroundColor: ColorPalette.background,
-    padding: 30,
+    padding: 16,
     paddingTop: 80,
   },
   header: {

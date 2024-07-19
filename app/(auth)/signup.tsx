@@ -105,7 +105,7 @@ const SignUp: React.FC = () => {
               onBlur={() => handleBlur('phantomWallet')}
               onFocus={() => console.log('Input focused')}
               value={values.phantomWallet}
-              icon={'locked'}
+              icon={'google-wallet'}
             />
             {touched.phantomWallet && errors.phantomWallet &&
               <Text style={{ color: 'red', marginBottom: 10 }}>{errors.phantomWallet}</Text>
@@ -139,13 +139,13 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     alignItems: 'center',
     backgroundColor: ColorPalette.background,
-    padding: 30,
+    padding: 16,
     paddingTop: 80,
   },
   title: {
     marginLeft: 15,
     color: ColorPalette.text,
-    fontSize: 35,
+    fontSize: 30,
     fontWeight: 'bold',
   },
   box: {

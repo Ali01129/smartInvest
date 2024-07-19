@@ -52,16 +52,6 @@ const Login: React.FC = () => {
               <Text style={styles.title}>Login</Text>
             </View>
 
-            <Text style={{ color: 'white', alignSelf: 'flex-start', marginBottom: 20 }}>Login with one of the following options</Text>
-
-            <View style={{ flexDirection: 'row', marginBottom: 30 }}>
-              <TouchableOpacity style={styles.box2} onPress={()=>{router.push('/homeindex')}}>
-                <Fontisto name="google" size={26} color="white" style={{ alignSelf: 'center' }} />
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.box2}>
-                <AntDesign name="apple1" size={26} color="white" style={{ alignSelf: 'center' }} />
-              </TouchableOpacity>
-            </View>
 
             <InputField
               name="Email"
@@ -119,27 +109,19 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     alignItems: 'center',
     backgroundColor: ColorPalette.background,
-    padding: 30,
+    padding: 16,
     paddingTop: 80,
   },
   title: {
     marginLeft: 15,
     color: ColorPalette.text,
-    fontSize: 35,
+    fontSize: 30,
     fontWeight: 'bold',
   },
   box: {
     borderWidth: 2,
     borderColor: 'grey',
     padding: 10,
-    borderRadius: 16,
-    marginRight: 10,
-  },
-  box2: {
-    flex: 1,
-    borderWidth: 2,
-    borderColor: 'grey',
-    padding: 20,
     borderRadius: 16,
     marginRight: 10,
   },

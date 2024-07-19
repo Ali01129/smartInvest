@@ -1,4 +1,4 @@
-import { Image, StyleSheet, Text, View, TouchableOpacity,ScrollView } from 'react-native';
+import { Image, StyleSheet, Text, View, TouchableOpacity, ScrollView, Modal } from 'react-native';
 import React, { useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ColorPalette } from '@/constants/Colors';
@@ -11,30 +11,45 @@ import SizedBox from '@/components/sizedbox';
 
 
 const HomeIndex = () => {
-  const [activeTab, setActiveTab] = useState("Transactions");
+
+  const [activeTab, setActiveTab] = useState('Transactions');
+  const [modalVisible, setModalVisible] = useState(false);
+  const [mainImage, setMainImage] = useState(require('@/assets/pic/profile.png'));
+  const images = [
+    require('@/assets/pic/profile.png'),
+    require('@/assets/pic/goku.png'),
+    require('@/assets/pic/zoro.png'),
+    require('@/assets/pic/profile.png'),
+  ];
+
 
   const renderContent = () => {
     if (activeTab === "Transactions") {
       return (
-        <ScrollView style={{width:'100%',height:150}}>
-          <TransCard name={'Ahmad'} date={'10-07-2024'} price={50} type={'sent'}/>
-          <TransCard name={'Huzaifa'} date={'10-07-2024'} price={70} type={'received'}/>
-          <TransCard name={'Ali'} date={'10-07-2024'} price={60} type={'sent'}/>
-          <TransCard name={'Ali'} date={'10-07-2024'} price={60} type={'sent'}/>
-          <TransCard name={'Ali'} date={'10-07-2024'} price={60} type={'sent'}/>
-          <SizedBox height={70}/>
+        <ScrollView style={{ width: '100%', height: 150 }}>
+          <TransCard name={'Ahmad'} date={'10-07-2024'} price={50} type={'sent'} />
+          <TransCard name={'Huzaifa'} date={'10-07-2024'} price={70} type={'received'} />
+          <TransCard name={'Ali'} date={'10-07-2024'} price={60} type={'sent'} />
+          <TransCard name={'Ali'} date={'10-07-2024'} price={60} type={'sent'} />
+          <TransCard name={'Ali'} date={'10-07-2024'} price={60} type={'sent'} />
+          <SizedBox height={70} />
         </ScrollView>
       );
     } else {
       return (
-        <ScrollView style={{width:'100%',height:350}}>
-          <PackCard name='VIP' profit={20} coins={500} validity='4 months'/>
-          <PackCard name='VIP' profit={20} coins={500} validity='4 months'/>
-          <PackCard name='VIP' profit={20} coins={500} validity='4 months'/>
-          <SizedBox height={70}/>
+        <ScrollView style={{ width: '100%', height: 350 }}>
+          <PackCard name='VIP' profit={20} coins={500} validity='4 months' />
+          <PackCard name='VIP' profit={20} coins={500} validity='4 months' />
+          <PackCard name='VIP' profit={20} coins={500} validity='4 months' />
+          <SizedBox height={70} />
         </ScrollView>
       );
     }
+  };
+
+  const handleImageSelect = (image: any) => {
+    setMainImage(image);
+    setModalVisible(false);
   };
 
   return (
@@ -45,10 +60,11 @@ const HomeIndex = () => {
           <Text style={styles.title}>Wallet</Text>
           <Text style={styles.subtitle}>Active</Text>
         </View>
-        <Image
-          source={require("@/assets/pic/profile.png")}
-          style={styles.pic}
-        />
+
+        <TouchableOpacity onPress={() => setModalVisible(true)}>
+          <Image source={mainImage} style={styles.pic} />
+        </TouchableOpacity>
+
       </View>
 
       {/* Card Section */}
@@ -76,13 +92,10 @@ const HomeIndex = () => {
             <Text style={styles.menuText}>Send</Text>
           </View>
           <View style={styles.menuItem}>
-            <TouchableOpacity onPress={() => router.push("deposit")}>
+
+            <TouchableOpacity onPress={() => router.push('deposit')}>
               <View style={styles.menu1}>
-                <MaterialIcons
-                  name="currency-exchange"
-                  size={20}
-                  color={ColorPalette.text}
-                />
+                <MaterialIcons name="currency-exchange" size={20} color={ColorPalette.text} />
               </View>
             </TouchableOpacity>
 
@@ -131,6 +144,24 @@ const HomeIndex = () => {
 
       {/* Content Section */}
       {renderContent()}
+
+      {/* Image Selection Modal */}
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => setModalVisible(false)}
+      >
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            {images.map((image, index) => (
+              <TouchableOpacity key={index} onPress={() => handleImageSelect(image)}>
+                <Image source={image} style={styles.modalImage} />
+              </TouchableOpacity>
+            ))}
+          </View>
+        </View>
+      </Modal>
     </SafeAreaView>
   );
 };
@@ -202,14 +233,25 @@ const styles = StyleSheet.create({
     color: ColorPalette.text,
     fontSize: 16,
   },
-  content: {
-    backgroundColor: ColorPalette.greyNav,
-    borderRadius: 10,
-    padding: 20,
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
-  trans: {
-    fontSize: 18,
-    color: ColorPalette.text,
-    marginBottom: 10,
+  modalContent: {
+    marginHorizontal:16,
+    backgroundColor: ColorPalette.greyNav,
+    padding: 20,
+    borderRadius: 10,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+  },
+  modalImage: {
+    width: 60,
+    height: 60,
+    margin: 10,
+    borderRadius: 50,
   },
 });
