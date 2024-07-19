@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import { ColorPalette } from '@/constants/Colors';
 
 interface TransDetailsCardProps {
@@ -8,11 +8,12 @@ interface TransDetailsCardProps {
   amount: string;
   date: string;
   type: string;
+  onPress: (id?: string, name?: string, amount?: string, date?: string, type?: string) => void;
 }
 
 const TransDetailsCard: React.FC<TransDetailsCardProps> = ({ id, name, amount, date, type }) => {
   return (
-    <View style={styles.content}>
+    <TouchableOpacity style={styles.content}>
       <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
         <View style={{ flexDirection: 'row' }}>
           {type === 'received' ? (
@@ -30,7 +31,7 @@ const TransDetailsCard: React.FC<TransDetailsCardProps> = ({ id, name, amount, d
           {id && <Text style={styles.transId}>ID: {id}</Text>}
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 

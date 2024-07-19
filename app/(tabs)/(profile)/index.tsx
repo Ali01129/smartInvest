@@ -20,7 +20,7 @@ const ProfileIndex = () => {
     { id: '5', date: '2023-07-12', amount: 'SC500', fromTo: 'Ali Nawaz', type: "received" },
     { id: '6', date: '2023-07-12', amount: 'SC50', fromTo: 'Mike Johnson', type: "received" },
     { id: '7', date: '2023-07-12', amount: 'SC50', fromTo: 'Mike Johnson', type: "received" },
-    { id: '8', date: '2023-07-11', amount: 'SC1750', fromTo: 'Ali Nawaz', type: "sent" },
+    { id: '8', date: '2023-07-11', amount: 'SC50', fromTo: 'Ali Nawaz', type: "sent" },
     { id: '9', date: '2023-07-11', amount: 'SC150', fromTo: 'Jane Smith', type: "sent" },
   ]);
 
@@ -112,6 +112,7 @@ const ProfileIndex = () => {
               amount={item.amount}
               date={item.date}
               type={item.type}
+              onPress={() => console.log('Transaction Details')}
             />
           ))}
         </View>
