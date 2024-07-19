@@ -16,7 +16,6 @@ const depositSuccessFull = () => {
         </Text>
         <Image
           source={Images.deposit}
-          source={Images.deposit}
           resizeMode="contain"
           style={styles.Picture}
         />
