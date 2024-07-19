@@ -82,13 +82,15 @@ const HomeIndex = () => {
           }}
         >
           <View style={styles.menuItem}>
-            <View style={styles.menu1}>
-              <FontAwesome6
-                name="money-bill-transfer"
-                size={20}
-                color={ColorPalette.text}
-              />
+           
+           <TouchableOpacity onPress={()=>router.push('send')}>
+           <View style={styles.menu1}>
+              <FontAwesome6 name="money-bill-transfer" size={20} color={ColorPalette.text} />
             </View>
+           </TouchableOpacity>
+           
+           
+           
             <Text style={styles.menuText}>Send</Text>
           </View>
           <View style={styles.menuItem}>
@@ -102,6 +104,8 @@ const HomeIndex = () => {
             <Text style={styles.menuText}>Deposit</Text>
           </View>
           <View style={styles.menuItem}>
+            
+            <TouchableOpacity onPress={()=>router.push('withdraw')}>
             <View style={styles.menu1}>
               <MaterialIcons
                 name="currency-exchange"
@@ -109,6 +113,10 @@ const HomeIndex = () => {
                 color={ColorPalette.text}
               />
             </View>
+            
+            </TouchableOpacity>
+            
+            
             <Text style={styles.menuText}>Withdraw</Text>
           </View>
           <View style={styles.menuItem}>

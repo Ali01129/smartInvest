@@ -5,6 +5,7 @@ import { Fontisto } from '@expo/vector-icons';
 import { ColorPalette } from '@/constants/Colors';
 import { AntDesign } from '@expo/vector-icons';
 import { Formik, FormikHelpers } from 'formik';
+
 import InputField from '@/components/inputField';
 import * as Yup from 'yup';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -13,14 +14,12 @@ interface FormValues {
   email: string;
   password: string;
 }
-
 const Login: React.FC = () => {
 
   const initialValues: FormValues = {
     email: '',
     password: '',
   };
-
   const validationSchema = Yup.object().shape({
     email: Yup.string()
       .email('Invalid email')
@@ -29,13 +28,11 @@ const Login: React.FC = () => {
       .min(6, 'Password must be at least 6 characters')
       .required('Password is required'),
   });
-
   const handleSubmit = (values: FormValues, actions: FormikHelpers<FormValues>) => {
     console.log(values);
     actions.resetForm();
     router.push('/homeindex');
   };
-
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Formik
@@ -51,7 +48,6 @@ const Login: React.FC = () => {
               </TouchableOpacity>
               <Text style={styles.title}>Login</Text>
             </View>
-
 
             <InputField
               name="Email"
@@ -78,6 +74,7 @@ const Login: React.FC = () => {
             {touched.password && errors.password &&
               <Text style={{ color: 'red', marginBottom: 10 }}>{errors.password}</Text>
             }
+
             <View>
               <Text style={{ color: 'white', alignSelf: 'flex-end', marginBottom: 20 }} onPress={()=>{router.push('forgetPassword')}}>Forgot Password?</Text>
             </View>
@@ -86,9 +83,11 @@ const Login: React.FC = () => {
             end={{ x: 1, y: 0 }}
             style={styles.gradient}
             >
+
               <TouchableOpacity onPress={() => handleSubmit()}>
                 <Text style={styles.logInText}>Login</Text>
               </TouchableOpacity>
+
             </LinearGradient>
             <View>
               <Text style={{ color: 'white', alignSelf: 'center', marginTop: 20 }}>Don't have an account?
@@ -101,9 +100,7 @@ const Login: React.FC = () => {
     </ScrollView>
   );
 }
-
 export default Login;
-
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
@@ -125,6 +122,7 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     marginRight: 10,
   },
+
   logInText: {
     color: ColorPalette.background,
     textAlign: 'center',
@@ -138,4 +136,5 @@ const styles = StyleSheet.create({
     width: '100%',
     backgroundColor: ColorPalette.secondary,
   }
+
 });
