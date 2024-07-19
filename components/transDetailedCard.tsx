@@ -1,30 +1,37 @@
-// TransDetailsCard.tsx
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import { ColorPalette } from '@/constants/Colors';
-import { FontAwesome5 } from '@expo/vector-icons';
 
 interface TransDetailsCardProps {
-  id: string;
+  id?: string; // Make id optional
   name: string;
   amount: string;
   date: string;
+  type: string;
+  onPress: (id?: string, name?: string, amount?: string, date?: string, type?: string) => void;
 }
 
-const TransDetailsCard: React.FC<TransDetailsCardProps> = ({ id, name, amount, date }) => {
+const TransDetailsCard: React.FC<TransDetailsCardProps> = ({ id, name, amount, date, type }) => {
   return (
-    <View style={styles.content}>
+    <TouchableOpacity style={styles.content}>
       <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
         <View style={{ flexDirection: 'row' }}>
-          <FontAwesome5 name="external-link-alt" size={30} style={styles.icon} color={ColorPalette.primary} />
+          {type === 'received' ? (
+            <Image source={require('@/assets/icons/down.png')} style={styles.img} />
+          ) : (
+            <Image source={require('@/assets/icons/up.png')} style={styles.img} />
+          )}
           <View>
             <Text style={styles.text}>{name}</Text>
             <Text style={styles.time}>{date}</Text>
           </View>
         </View>
-        <Text style={styles.payment}>{amount}</Text>
+        <View style={{ justifyContent: 'center' }}>
+          <Text style={styles.payment}>{amount}</Text>
+          {id && <Text style={styles.transId}>ID: {id}</Text>}
+        </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
@@ -36,9 +43,12 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 16,
     marginBottom: 10,
+    elevation: 5,
   },
-  icon: {
+  img: {
     alignSelf: 'center',
+    width: 40,
+    height: 40,
     marginRight: 15,
   },
   text: {
@@ -54,5 +64,10 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     color: ColorPalette.text,
     fontSize: 16,
+  },
+  transId: {
+    color: ColorPalette.textGrey,
+    fontSize: 12,
+    textAlign: 'right',
   },
 });
