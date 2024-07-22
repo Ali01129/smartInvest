@@ -1,10 +1,10 @@
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Text, StyleSheet, View, Image } from "react-native";
 import { ColorPalette } from "@/constants/Colors";
-// import transactionIcon from "@/assets/pic/transactionlogo.png";
 import Images from "@/constants/Images";
 import CustomSolidButton from "@/components/CustomSolidButton";
 import { router } from "expo-router";
+
 
 const depositSuccessFull = () => {
   return (
