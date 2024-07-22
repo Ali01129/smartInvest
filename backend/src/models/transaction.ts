@@ -14,4 +14,5 @@ const transactionSchema = new Schema<ITransaction>({
     type: { type: String, required: true },
 }, { timestamps: true });
 
-export default mongoose.model<ITransaction>('Transaction', transactionSchema);
+const Transaction=mongoose.model<ITransaction>('Transaction', transactionSchema);
+export default Transaction;
