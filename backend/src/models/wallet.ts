@@ -7,7 +7,7 @@ interface IWallet {
 }
 
 const walletSchema=new mongoose.Schema<IWallet>({
-    userId:{type:String,required:true},
+    userId:{type:String,required:true,unique:true},
     usd:{type:Number,required:true},
     smartCoin:{type:Number,required:true}
 });
