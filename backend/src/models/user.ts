@@ -18,6 +18,7 @@ const UserSchema = new mongoose.Schema<IUser>({
   password: { type: String, required: true },
   referralCode: { type: String, required: false },
   phantomWalletAddress: { type: String, unique: true, required: false },
+
   packagesSubscribed: {
     type: [
       {
@@ -27,6 +28,7 @@ const UserSchema = new mongoose.Schema<IUser>({
     ],
     required: false,
   },
+
 });
 
 const User = mongoose.model("User", UserSchema);
