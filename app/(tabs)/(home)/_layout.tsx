@@ -3,15 +3,14 @@ import { Stack } from 'expo-router';
 
 const _layout = () => {
   return (
-      <Stack>
-        <Stack.Screen name="homeindex" options={{ headerShown: false,animation:'ios' }} />
-        <Stack.Screen name="convert" options={{ headerShown: false,animation:'ios' }} />
-        <Stack.Screen name="deposit" options={{ headerShown: false,animation:'ios' }} />
-        <Stack.Screen name="send" options={{ headerShown: false,animation:'ios' }} />
-        <Stack.Screen name="withdraw" options={{ headerShown: false,animation:'ios' }} />
-        <Stack.Screen name="depositSuccessFull" options={{ headerShown: false,animation:'ios' }} />
-        <Stack.Screen name="SendConfirmation" options={{ headerShown: false,animation:'ios' }} />
-      </Stack>
+    <Stack>
+      <Stack.Screen name="homeindex" options={{ headerShown: false, animation: 'ios' }} />
+      <Stack.Screen name="deposit" options={{ headerShown: false, animation: 'ios' }} />
+      <Stack.Screen name="send" options={{ headerShown: false, animation: 'ios' }} />
+      <Stack.Screen name="withdraw" options={{ headerShown: false, animation: 'ios' }} />
+      <Stack.Screen name="depositSuccessFull" options={{ headerShown: false, animation: 'ios' }} />
+      <Stack.Screen name="SendConfirmation" options={{ headerShown: false, animation: 'ios' }} />
+    </Stack>
   );
 };
 

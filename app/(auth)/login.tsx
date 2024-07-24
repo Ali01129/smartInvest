@@ -1,25 +1,27 @@
-import { StyleSheet, Text, TextInput, TouchableOpacity, View, ScrollView } from 'react-native'; // Import ScrollView
+import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'; // Remove ScrollView import
 import React, { useState } from 'react';
 import { router } from 'expo-router';
 import { Fontisto } from '@expo/vector-icons';
 import { ColorPalette } from '@/constants/Colors';
 import { AntDesign } from '@expo/vector-icons';
 import { Formik, FormikHelpers } from 'formik';
-
 import InputField from '@/components/inputField';
 import * as Yup from 'yup';
 import { LinearGradient } from 'expo-linear-gradient';
+import { StatusBar } from "expo-status-bar";
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'; // Add import
 
 interface FormValues {
   email: string;
   password: string;
 }
-const Login: React.FC = () => {
 
+const Login: React.FC = () => {
   const initialValues: FormValues = {
     email: '',
     password: '',
   };
+
   const validationSchema = Yup.object().shape({
     email: Yup.string()
       .email('Invalid email')
@@ -28,13 +30,15 @@ const Login: React.FC = () => {
       .min(6, 'Password must be at least 6 characters')
       .required('Password is required'),
   });
+
   const handleSubmit = (values: FormValues, actions: FormikHelpers<FormValues>) => {
     console.log(values);
     actions.resetForm();
     router.push('/homeindex');
   };
+
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <KeyboardAwareScrollView contentContainerStyle={styles.container}>
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
@@ -43,7 +47,7 @@ const Login: React.FC = () => {
         {({ handleChange, handleBlur, handleSubmit, values, errors, touched }) => (
           <View style={{ width: '100%' }}>
             <View style={{ alignSelf: 'flex-start', flexDirection: 'row', marginBottom: 50, alignItems: 'center' }}>
-              <TouchableOpacity style={styles.box} onPress={() => {router.back()}}>
+              <TouchableOpacity style={styles.box} onPress={() => { router.back() }}>
                 <AntDesign name="left" size={26} color="white" />
               </TouchableOpacity>
               <Text style={styles.title}>Login</Text>
@@ -62,6 +66,7 @@ const Login: React.FC = () => {
             {touched.email && errors.email &&
               <Text style={{ color: 'red', marginBottom: 10 }}>{errors.email}</Text>
             }
+
             <InputField
               name="Password"
               placeholder="Enter your Password"
@@ -71,36 +76,38 @@ const Login: React.FC = () => {
               value={values.password}
               icon={'locked'}
             />
+
             {touched.password && errors.password &&
               <Text style={{ color: 'red', marginBottom: 10 }}>{errors.password}</Text>
             }
 
             <View>
-              <Text style={{ color: 'white', alignSelf: 'flex-end', marginBottom: 20 }} onPress={()=>{router.push('forgetPassword')}}>Forgot Password?</Text>
+              <Text style={{ color: 'white', alignSelf: 'flex-end', marginBottom: 20 }} onPress={() => { router.push('forgetPassword') }}>Forgot Password?</Text>
             </View>
             <LinearGradient colors={[ColorPalette.g2, ColorPalette.secondary]}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 0 }}
-            style={styles.gradient}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 0 }}
+              style={styles.gradient}
             >
-
               <TouchableOpacity onPress={() => handleSubmit()}>
                 <Text style={styles.logInText}>Login</Text>
               </TouchableOpacity>
-
             </LinearGradient>
             <View>
               <Text style={{ color: 'white', alignSelf: 'center', marginTop: 20 }}>Don't have an account?
-                <Text style={{ color: ColorPalette.secondary }} onPress={()=>{router.replace('signup')}}> Sign Up</Text>
+                <Text style={{ color: ColorPalette.secondary }} onPress={() => { router.replace('signup') }}> Sign Up</Text>
               </Text>
             </View>
           </View>
         )}
       </Formik>
-    </ScrollView>
+      <StatusBar backgroundColor={ColorPalette.background} style="light" />
+    </KeyboardAwareScrollView>
   );
-}
+};
+
 export default Login;
+
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
@@ -122,7 +129,6 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     marginRight: 10,
   },
-
   logInText: {
     color: ColorPalette.background,
     textAlign: 'center',
@@ -136,5 +142,4 @@ const styles = StyleSheet.create({
     width: '100%',
     backgroundColor: ColorPalette.secondary,
   }
-
 });

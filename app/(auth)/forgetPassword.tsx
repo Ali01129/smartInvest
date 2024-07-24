@@ -7,6 +7,8 @@ import { Formik, FormikHelpers } from 'formik';
 import InputField from '@/components/inputField';
 import * as Yup from 'yup';
 import { LinearGradient } from 'expo-linear-gradient';
+import { StatusBar } from "expo-status-bar";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 interface FormValues {
   email: string;
@@ -31,7 +33,7 @@ const ForgetPassword: React.FC = () => {
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <KeyboardAwareScrollView contentContainerStyle={styles.container}>
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
@@ -50,7 +52,7 @@ const ForgetPassword: React.FC = () => {
                 name="Email"
                 placeholder="Enter your Email"
                 onChangeText={handleChange('email')}
-                onBlur={()=>{handleBlur('email')}}
+                onBlur={() => { handleBlur('email') }}
                 onFocus={() => console.log('Input focused')}
                 value={values.email}
                 icon={'email'}
@@ -72,7 +74,8 @@ const ForgetPassword: React.FC = () => {
           </View>
         )}
       </Formik>
-    </ScrollView>
+      <StatusBar backgroundColor={ColorPalette.background} style="light" />
+    </KeyboardAwareScrollView>
   );
 }
 

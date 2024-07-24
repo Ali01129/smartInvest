@@ -8,6 +8,8 @@ import { Formik, FormikHelpers } from 'formik';
 import InputField from '@/components/inputField';
 import * as Yup from 'yup';
 import { LinearGradient } from 'expo-linear-gradient';
+import { StatusBar } from "expo-status-bar";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 interface FormValues {
   email: string;
@@ -22,7 +24,7 @@ const SignUp: React.FC = () => {
     email: '',
     userName: '',
     password: '',
-    phantomWallet:'',
+    phantomWallet: '',
   };
 
   const validationSchema = Yup.object().shape({
@@ -46,7 +48,7 @@ const SignUp: React.FC = () => {
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <KeyboardAwareScrollView contentContainerStyle={styles.container}>
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
@@ -55,7 +57,7 @@ const SignUp: React.FC = () => {
         {({ handleChange, handleBlur, handleSubmit, values, errors, touched }) => (
           <View style={{ width: '100%' }}>
             <View style={{ alignSelf: 'flex-start', flexDirection: 'row', marginBottom: 50, alignItems: 'center' }}>
-              <TouchableOpacity style={styles.box} onPress={() => {router.back()}}>
+              <TouchableOpacity style={styles.box} onPress={() => { router.back() }}>
                 <AntDesign name="left" size={26} color="white" />
               </TouchableOpacity>
               <Text style={styles.title}>SignUp</Text>
@@ -82,7 +84,7 @@ const SignUp: React.FC = () => {
               value={values.userName}
               icon={'person'}
             />
-            
+
             {touched.userName && errors.userName &&
               <Text style={{ color: 'red', marginBottom: 10 }}>{errors.userName}</Text>
             }
@@ -112,23 +114,24 @@ const SignUp: React.FC = () => {
             }
 
             <LinearGradient colors={[ColorPalette.g2, ColorPalette.secondary]}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 0 }}
-            style={styles.gradient}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 0 }}
+              style={styles.gradient}
             >
-            <TouchableOpacity onPress={() => handleSubmit()}>
-              <Text style={styles.logInText}>SignUp</Text>
-            </TouchableOpacity>
+              <TouchableOpacity onPress={() => handleSubmit()}>
+                <Text style={styles.logInText}>SignUp</Text>
+              </TouchableOpacity>
             </LinearGradient>
             <View>
               <Text style={{ color: 'white', alignSelf: 'center', marginTop: 20 }}>Already have an account?
-                <Text style={{ color: ColorPalette.secondary }} onPress={()=>{router.replace('login')}}> Login</Text>
+                <Text style={{ color: ColorPalette.secondary }} onPress={() => { router.replace('login') }}> Login</Text>
               </Text>
             </View>
           </View>
         )}
       </Formik>
-    </ScrollView>
+      <StatusBar backgroundColor={ColorPalette.background} style="light" />
+    </KeyboardAwareScrollView>
   );
 }
 

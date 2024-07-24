@@ -8,6 +8,8 @@ import { router } from "expo-router";
 import CustomSolidButton from "@/components/CustomSolidButton";
 import Images from "@/constants/Images";
 import axios from "axios";
+import { StatusBar } from "expo-status-bar";
+
 
 axios.interceptors.request.use(
   function (config) {
@@ -53,6 +55,7 @@ const SendConfirmation = () => {
           textColor={ColorPalette.textBlack}
         />
       </View>
+      <StatusBar backgroundColor={ColorPalette.background} style="light" />
     </SafeAreaView>
   );
 };

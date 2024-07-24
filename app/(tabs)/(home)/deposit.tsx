@@ -10,6 +10,8 @@ import { Formik, FormikHelpers } from "formik";
 import * as Yup from "yup";
 import InputField from "@/components/inputFieldSendCard";
 import Images from "@/constants/Images";
+import { StatusBar } from "expo-status-bar";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 // Define the validation schema using Yup
 const validationSchema = Yup.object().shape({
@@ -66,7 +68,7 @@ const Deposit = () => {
               </Text>
             )}
 
-            <View style={{ width: "100%" }}>
+            <KeyboardAwareScrollView style={{ width: "100%" }}>
               <InputField
                 name="Amount"
                 placeholder="Enter amount"
@@ -91,10 +93,11 @@ const Deposit = () => {
                   textColor={ColorPalette.textBlack}
                 />
               </View>
-            </View>
+            </KeyboardAwareScrollView>
           </>
         )}
       </Formik>
+      <StatusBar backgroundColor={ColorPalette.background} style="light" />
     </SafeAreaView>
   );
 };

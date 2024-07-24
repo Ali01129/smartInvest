@@ -2,13 +2,14 @@ import { Image, StyleSheet, Text, View, TouchableOpacity, ScrollView, Modal } fr
 import React, { useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ColorPalette } from '@/constants/Colors';
-import { FontAwesome6 } from '@expo/vector-icons';
+import { AntDesign, FontAwesome6 } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import TransCard from '@/components/transCard';
 import PackCard from '@/components/packCard';
 import SizedBox from '@/components/sizedbox';
 import Images from "@/constants/Images";
+import { StatusBar } from "expo-status-bar";
 
 
 const HomeIndex = () => {
@@ -86,7 +87,7 @@ const HomeIndex = () => {
 
             <TouchableOpacity onPress={() => router.push('send')}>
               <View style={styles.menu1}>
-                <FontAwesome6 name="money-bill-transfer" size={20} color={ColorPalette.text} />
+                <MaterialIcons name="send" size={20} color={ColorPalette.text} />
               </View>
             </TouchableOpacity>
 
@@ -98,7 +99,7 @@ const HomeIndex = () => {
 
             <TouchableOpacity onPress={() => router.push('deposit')}>
               <View style={styles.menu1}>
-                <MaterialIcons name="currency-exchange" size={20} color={ColorPalette.text} />
+                <AntDesign name="enter" size={20} color={ColorPalette.text} />
               </View>
             </TouchableOpacity>
 
@@ -109,7 +110,7 @@ const HomeIndex = () => {
             <TouchableOpacity onPress={() => router.push('withdraw')}>
               <View style={styles.menu1}>
                 <MaterialIcons
-                  name="currency-exchange"
+                  name="money-off"
                   size={20}
                   color={ColorPalette.text}
                 />
@@ -123,8 +124,8 @@ const HomeIndex = () => {
           <View style={styles.menuItem}>
             <TouchableOpacity onPress={() => router.push("conversion")}>
               <View style={styles.menu1}>
-                <MaterialIcons
-                  name="currency-exchange"
+                <FontAwesome6
+                  name="money-bill-transfer"
                   size={20}
                   color={ColorPalette.text}
                 />
@@ -171,6 +172,7 @@ const HomeIndex = () => {
           </View>
         </View>
       </Modal>
+      <StatusBar backgroundColor={ColorPalette.background} style="light" />
     </SafeAreaView>
   );
 };
