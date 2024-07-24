@@ -1,3 +1,4 @@
+
 import express, { Request, Response, NextFunction } from 'express';
 import fetchUser from '../../middleware/fetchUser';
 import Wallet from '../../models/wallet';
@@ -9,45 +10,65 @@ dotenv.config();
 const CONVERSION_RATE = 5; 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
 
+
 interface AuthenticatedRequest extends Request {
   user?: any;
 }
 
 const router = express.Router();
 
-router.put('/send', fetchUser, async (req: AuthenticatedRequest, res: Response) => {
+router.put(
+  "/send",
+  fetchUser,
+  async (req: AuthenticatedRequest, res: Response) => {
     const { address, amount } = req.body;
     const user = req.user;
-  
+
     try {
       const senderWallet = await Wallet.findOne({ userId: user.id });
       const receiverWallet = await Wallet.findOne({ _id: address });
       if (!senderWallet || !receiverWallet) {
-        return res.status(404).send({ status: 'error', message: 'Wallet not found'});
+        return res
+          .status(404)
+          .send({ status: "error", message: "Wallet not found" });
       }
-  
+
       if (senderWallet.smartCoin < amount) {
-        return res.status(400).send({ status: 'error', message: 'Insufficient balance',senderWallet,receiverWallet,user });
+        return res.status(400).send({
+          status: "error",
+          message: "Insufficient balance",
+          senderWallet,
+          receiverWallet,
+          user,
+        });
       }
-  
+
       senderWallet.smartCoin -= amount;
       receiverWallet.smartCoin += amount;
-  
+
       await senderWallet.save();
       await receiverWallet.save();
-      
-      const transaction=await Transaction.create({
-        senderId:senderWallet.userId,
-        receiverId:receiverWallet.userId,
-        amount:amount
+
+      const transaction = await Transaction.create({
+        senderId: senderWallet.userId,
+        receiverId: receiverWallet.userId,
+        amount: amount,
       });
 
-      return res.status(200).send({status: 'success',message: 'Transaction successful',transaction:transaction});
+      return res.status(200).send({
+        status: "success",
+        message: "Transaction successful",
+        transaction: transaction,
+      });
     } catch (error) {
-      console.error('Transaction error:', error);
-      return res.status(500).send({ status: 'error', message: 'Internal server error' });
+      console.error("Transaction error:", error);
+      return res
+        .status(500)
+        .send({ status: "error", message: "Internal server error" });
     }
-});
+  }
+);
+
 
 router.put('/deposit', fetchUser, async (req: AuthenticatedRequest, res: Response) => {
   const { amount, paymentMethodId } = req.body;
@@ -134,3 +155,4 @@ router.post('/convert', fetchUser, async (req: AuthenticatedRequest, res: Respon
 
 
 export default router;
+
