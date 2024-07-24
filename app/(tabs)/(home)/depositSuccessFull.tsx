@@ -5,7 +5,6 @@ import Images from "@/constants/Images";
 import CustomSolidButton from "@/components/CustomSolidButton";
 import { router } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import Images from "@/constants/Images";
 
 
 const depositSuccessFull = () => {
