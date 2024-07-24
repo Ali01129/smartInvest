@@ -3,6 +3,7 @@ import express, { Application } from "express";
 import authService from "./api/routes/auth";
 import transactionService from "./api/routes/transaction";
 import packageService from "./api/routes/packages";
+import cors from 'cors';
 
 interface Env {
   MONGO_URI: string;
@@ -22,9 +23,10 @@ mongoose
     console.error("Error connecting to MongoDB:", error);
   });
 
+ 
 const app: Application = express();
 const port: number = 5000;
-
+app.use(cors());
 app.use(express.json());
 
 app.use("/auth", authService);

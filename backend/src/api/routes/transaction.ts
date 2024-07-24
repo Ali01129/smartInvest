@@ -7,7 +7,7 @@ import Stripe from 'stripe';
 import dotenv from 'dotenv';
 dotenv.config();
 
-const CONVERSION_RATE = 5; 
+const CONVERSION_RATE = 5;
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
 
 
@@ -17,10 +17,8 @@ interface AuthenticatedRequest extends Request {
 
 const router = express.Router();
 
-router.put(
-  "/send",
-  fetchUser,
-  async (req: AuthenticatedRequest, res: Response) => {
+//send money
+router.post("/send",fetchUser,async (req: AuthenticatedRequest, res: Response) => {
     const { address, amount } = req.body;
     const user = req.user;
 
@@ -60,6 +58,7 @@ router.put(
         message: "Transaction successful",
         transaction: transaction,
       });
+      console.log("Transaction successful");
     } catch (error) {
       console.error("Transaction error:", error);
       return res
@@ -69,7 +68,7 @@ router.put(
   }
 );
 
-
+//deposit money
 router.put('/deposit', fetchUser, async (req: AuthenticatedRequest, res: Response) => {
   const { amount, paymentMethodId } = req.body;
   const user = req.user;
@@ -104,7 +103,7 @@ router.put('/deposit', fetchUser, async (req: AuthenticatedRequest, res: Respons
   }
 });
 
-
+//conversion
 router.post('/convert', fetchUser, async (req: AuthenticatedRequest, res: Response) => {
   const { amount, DtoSc } = req.body;
   const user = req.user;
@@ -153,6 +152,53 @@ router.post('/convert', fetchUser, async (req: AuthenticatedRequest, res: Respon
   }
 });
 
+//withdraw
+router.post('/withdraw', fetchUser, async (req: AuthenticatedRequest, res: Response) => {
+  const {amount}=req.body;
+  const user=req.user;
+  try{
+    const wallet=await Wallet.findOne({userId:user.id});
+    if(!wallet){
+      return res.status(404).send({status:'error',message:'Wallet not found'});
+    }
+    if(wallet.usd<amount){
+      return res.status(400).send({status:'error',message:'Insufficient balance'});
+    }
+    wallet.usd-=amount;
+    await wallet.save();
+    const transaction=await Transaction.create({
+      senderId:wallet.userId,
+      receiverId:'Withdraw',
+      amount:amount,
+    });
+    return res.status(200).send({status:'success',message:'Withdraw successful',wallet,transaction});
+  }catch(error){
+    console.error('Withdraw error:',error);
+    return res.status(500).send({status:'error',message:'Internal server error'});
+  }
+});
+
+
+//list all the transcations
+router.get('/list', async (req: Request, res: Response) => {
+  try {
+      const transactions = await Transaction.find({});
+      return res.status(200).send({ status: 'success', transactions });
+  } catch (error) {
+      console.error('List transactions error:', error);
+      return res.status(500).send({ status: 'error', message: 'Internal server error' });
+  }
+});
+//find by userid
+router.get('/list_by_user', fetchUser, async (req: AuthenticatedRequest, res: Response) => {
+  const user = req.user;
+  try {
+      const transactions = await Transaction.find({ $or: [{ senderId: user.id }, { receiverId: user.id }] });
+      return res.status(200).send({ status: 'success', transactions });
+  } catch (error) {
+      console.error('List transactions error:', error);
+      return res.status(500).send({ status: 'error', message: 'Internal server error' });
+  }
+}); 
 
 export default router;
-
