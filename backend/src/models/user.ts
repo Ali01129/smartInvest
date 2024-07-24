@@ -1,12 +1,33 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
-const UserSchema = new mongoose.Schema({
+interface IUser {
+  username: string;
+  email: string;
+  password: string;
+  referralCode?: string;
+  phantomWalletAddress?: string;
+  packagesSubscribed?: {
+    packageId: mongoose.Types.ObjectId;
+    subscribedAt?: Date;
+  }[];
+}
+
+const UserSchema = new mongoose.Schema<IUser>({
   username: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
-  referralCode: { type: String,required: false},
-  phantomWalletAddress: { type: String, unique: true ,required: false},
+  referralCode: { type: String, required: false },
+  phantomWalletAddress: { type: String, unique: true, required: false },
+  packagesSubscribed: {
+    type: [
+      {
+        packageId: { type: mongoose.Types.ObjectId, required: true },
+        subscribedAt: { type: Date, default: Date.now },
+      },
+    ],
+    required: false,
+  },
 });
 
-const User = mongoose.model('User', UserSchema);
+const User = mongoose.model("User", UserSchema);
 export default User;
