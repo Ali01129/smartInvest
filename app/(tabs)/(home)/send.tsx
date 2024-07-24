@@ -10,6 +10,7 @@ import InputField from "@/components/inputFieldSendCard";
 import Images from "@/constants/Images";
 import SendCard from "@/components/SendCard";
 import CustomSolidButton from "@/components/CustomSolidButton";
+import { StatusBar } from "expo-status-bar";
 const validationSchema = Yup.object().shape({
   address: Yup.string().required("Address is required"),
   amount: Yup.string().required("Amount is required"),
@@ -91,6 +92,7 @@ const Send = () => {
           </View>
         )}
       </Formik>
+      <StatusBar backgroundColor={ColorPalette.background} style="light" />
     </SafeAreaView>
   );
 };

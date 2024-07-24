@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TextInput, View,TouchableOpacity } from "react-native";
+import { StyleSheet, Text, TextInput, View, TouchableOpacity } from "react-native";
 import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ColorPalette } from "@/constants/Colors";
@@ -11,6 +11,7 @@ import { Formik, FormikHelpers } from "formik";
 import * as Yup from "yup";
 import InputField from "@/components/inputFieldSendCard";
 import CustomSolidButton from "@/components/CustomSolidButton";
+import { StatusBar } from "expo-status-bar";
 
 // Define the validation schema using Yup
 const validationSchema = Yup.object().shape({
@@ -97,23 +98,23 @@ const WithDraw = () => {
               <Text style={{ color: ColorPalette.text, marginLeft: 10 }}>
                 Withdraw Money To
               </Text>
-              
+
               <TouchableOpacity>
 
-              <View
-                style={{
-                  backgroundColor: ColorPalette.secondary,
-                  borderRadius: 5,
-                  padding: 3.8,
-                }}
-              >
-                <Text>+ Add Beneficiary</Text>
-              </View>
+                <View
+                  style={{
+                    backgroundColor: ColorPalette.secondary,
+                    borderRadius: 5,
+                    padding: 3.8,
+                  }}
+                >
+                  <Text>+ Add Beneficiary</Text>
+                </View>
               </TouchableOpacity>
             </View>
 
             {/* Add SendCard2 here */}
-            <View style={{marginTop:16}}>
+            <View style={{ marginTop: 16 }}>
               <SendCard2
                 BoxName="Payment Method"
                 imageNoStyle={Images.stripe}
@@ -141,6 +142,7 @@ const WithDraw = () => {
           </>
         )}
       </Formik>
+      <StatusBar backgroundColor={ColorPalette.background} style="light" />
     </SafeAreaView>
   );
 };

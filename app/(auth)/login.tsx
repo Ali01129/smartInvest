@@ -9,6 +9,7 @@ import { Formik, FormikHelpers } from 'formik';
 import InputField from '@/components/inputField';
 import * as Yup from 'yup';
 import { LinearGradient } from 'expo-linear-gradient';
+import { StatusBar } from "expo-status-bar";
 
 interface FormValues {
   email: string;
@@ -43,7 +44,7 @@ const Login: React.FC = () => {
         {({ handleChange, handleBlur, handleSubmit, values, errors, touched }) => (
           <View style={{ width: '100%' }}>
             <View style={{ alignSelf: 'flex-start', flexDirection: 'row', marginBottom: 50, alignItems: 'center' }}>
-              <TouchableOpacity style={styles.box} onPress={() => {router.back()}}>
+              <TouchableOpacity style={styles.box} onPress={() => { router.back() }}>
                 <AntDesign name="left" size={26} color="white" />
               </TouchableOpacity>
               <Text style={styles.title}>Login</Text>
@@ -76,12 +77,12 @@ const Login: React.FC = () => {
             }
 
             <View>
-              <Text style={{ color: 'white', alignSelf: 'flex-end', marginBottom: 20 }} onPress={()=>{router.push('forgetPassword')}}>Forgot Password?</Text>
+              <Text style={{ color: 'white', alignSelf: 'flex-end', marginBottom: 20 }} onPress={() => { router.push('forgetPassword') }}>Forgot Password?</Text>
             </View>
             <LinearGradient colors={[ColorPalette.g2, ColorPalette.secondary]}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 0 }}
-            style={styles.gradient}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 0 }}
+              style={styles.gradient}
             >
 
               <TouchableOpacity onPress={() => handleSubmit()}>
@@ -91,12 +92,13 @@ const Login: React.FC = () => {
             </LinearGradient>
             <View>
               <Text style={{ color: 'white', alignSelf: 'center', marginTop: 20 }}>Don't have an account?
-                <Text style={{ color: ColorPalette.secondary }} onPress={()=>{router.replace('signup')}}> Sign Up</Text>
+                <Text style={{ color: ColorPalette.secondary }} onPress={() => { router.replace('signup') }}> Sign Up</Text>
               </Text>
             </View>
           </View>
         )}
       </Formik>
+      <StatusBar backgroundColor={ColorPalette.background} style="light" />
     </ScrollView>
   );
 }

@@ -9,6 +9,7 @@ import TransCard from '@/components/transCard';
 import PackCard from '@/components/packCard';
 import SizedBox from '@/components/sizedbox';
 import Images from "@/constants/Images";
+import { StatusBar } from "expo-status-bar";
 
 
 const HomeIndex = () => {
@@ -171,6 +172,7 @@ const HomeIndex = () => {
           </View>
         </View>
       </Modal>
+      <StatusBar backgroundColor={ColorPalette.background} style="light" />
     </SafeAreaView>
   );
 };
