@@ -12,6 +12,7 @@ import * as Yup from "yup";
 import InputField from "@/components/inputFieldSendCard";
 import CustomSolidButton from "@/components/CustomSolidButton";
 import { StatusBar } from "expo-status-bar";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 // Define the validation schema using Yup
 const validationSchema = Yup.object().shape({
@@ -52,93 +53,95 @@ const WithDraw = () => {
           touched,
         }) => (
           <>
-            <Text style={styles.Text}> Amount</Text>
-            <TextInput
-              placeholder="Enter Amount"
-              placeholderTextColor={ColorPalette.textGrey}
-              style={styles.InputField}
-              onChangeText={handleChange("amount")}
-              onBlur={() => handleBlur("amount")}
-              value={values.amount}
-            />
-            {touched.amount && errors.amount && (
-              <Text style={{ color: "red", marginBottom: 5 }}>
-                {errors.amount}
-              </Text>
-            )}
-
-            <View style={{ justifyContent: "center", alignItems: "center" }}>
-              <Text
-                style={{
-                  color: ColorPalette.text,
-                  fontSize: 20,
-                  fontWeight: "500",
-                }}
-              >
-                $480.00
-              </Text>
-              <Text style={{ color: ColorPalette.text }}>
-                AVAILABLE BALANCE
-              </Text>
-            </View>
-
-            <View
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-                justifyContent: "space-between",
-                marginTop: 90,
-              }}
-            >
-              <MaterialCommunityIcons
-                name="cash-plus"
-                size={26}
-                color={ColorPalette.secondary}
+            <KeyboardAwareScrollView>
+              <Text style={styles.Text}> Amount</Text>
+              <TextInput
+                placeholder="Enter Amount"
+                placeholderTextColor={ColorPalette.textGrey}
+                style={styles.InputField}
+                onChangeText={handleChange("amount")}
+                onBlur={() => handleBlur("amount")}
+                value={values.amount}
               />
-              <Text style={{ color: ColorPalette.text, marginLeft: 10 }}>
-                Withdraw Money To
-              </Text>
-
-              <TouchableOpacity>
-
-                <View
-                  style={{
-                    backgroundColor: ColorPalette.secondary,
-                    borderRadius: 5,
-                    padding: 3.8,
-                  }}
-                >
-                  <Text>+ Add Beneficiary</Text>
-                </View>
-              </TouchableOpacity>
-            </View>
-
-            {/* Add SendCard2 here */}
-            <View style={{ marginTop: 16 }}>
-              <SendCard2
-                BoxName="Payment Method"
-                imageNoStyle={Images.stripe}
-                onPress={() => {
-                  setSelectedCard(!selectedCard);
-                  setFieldValue("selectedCard", !selectedCard);
-                }}
-                selected={selectedCard}
-              />
-              {touched.selectedCard && errors.selectedCard && (
+              {touched.amount && errors.amount && (
                 <Text style={{ color: "red", marginBottom: 5 }}>
-                  {errors.selectedCard}
+                  {errors.amount}
                 </Text>
               )}
-            </View>
 
-            <View style={styles.buttonWrapper}>
-              <CustomSolidButton
-                text={"Withdraw".toUpperCase()}
-                onPress={() => handleSubmit()}
-                gradientColors={[ColorPalette.g2, ColorPalette.secondary]}
-                textColor={ColorPalette.textBlack}
-              />
-            </View>
+              <View style={{ justifyContent: "center", alignItems: "center" }}>
+                <Text
+                  style={{
+                    color: ColorPalette.text,
+                    fontSize: 20,
+                    fontWeight: "500",
+                  }}
+                >
+                  $480.00
+                </Text>
+                <Text style={{ color: ColorPalette.text }}>
+                  AVAILABLE BALANCE
+                </Text>
+              </View>
+
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  marginTop: 90,
+                }}
+              >
+                <MaterialCommunityIcons
+                  name="cash-plus"
+                  size={26}
+                  color={ColorPalette.secondary}
+                />
+                <Text style={{ color: ColorPalette.text, marginLeft: 10 }}>
+                  Withdraw Money To
+                </Text>
+
+                <TouchableOpacity>
+
+                  <View
+                    style={{
+                      backgroundColor: ColorPalette.secondary,
+                      borderRadius: 5,
+                      padding: 3.8,
+                    }}
+                  >
+                    <Text>+ Add Beneficiary</Text>
+                  </View>
+                </TouchableOpacity>
+              </View>
+
+              {/* Add SendCard2 here */}
+              <View style={{ marginTop: 16 }}>
+                <SendCard2
+                  BoxName="Payment Method"
+                  imageNoStyle={Images.stripe}
+                  onPress={() => {
+                    setSelectedCard(!selectedCard);
+                    setFieldValue("selectedCard", !selectedCard);
+                  }}
+                  selected={selectedCard}
+                />
+                {touched.selectedCard && errors.selectedCard && (
+                  <Text style={{ color: "red", marginBottom: 5 }}>
+                    {errors.selectedCard}
+                  </Text>
+                )}
+              </View>
+
+              <View style={styles.buttonWrapper}>
+                <CustomSolidButton
+                  text={"Withdraw".toUpperCase()}
+                  onPress={() => handleSubmit()}
+                  gradientColors={[ColorPalette.g2, ColorPalette.secondary]}
+                  textColor={ColorPalette.textBlack}
+                />
+              </View>
+            </KeyboardAwareScrollView>
           </>
         )}
       </Formik>
