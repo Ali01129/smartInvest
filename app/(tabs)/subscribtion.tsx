@@ -5,6 +5,7 @@ import { ColorPalette } from "@/constants/Colors";
 import Header from "@/components/header";
 import SizedBox from "@/components/sizedbox";
 import SubscriptionCard from "@/components/subscriptionCard";
+import { StatusBar } from "expo-status-bar";
 
 const Subscribtion = () => {
   return (
@@ -27,6 +28,7 @@ const Subscribtion = () => {
         </ScrollView>
         <SizedBox height={70} />
       </View>
+      <StatusBar backgroundColor={ColorPalette.background} style="light" />
     </SafeAreaView>
   );
 };

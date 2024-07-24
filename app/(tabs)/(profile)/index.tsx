@@ -9,6 +9,7 @@ import TransDetailsCard from '@/components/transDetailedCard';
 import Icon from "@expo/vector-icons/MaterialIcons";
 import TransactionDetailsModal from '@/components/transactionDetailsModal';
 import { router } from "expo-router";
+import { StatusBar } from "expo-status-bar";
 
 const ProfileIndex = () => {
   const [usd, setUsd] = useState("123");
@@ -147,6 +148,7 @@ const ProfileIndex = () => {
         onClose={closeModal}
         transaction={selectedTransaction}
       />
+      <StatusBar backgroundColor={ColorPalette.background} style="light" />
     </SafeAreaView>
   );
 }

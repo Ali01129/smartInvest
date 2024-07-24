@@ -7,6 +7,7 @@ import Header from "@/components/header";
 import { router } from "expo-router";
 import CustomSolidButton from "@/components/CustomSolidButton";
 import Images from "@/constants/Images";
+import { StatusBar } from "expo-status-bar";
 
 
 const SendConfirmation = () => {
@@ -24,6 +25,7 @@ const SendConfirmation = () => {
           textColor={ColorPalette.textBlack}
         />
       </View>
+      <StatusBar backgroundColor={ColorPalette.background} style="light" />
     </SafeAreaView>
   );
 };
