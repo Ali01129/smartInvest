@@ -9,6 +9,7 @@ import InputField from '@/components/inputField';
 import * as Yup from 'yup';
 import { LinearGradient } from 'expo-linear-gradient';
 import { StatusBar } from "expo-status-bar";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 interface FormValues {
   email: string;
@@ -47,7 +48,7 @@ const SignUp: React.FC = () => {
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <KeyboardAwareScrollView contentContainerStyle={styles.container}>
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
@@ -130,7 +131,7 @@ const SignUp: React.FC = () => {
         )}
       </Formik>
       <StatusBar backgroundColor={ColorPalette.background} style="light" />
-    </ScrollView>
+    </KeyboardAwareScrollView>
   );
 }
 

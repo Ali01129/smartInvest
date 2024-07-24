@@ -11,6 +11,7 @@ import Images from "@/constants/Images";
 import SendCard from "@/components/SendCard";
 import CustomSolidButton from "@/components/CustomSolidButton";
 import { StatusBar } from "expo-status-bar";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 const validationSchema = Yup.object().shape({
   address: Yup.string().required("Address is required"),
   amount: Yup.string().required("Amount is required"),
@@ -44,7 +45,7 @@ const Send = () => {
           errors,
           touched,
         }) => (
-          <View style={{ width: "100%" }}>
+          <KeyboardAwareScrollView style={{ width: "100%" }}>
             <InputField
               name="Address"
               placeholder="Enter recipient's address"
@@ -89,7 +90,7 @@ const Send = () => {
                 textColor={ColorPalette.textBlack}
               />
             </View>
-          </View>
+          </KeyboardAwareScrollView>
         )}
       </Formik>
       <StatusBar backgroundColor={ColorPalette.background} style="light" />
