@@ -66,7 +66,7 @@ const ProfileIndex = () => {
     {
       name: 'SC Received',
       amount: receivedAmount,
-      color: "#404040",
+      color: ColorPalette.greyNav,
       legendFontColor: ColorPalette.text,
       legendFontSize: 15,
     },
