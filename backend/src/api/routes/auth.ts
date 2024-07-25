@@ -5,7 +5,6 @@ import User from '../../models/user';
 import dotenv from 'dotenv';
 import nodemailer from 'nodemailer';
 import Wallet from '../../models/wallet';
-import fetchUser from "../../middleware/fetchUser";
 dotenv.config();
 
 const JWT_SECRET = process.env.JWT_SECRET as string;
