@@ -1,12 +1,29 @@
 import { StyleSheet, Text, View, ScrollView } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ColorPalette } from "@/constants/Colors";
 import SizedBox from "@/components/sizedbox";
 import SubscriptionCard from "@/components/subscriptionCard";
 import { StatusBar } from "expo-status-bar";
+import axiosInstance from "@/utilities/axios";
 
 const Subscribtion = () => {
+  const [subscriptions, setSubscriptions] = useState<any>([]);
+
+  const fetchSubscriptions = async () => {
+    try {
+      const response = await axiosInstance.get("/package");
+      console.log(response.data.packages);
+      setSubscriptions(response.data.packages);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchSubscriptions();
+  }, [subscriptions]);
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={{ flex: 1 }}>
@@ -15,12 +32,12 @@ const Subscribtion = () => {
           Note: Profit for each subscriptions will be given each month.
         </Text>
         <ScrollView style={{ flex: 1 }}>
-          {dummyData.map((item, index) => (
+          {subscriptions.map((item: any, index: any) => (
             <SubscriptionCard
               key={index}
               name={item.name}
               profit={item.profit}
-              coins={item.coins}
+              coins={item.price}
               validity={item.validity}
             />
           ))}
@@ -31,40 +48,6 @@ const Subscribtion = () => {
     </SafeAreaView>
   );
 };
-
-// temporary data
-const dummyData = [
-  {
-    name: "Good Offer",
-    profit: 20,
-    coins: 300,
-    validity: "2 months",
-  },
-  {
-    name: "Better Offer",
-    profit: 30,
-    coins: 500,
-    validity: "3 months",
-  },
-  {
-    name: "Best Offer",
-    profit: 50,
-    coins: 1000,
-    validity: "6 months",
-  },
-  {
-    name: "Great Offer",
-    profit: 40,
-    coins: 800,
-    validity: "4 months",
-  },
-  {
-    name: "Amazing Offer",
-    profit: 60,
-    coins: 1500,
-    validity: "12 months",
-  },
-];
 
 const styles = StyleSheet.create({
   title: {
