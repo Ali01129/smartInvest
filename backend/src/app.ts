@@ -1,9 +1,9 @@
 import mongoose from "mongoose";
 import express, { Application } from "express";
-import authService from "./routes/auth";
-import transactionService from "./routes/transaction";
-import packageService from "./routes/packages";
-import cors from 'cors';
+import authService from "./api/routes/auth";
+import transactionService from "./api/routes/transaction";
+import packageService from "./api/routes/packages";
+import cors from "cors";
 
 interface Env {
   MONGO_URI: string;
@@ -32,6 +32,7 @@ app.use(express.json());
 app.use("/auth", authService);
 app.use("/transaction", transactionService);
 app.use("/package", packageService);
+app.use(cors());
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
