@@ -17,7 +17,10 @@
   "dependencies": {
     "@expo/vector-icons": "^14.0.2",
     "@gorhom/bottom-sheet": "^4.6.3",
+    "@react-native-async-storage/async-storage": "^1.24.0",
     "@react-navigation/native": "^6.0.2",
+    "@reduxjs/toolkit": "^2.2.6",
+    "axios": "^1.7.2",
     "expo": "~51.0.20",
     "expo-constants": "~16.0.2",
     "expo-font": "~12.0.8",
@@ -45,7 +48,10 @@
     "react-native-svg": "^15.4.0",
     "react-native-view-shot": "^3.8.0",
     "react-native-web": "~0.19.10",
+    "react-redux": "^9.1.2",
     "reanimated-bottom-sheet": "^1.0.0-alpha.22",
+    "redux": "^5.0.1",
+    "redux-thunk": "^3.1.0",
     "yup": "^1.4.0"
   },
   "devDependencies": {
