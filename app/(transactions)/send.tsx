@@ -17,7 +17,6 @@ const validationSchema = Yup.object().shape({
   amount: Yup.string().required("Amount is required"),
 });
 
-
 const Send = () => {
   const handleSubmit = (
     values: { address: string; amount: string },
@@ -25,13 +24,17 @@ const Send = () => {
   ) => {
     console.log(values);
     actions.resetForm();
-    router.push("/SendConfirmation");
+    router.push("/sendConfirmation");
   };
 
   return (
     <SafeAreaView style={styles.container}>
-      <Header title="Send" onPress={() => router.push("homeindex")} />
-      <SendCard title="From" address="0x4564879848..7878" image={Images.amongus} />
+      <Header title="Send" onPress={() => router.push("home")} />
+      <SendCard
+        title="From"
+        address="0x4564879848..7878"
+        image={Images.amongus}
+      />
       <Formik
         initialValues={{ address: "", amount: "" }}
         validationSchema={validationSchema}
@@ -84,7 +87,7 @@ const Send = () => {
               }}
             >
               <CustomSolidButton
-                text={"Send".toUpperCase()}
+                text={"Send"}
                 onPress={() => handleSubmit()}
                 gradientColors={[ColorPalette.g2, ColorPalette.secondary]}
                 textColor={ColorPalette.textBlack}

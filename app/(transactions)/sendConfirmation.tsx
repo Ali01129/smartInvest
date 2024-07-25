@@ -9,7 +9,7 @@ import CustomSolidButton from "@/components/CustomSolidButton";
 import Images from "@/constants/Images";
 import axios from "axios";
 import { StatusBar } from "expo-status-bar";
-
+import { UseSelector } from "react-redux";
 
 axios.interceptors.request.use(
   function (config) {
@@ -25,13 +25,16 @@ axios.interceptors.request.use(
 const SendConfirmation = () => {
   const onSubmit = async () => {
     try {
-      const response = await axios.post("http://192.168.1.9:5000/transaction/send", {
-        address: "66a08eb1ccf6e4f785bcdebc",
-        amount: 300,
-      });
+      const response = await axios.post(
+        "http://192.168.1.9:5000/transaction/send",
+        {
+          address: "66a08eb1ccf6e4f785bcdebc",
+          amount: 300,
+        }
+      );
       if (response.status === 200) {
         Alert.alert("Success", "Transaction confirmed");
-        router.push("homeindex");
+        router.push("home");
       } else {
         Alert.alert("Error", "Something went wrong");
       }
@@ -49,7 +52,7 @@ const SendConfirmation = () => {
       <Text style={styles.AmountText}>Amount :$300</Text>
       <View style={{ justifyContent: "center", alignContent: "flex-end" }}>
         <CustomSolidButton
-          text={"Confirm".toUpperCase()}
+          text={"Confirm"}
           onPress={onSubmit}
           gradientColors={[ColorPalette.g2, ColorPalette.secondary]}
           textColor={ColorPalette.textBlack}

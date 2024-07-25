@@ -56,8 +56,8 @@ const depositSuccessFull = () => {
         style={{ flex: 1, justifyContent: "center", alignContent: "flex-end" }}
       >
         <CustomSolidButton
-          text={"Back to homepage".toUpperCase()}
-          onPress={() => router.push("homeindex")}
+          text={"Back to homepage"}
+          onPress={() => router.push("home")}
           gradientColors={[ColorPalette.g2, ColorPalette.secondary]}
           textColor={ColorPalette.textBlack}
         />

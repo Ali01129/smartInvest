@@ -1,35 +1,43 @@
-import { StyleSheet, Text, TextInput, TouchableOpacity, View, ScrollView } from 'react-native';
-import React, { useState } from 'react';
-import { router } from 'expo-router';
-import { ColorPalette } from '@/constants/Colors';
-import { AntDesign } from '@expo/vector-icons';
-import { Formik, FormikHelpers } from 'formik';
-import InputField from '@/components/inputField';
-import * as Yup from 'yup';
-import { LinearGradient } from 'expo-linear-gradient';
+import {
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+  ScrollView,
+} from "react-native";
+import React, { useState } from "react";
+import { router } from "expo-router";
+import { ColorPalette } from "@/constants/Colors";
+import { AntDesign } from "@expo/vector-icons";
+import { Formik, FormikHelpers } from "formik";
+import InputField from "@/components/inputField";
+import * as Yup from "yup";
+import { LinearGradient } from "expo-linear-gradient";
 import { StatusBar } from "expo-status-bar";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import CustomSolidButton from "@/components/CustomSolidButton";
 
 interface FormValues {
   email: string;
 }
 
 const ForgetPassword: React.FC = () => {
-
   const initialValues: FormValues = {
-    email: '',
+    email: "",
   };
 
   const validationSchema = Yup.object().shape({
-    email: Yup.string()
-      .email('Invalid email')
-      .required('Email is required'),
+    email: Yup.string().email("Invalid email").required("Email is required"),
   });
 
-  const handleSubmit = (values: FormValues, actions: FormikHelpers<FormValues>) => {
+  const handleSubmit = (
+    values: FormValues,
+    actions: FormikHelpers<FormValues>
+  ) => {
     console.log(values);
     actions.resetForm();
-    router.push('login');
+    router.push("otp");
   };
 
   return (
@@ -39,11 +47,25 @@ const ForgetPassword: React.FC = () => {
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
-        {({ handleChange, handleBlur, handleSubmit, values, errors, touched }) => (
-          <View style={{ flex: 1, width: '100%', justifyContent: 'space-between' }}>
+        {({
+          handleChange,
+          handleBlur,
+          handleSubmit,
+          values,
+          errors,
+          touched,
+        }) => (
+          <View
+            style={{ flex: 1, width: "100%", justifyContent: "space-between" }}
+          >
             <View>
               <View style={styles.header}>
-                <TouchableOpacity style={styles.box} onPress={() => { router.back() }}>
+                <TouchableOpacity
+                  style={styles.box}
+                  onPress={() => {
+                    router.back();
+                  }}
+                >
                   <AntDesign name="left" size={26} color="white" />
                 </TouchableOpacity>
                 <Text style={styles.title}>Forget Password</Text>
@@ -51,78 +73,77 @@ const ForgetPassword: React.FC = () => {
               <InputField
                 name="Email"
                 placeholder="Enter your Email"
-                onChangeText={handleChange('email')}
-                onBlur={() => { handleBlur('email') }}
-                onFocus={() => console.log('Input focused')}
+                onChangeText={handleChange("email")}
+                onBlur={() => {
+                  handleBlur("email");
+                }}
+                onFocus={() => console.log("Input focused")}
                 value={values.email}
-                icon={'email'}
+                icon={"email"}
               />
               {touched.email && errors.email && (
                 <Text style={styles.errorText}>{errors.email}</Text>
               )}
             </View>
-            <LinearGradient
-              colors={[ColorPalette.g2, ColorPalette.secondary]}
-              start={{ x: 0, y: 0 }}
-              end={{ x: 1, y: 0 }}
-              style={styles.gradient}
-            >
-              <TouchableOpacity onPress={() => handleSubmit()}>
-                <Text style={styles.logInText}>Forget Password</Text>
-              </TouchableOpacity>
-            </LinearGradient>
+            <CustomSolidButton
+              text={"Forget Password"}
+              onPress={() => handleSubmit()}
+              textColor={ColorPalette.textBlack}
+              gradientColors={[ColorPalette.g2, ColorPalette.secondary]}
+            />
           </View>
         )}
       </Formik>
       <StatusBar backgroundColor={ColorPalette.background} style="light" />
     </KeyboardAwareScrollView>
   );
-}
+};
 
 export default ForgetPassword;
 
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
-    alignItems: 'center',
+    alignItems: "center",
     backgroundColor: ColorPalette.background,
-    padding: 30,
+    padding: 16,
+    paddingBottom: 20,
     paddingTop: 80,
   },
   header: {
-    alignSelf: 'flex-start',
-    flexDirection: 'row',
+    alignSelf: "flex-start",
+    flexDirection: "row",
     marginBottom: 50,
-    alignItems: 'center',
+    alignItems: "center",
   },
   title: {
     marginLeft: 15,
     color: ColorPalette.text,
     fontSize: 25,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   box: {
     borderWidth: 2,
-    borderColor: 'grey',
+    borderColor: "grey",
     padding: 10,
     borderRadius: 16,
     marginRight: 10,
   },
   errorText: {
-    color: 'red',
+    color: "red",
     marginBottom: 10,
   },
   logInText: {
     color: ColorPalette.background,
-    textAlign: 'center',
+    textAlign: "center",
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   gradient: {
     borderRadius: 16,
     marginTop: 10,
     padding: 15,
-    width: '100%',
-    alignSelf: 'flex-end',
-  }
+    width: "100%",
+    alignSelf: "flex-end",
+  },
 });

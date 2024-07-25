@@ -4,7 +4,6 @@ import { Tabs } from "expo-router";
 import { ColorPalette } from "@/constants/Colors";
 import icons from "@/constants/Icons";
 const TabsLayout = () => {
-
   return (
     <Tabs
       screenOptions={{
@@ -13,7 +12,7 @@ const TabsLayout = () => {
         tabBarShowLabel: true,
         tabBarLabelStyle: {
           fontSize: 10,
-          position: 'relative',
+          position: "relative",
           top: -12,
         },
         tabBarStyle: {
@@ -21,13 +20,13 @@ const TabsLayout = () => {
           borderTopWidth: 0,
           height: 70,
           borderRadius: 10,
-          overflow: 'hidden',
-          position: 'absolute',
+          overflow: "hidden",
+          position: "absolute",
           left: 0,
           right: 0,
           bottom: 0,
           elevation: 5, // Android
-          shadowColor: '#000', // iOS
+          shadowColor: "#000", // iOS
           shadowOffset: { width: 0, height: 2 }, // iOS
           shadowOpacity: 0.25, // iOS
           shadowRadius: 3.5, // iOS
@@ -36,10 +35,10 @@ const TabsLayout = () => {
       }}
     >
       <Tabs.Screen
-        name="(home)"
+        name="home"
         options={{
           headerShown: false,
-          tabBarLabel: 'Dashboard',
+          tabBarLabel: "Dashboard",
           tabBarIcon: ({ color, focused }) => (
             <Image
               source={focused ? icons.home : icons.homeYellow}
@@ -47,7 +46,6 @@ const TabsLayout = () => {
             />
           ),
         }}
-
       />
 
       <Tabs.Screen
@@ -65,11 +63,11 @@ const TabsLayout = () => {
       />
 
       <Tabs.Screen
-        name="(profile)"
+        name="profile"
         options={{
           headerShown: false,
 
-          tabBarLabel: 'Portfolio',
+          tabBarLabel: "Portfolio",
 
           tabBarIcon: ({ color, focused }) => (
             <Image
@@ -78,7 +76,6 @@ const TabsLayout = () => {
             />
           ),
         }}
-
       />
     </Tabs>
   );

@@ -2,7 +2,6 @@ import { StyleSheet, Text, View, ScrollView } from "react-native";
 import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ColorPalette } from "@/constants/Colors";
-import Header from "@/components/header";
 import SizedBox from "@/components/sizedbox";
 import SubscriptionCard from "@/components/subscriptionCard";
 import { StatusBar } from "expo-status-bar";

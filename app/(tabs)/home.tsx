@@ -1,48 +1,86 @@
-import { Image, StyleSheet, Text, View, TouchableOpacity, ScrollView, Modal } from 'react-native';
-import React, { useState } from 'react';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { ColorPalette } from '@/constants/Colors';
-import { AntDesign, FontAwesome6 } from '@expo/vector-icons';
-import { MaterialIcons } from '@expo/vector-icons';
-import { router } from 'expo-router';
-import TransCard from '@/components/transCard';
-import PackCard from '@/components/packCard';
-import SizedBox from '@/components/sizedbox';
+import {
+  Image,
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  ScrollView,
+  Modal,
+} from "react-native";
+import React, { useEffect, useState } from "react";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { ColorPalette } from "@/constants/Colors";
+import { FontAwesome6 } from "@expo/vector-icons";
+import { MaterialIcons } from "@expo/vector-icons";
+import { router } from "expo-router";
+import TransCard from "@/components/transCard";
+import PackCard from "@/components/packCard";
+import SizedBox from "@/components/sizedbox";
 import Images from "@/constants/Images";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/store";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { StatusBar } from "expo-status-bar";
 
-
-const HomeIndex = () => {
-
-  const [activeTab, setActiveTab] = useState('Transactions');
+const Home = () => {
+  const [activeTab, setActiveTab] = useState("Transactions");
   const [modalVisible, setModalVisible] = useState(false);
   const [mainImage, setMainImage] = useState(Images.amongus);
-  const images = [
-    Images.amongus,
-    Images.goku,
-    Images.zoro,
-    Images.amongus,
-  ];
+  const { token, user } = useSelector((state: RootState) => state.auth);
 
+  const images = [Images.amongus, Images.goku, Images.zoro, Images.amongus];
+
+  useEffect(() => {
+    console.log("token", token);
+    // console.log("user", user);
+    AsyncStorage.getItem("token").then((token) => {
+      console.log("token async", token);
+    });
+  }, []);
 
   const renderContent = () => {
     if (activeTab === "Transactions") {
       return (
-        <ScrollView style={{ width: '100%', height: 150 }}>
-          <TransCard name={'Ahmad'} date={'10-07-2024'} price={50} type={'sent'} />
-          <TransCard name={'Huzaifa'} date={'10-07-2024'} price={70} type={'received'} />
-          <TransCard name={'Ali'} date={'10-07-2024'} price={60} type={'sent'} />
-          <TransCard name={'Ali'} date={'10-07-2024'} price={60} type={'sent'} />
-          <TransCard name={'Ali'} date={'10-07-2024'} price={60} type={'sent'} />
+        <ScrollView style={{ width: "100%", height: 150 }}>
+          <TransCard
+            name={"Ahmad"}
+            date={"10-07-2024"}
+            price={50}
+            type={"sent"}
+          />
+          <TransCard
+            name={"Huzaifa"}
+            date={"10-07-2024"}
+            price={70}
+            type={"received"}
+          />
+          <TransCard
+            name={"Ali"}
+            date={"10-07-2024"}
+            price={60}
+            type={"sent"}
+          />
+          <TransCard
+            name={"Ali"}
+            date={"10-07-2024"}
+            price={60}
+            type={"sent"}
+          />
+          <TransCard
+            name={"Ali"}
+            date={"10-07-2024"}
+            price={60}
+            type={"sent"}
+          />
           <SizedBox height={70} />
         </ScrollView>
       );
     } else {
       return (
-        <ScrollView style={{ width: '100%', height: 350 }}>
-          <PackCard name='VIP' profit={20} coins={500} validity='4 months' />
-          <PackCard name='VIP' profit={20} coins={500} validity='4 months' />
-          <PackCard name='VIP' profit={20} coins={500} validity='4 months' />
+        <ScrollView style={{ width: "100%", height: 350 }}>
+          <PackCard name="VIP" profit={20} coins={500} validity="4 months" />
+          <PackCard name="VIP" profit={20} coins={500} validity="4 months" />
+          <PackCard name="VIP" profit={20} coins={500} validity="4 months" />
           <SizedBox height={70} />
         </ScrollView>
       );
@@ -66,7 +104,6 @@ const HomeIndex = () => {
         <TouchableOpacity onPress={() => setModalVisible(true)}>
           <Image source={mainImage} style={styles.pic} />
         </TouchableOpacity>
-
       </View>
 
       {/* Card Section */}
@@ -84,30 +121,33 @@ const HomeIndex = () => {
           }}
         >
           <View style={styles.menuItem}>
-
-            <TouchableOpacity onPress={() => router.push('send')}>
+            <TouchableOpacity onPress={() => router.push("send")}>
               <View style={styles.menu1}>
-                <MaterialIcons name="send" size={20} color={ColorPalette.text} />
+                <FontAwesome6
+                  name="money-bill-transfer"
+                  size={20}
+                  color={ColorPalette.text}
+                />
               </View>
             </TouchableOpacity>
-
-
 
             <Text style={styles.menuText}>Send</Text>
           </View>
           <View style={styles.menuItem}>
-
-            <TouchableOpacity onPress={() => router.push('deposit')}>
+            <TouchableOpacity onPress={() => router.push("deposit")}>
               <View style={styles.menu1}>
-                <AntDesign name="enter" size={20} color={ColorPalette.text} />
+                <MaterialIcons
+                  name="currency-exchange"
+                  size={20}
+                  color={ColorPalette.text}
+                />
               </View>
             </TouchableOpacity>
 
             <Text style={styles.menuText}>Deposit</Text>
           </View>
           <View style={styles.menuItem}>
-
-            <TouchableOpacity onPress={() => router.push('withdraw')}>
+            <TouchableOpacity onPress={() => router.push("withdraw")}>
               <View style={styles.menu1}>
                 <MaterialIcons
                   name="money-off"
@@ -115,9 +155,7 @@ const HomeIndex = () => {
                   color={ColorPalette.text}
                 />
               </View>
-
             </TouchableOpacity>
-
 
             <Text style={styles.menuText}>Withdraw</Text>
           </View>
@@ -165,7 +203,10 @@ const HomeIndex = () => {
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
             {images.map((image, index) => (
-              <TouchableOpacity key={index} onPress={() => handleImageSelect(image)}>
+              <TouchableOpacity
+                key={index}
+                onPress={() => handleImageSelect(image)}
+              >
                 <Image source={image} style={styles.modalImage} />
               </TouchableOpacity>
             ))}
@@ -177,7 +218,7 @@ const HomeIndex = () => {
   );
 };
 
-export default HomeIndex;
+export default Home;
 
 const styles = StyleSheet.create({
   container: {
@@ -246,18 +287,18 @@ const styles = StyleSheet.create({
   },
   modalContainer: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
   },
   modalContent: {
     marginHorizontal: 16,
     backgroundColor: ColorPalette.greyNav,
     padding: 20,
     borderRadius: 10,
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "center",
   },
   modalImage: {
     width: 60,

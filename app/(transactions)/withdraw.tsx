@@ -1,4 +1,10 @@
-import { StyleSheet, Text, TextInput, View, TouchableOpacity } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+  TouchableOpacity,
+} from "react-native";
 import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ColorPalette } from "@/constants/Colors";
@@ -31,12 +37,12 @@ const WithDraw = () => {
   ) => {
     console.log(values);
     actions.resetForm();
-    router.push("/withdrawSuccessFull"); // Update this route as needed
+    router.push("/home"); // Update this route as needed
   };
 
   return (
     <SafeAreaView style={styles.container}>
-      <Header title="Withdraw" onPress={() => router.push("homeindex")} />
+      <Header title="Withdraw" onPress={() => router.push("home")} />
 
       <Formik
         initialValues={{ amount: "", selectedCard: false }}
@@ -62,6 +68,7 @@ const WithDraw = () => {
                 onChangeText={handleChange("amount")}
                 onBlur={() => handleBlur("amount")}
                 value={values.amount}
+                keyboardType="numeric"
               />
               {touched.amount && errors.amount && (
                 <Text style={{ color: "red", marginBottom: 5 }}>
@@ -102,7 +109,6 @@ const WithDraw = () => {
                 </Text>
 
                 <TouchableOpacity>
-
                   <View
                     style={{
                       backgroundColor: ColorPalette.secondary,
@@ -135,7 +141,7 @@ const WithDraw = () => {
 
               <View style={styles.buttonWrapper}>
                 <CustomSolidButton
-                  text={"Withdraw".toUpperCase()}
+                  text={"Withdraw"}
                   onPress={() => handleSubmit()}
                   gradientColors={[ColorPalette.g2, ColorPalette.secondary]}
                   textColor={ColorPalette.textBlack}
