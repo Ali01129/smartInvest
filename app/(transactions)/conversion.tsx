@@ -94,7 +94,7 @@ const Conversion = () => {
       <Header
         title="Convert"
         onPress={() => {
-          router.replace("homeindex");
+          router.replace("home");
         }}
       />
       <View style={styles.formBox}>

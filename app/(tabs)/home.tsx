@@ -22,7 +22,7 @@ import { RootState } from "@/store/store";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { StatusBar } from "expo-status-bar";
 
-const HomeIndex = () => {
+const Home = () => {
   const [activeTab, setActiveTab] = useState("Transactions");
   const [modalVisible, setModalVisible] = useState(false);
   const [mainImage, setMainImage] = useState(Images.amongus);
@@ -218,7 +218,7 @@ const HomeIndex = () => {
   );
 };
 
-export default HomeIndex;
+export default Home;
 
 const styles = StyleSheet.create({
   container: {

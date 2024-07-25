@@ -9,6 +9,7 @@ import CustomSolidButton from "@/components/CustomSolidButton";
 import Images from "@/constants/Images";
 import axios from "axios";
 import { StatusBar } from "expo-status-bar";
+import { UseSelector } from "react-redux";
 
 axios.interceptors.request.use(
   function (config) {
@@ -33,7 +34,7 @@ const SendConfirmation = () => {
       );
       if (response.status === 200) {
         Alert.alert("Success", "Transaction confirmed");
-        router.push("homeindex");
+        router.push("home");
       } else {
         Alert.alert("Error", "Something went wrong");
       }

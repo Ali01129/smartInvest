@@ -57,7 +57,7 @@ const depositSuccessFull = () => {
       >
         <CustomSolidButton
           text={"Back to homepage"}
-          onPress={() => router.push("homeindex")}
+          onPress={() => router.push("home")}
           gradientColors={[ColorPalette.g2, ColorPalette.secondary]}
           textColor={ColorPalette.textBlack}
         />
