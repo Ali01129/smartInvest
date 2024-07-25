@@ -69,7 +69,7 @@ const SubscribeButton: React.FC = () => {
 
 const styles = StyleSheet.create({
   card: {
-    height: height * 0.185,
+    height: 150,
     padding: 16,
     width: "100%",
     backgroundColor: ColorPalette.greyNav,

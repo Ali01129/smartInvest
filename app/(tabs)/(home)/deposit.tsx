@@ -18,8 +18,7 @@ const validationSchema = Yup.object().shape({
   amount: Yup.string()
     .required("Amount is required")
     .min(1, "Amount must be greater than zero"),
-  selectedCard: Yup.boolean()
-    .oneOf([true], "Payment method is required")
+  selectedCard: Yup.boolean().oneOf([true], "Payment method is required"),
 });
 
 const Deposit = () => {
@@ -87,7 +86,7 @@ const Deposit = () => {
 
               <View style={styles.buttonWrapper}>
                 <CustomSolidButton
-                  text={"Deposit".toUpperCase()}
+                  text={"Deposit"}
                   onPress={() => handleSubmit()}
                   gradientColors={[ColorPalette.g2, ColorPalette.secondary]}
                   textColor={ColorPalette.textBlack}

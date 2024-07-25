@@ -1,4 +1,10 @@
-import { StyleSheet, Text, TextInput, View, TouchableOpacity } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+  TouchableOpacity,
+} from "react-native";
 import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ColorPalette } from "@/constants/Colors";
@@ -102,7 +108,6 @@ const WithDraw = () => {
                 </Text>
 
                 <TouchableOpacity>
-
                   <View
                     style={{
                       backgroundColor: ColorPalette.secondary,
@@ -135,7 +140,7 @@ const WithDraw = () => {
 
               <View style={styles.buttonWrapper}>
                 <CustomSolidButton
-                  text={"Withdraw".toUpperCase()}
+                  text={"Withdraw"}
                   onPress={() => handleSubmit()}
                   gradientColors={[ColorPalette.g2, ColorPalette.secondary]}
                   textColor={ColorPalette.textBlack}

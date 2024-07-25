@@ -20,6 +20,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { login } from "@/actions/authActions";
 import { AppDispatch, RootState } from "@/store/store";
 import CustomSolidButton from "@/components/CustomSolidButton";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { StatusBar } from "expo-status-bar";
 
 interface FormValues {
   email: string;
@@ -35,7 +37,6 @@ const Login: React.FC = () => {
     dispatch(login(email, password));
   };
 
-const Login: React.FC = () => {
   const initialValues: FormValues = {
     email: "",
     password: "",
@@ -62,7 +63,6 @@ const Login: React.FC = () => {
       actions.resetForm();
       router.push("/homeindex");
     }
-
   };
 
   return (
@@ -72,7 +72,6 @@ const Login: React.FC = () => {
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
-
         {({
           handleChange,
           handleBlur,
@@ -148,6 +147,7 @@ const Login: React.FC = () => {
             <CustomSolidButton
               gradientColors={[ColorPalette.g2, ColorPalette.secondary]}
               text={loading ? "Loading..." : "Login"}
+              textColor={ColorPalette.textBlack}
               onPress={() => handleSubmit()}
             />
             {/* if  there is any error */}
