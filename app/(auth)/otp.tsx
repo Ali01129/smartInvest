@@ -7,6 +7,7 @@ import InputField from '@/components/inputField';
 import * as Yup from 'yup';
 import { LinearGradient } from 'expo-linear-gradient';
 import { ColorPalette } from '@/constants/Colors';
+import { StatusBar } from "expo-status-bar";
 
 interface FormValues {
   otp: string;
@@ -71,6 +72,7 @@ const Otp: React.FC = () => {
           </View>
         )}
       </Formik>
+      <StatusBar backgroundColor={ColorPalette.background} style="light" />
     </ScrollView>
   );
 };

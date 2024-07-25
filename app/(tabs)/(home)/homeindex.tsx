@@ -149,7 +149,7 @@ const HomeIndex = () => {
             <TouchableOpacity onPress={() => router.push("withdraw")}>
               <View style={styles.menu1}>
                 <MaterialIcons
-                  name="currency-exchange"
+                  name="money-off"
                   size={20}
                   color={ColorPalette.text}
                 />
@@ -161,8 +161,8 @@ const HomeIndex = () => {
           <View style={styles.menuItem}>
             <TouchableOpacity onPress={() => router.push("conversion")}>
               <View style={styles.menu1}>
-                <MaterialIcons
-                  name="currency-exchange"
+                <FontAwesome6
+                  name="money-bill-transfer"
                   size={20}
                   color={ColorPalette.text}
                 />
@@ -212,6 +212,7 @@ const HomeIndex = () => {
           </View>
         </View>
       </Modal>
+      <StatusBar backgroundColor={ColorPalette.background} style="light" />
     </SafeAreaView>
   );
 };

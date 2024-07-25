@@ -25,6 +25,7 @@ interface FormValues {
   email: string;
   password: string;
 }
+
 const Login: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
   const { loading, error } = useSelector((state: RootState) => state.auth);
@@ -34,6 +35,7 @@ const Login: React.FC = () => {
     dispatch(login(email, password));
   };
 
+const Login: React.FC = () => {
   const initialValues: FormValues = {
     email: "",
     password: "",
@@ -45,6 +47,7 @@ const Login: React.FC = () => {
       .min(6, "Password must be at least 6 characters")
       .required("Password is required"),
   });
+
   const handleSubmit = (
     values: FormValues,
     actions: FormikHelpers<FormValues>
@@ -59,14 +62,17 @@ const Login: React.FC = () => {
       actions.resetForm();
       router.push("/homeindex");
     }
+
   };
+
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <KeyboardAwareScrollView contentContainerStyle={styles.container}>
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
+
         {({
           handleChange,
           handleBlur,
@@ -139,20 +145,6 @@ const Login: React.FC = () => {
                 Forgot Password?
               </Text>
             </View>
-            {/* <LinearGradient
-              colors={[ColorPalette.g2, ColorPalette.secondary]}
-              start={{ x: 0, y: 0 }}
-              end={{ x: 1, y: 0 }}
-              style={styles.gradient}
-            >
-              <TouchableOpacity
-                onPress={() => {
-                  handleSubmit();
-                }}
-              >
-                <Text style={styles.logInText}>Login</Text>
-              </TouchableOpacity>
-            </LinearGradient> */}
             <CustomSolidButton
               gradientColors={[ColorPalette.g2, ColorPalette.secondary]}
               text={loading ? "Loading..." : "Login"}
@@ -179,10 +171,13 @@ const Login: React.FC = () => {
           </View>
         )}
       </Formik>
-    </ScrollView>
+      <StatusBar backgroundColor={ColorPalette.background} style="light" />
+    </KeyboardAwareScrollView>
   );
 };
+
 export default Login;
+
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
@@ -204,7 +199,6 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     marginRight: 10,
   },
-
   logInText: {
     color: ColorPalette.background,
     textAlign: "center",

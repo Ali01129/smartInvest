@@ -23,9 +23,10 @@ mongoose
     console.error("Error connecting to MongoDB:", error);
   });
 
+ 
 const app: Application = express();
 const port: number = 5000;
-
+app.use(cors());
 app.use(express.json());
 
 app.use("/auth", authService);

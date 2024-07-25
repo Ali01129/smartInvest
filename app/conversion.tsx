@@ -8,6 +8,7 @@ import Header from "@/components/header";
 import { router } from "expo-router";
 import ConversionInputField from "@/components/conversionInputField";
 import SwapButton from "@/components/swapButton";
+import { StatusBar } from "expo-status-bar";
 
 const Conversion = () => {
   const [dollarValue, setDollarValue] = useState<string>("");
@@ -108,8 +109,9 @@ const Conversion = () => {
         gradientColors={[ColorPalette.g2, ColorPalette.secondary]}
         text={"Convert"}
         textColor={ColorPalette.background}
-        onPress={() => {}}
+        onPress={() => { }}
       />
+      <StatusBar backgroundColor={ColorPalette.background} style="light" />
     </SafeAreaView>
   );
 };
