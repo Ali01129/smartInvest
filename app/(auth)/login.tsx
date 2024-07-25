@@ -40,7 +40,7 @@ const Login: React.FC = () => {
         console.log("error", error);
         if (!loading && !error) {
           console.log("Login successful");
-          // actions.resetForm();
+
           router.push("/home");
         }
       })
@@ -67,6 +67,7 @@ const Login: React.FC = () => {
   ) => {
     // console.log(values);
     handleLogin(values.email, values.password);
+    actions.resetForm();
   };
 
   return (

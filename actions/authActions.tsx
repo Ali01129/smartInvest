@@ -23,7 +23,7 @@ export const login = (email: string, password: string) => {
       });
       console.log("response", response);
       const token = response.data.token;
-      const user = response.data.user;
+      const user = JSON.stringify(response.data.user);
       console.log("token", token);
       console.log("user", JSON.stringify(user));
       const payload = {
