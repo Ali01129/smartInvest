@@ -34,7 +34,19 @@ const Login: React.FC = () => {
 
   const handleLogin = (email: string, password: string) => {
     console.log("in handle login");
-    dispatch(login(email, password));
+    dispatch(login(email, password))
+      .then(() => {
+        console.log("loading", loading);
+        console.log("error", error);
+        if (!loading && !error) {
+          console.log("Login successful");
+          // actions.resetForm();
+          router.push("/home");
+        }
+      })
+      .catch((err) => {
+        console.log("error", err);
+      });
   };
 
   const initialValues: FormValues = {
@@ -55,14 +67,6 @@ const Login: React.FC = () => {
   ) => {
     // console.log(values);
     handleLogin(values.email, values.password);
-
-    console.log("loading", loading);
-    console.log("error", error);
-    if (!loading && !error) {
-      console.log("Login successful");
-      actions.resetForm();
-      router.push("/homeindex");
-    }
   };
 
   return (

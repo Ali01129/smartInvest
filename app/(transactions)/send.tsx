@@ -24,12 +24,12 @@ const Send = () => {
   ) => {
     console.log(values);
     actions.resetForm();
-    router.push("/SendConfirmation");
+    router.push("/sendConfirmation");
   };
 
   return (
     <SafeAreaView style={styles.container}>
-      <Header title="Send" onPress={() => router.push("homeindex")} />
+      <Header title="Send" onPress={() => router.push("home")} />
       <SendCard
         title="From"
         address="0x4564879848..7878"

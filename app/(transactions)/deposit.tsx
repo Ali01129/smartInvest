@@ -35,7 +35,7 @@ const Deposit = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Header title="Deposit" onPress={() => router.push("homeindex")} />
+      <Header title="Deposit" onPress={() => router.push("home")} />
 
       <Formik
         initialValues={{ amount: "", selectedCard: false }}

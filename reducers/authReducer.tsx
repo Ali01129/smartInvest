@@ -34,6 +34,7 @@ const authSlice = createSlice({
       state.loading = false;
     },
     loginFailure(state, action: PayloadAction<string>) {
+      console.log("Error in login failure: ", action.payload);
       state.loading = false;
       state.error = action.payload;
     },

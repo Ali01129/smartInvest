@@ -37,7 +37,7 @@ const Otp: React.FC = () => {
   ) => {
     console.log(values);
     actions.resetForm();
-    router.push("/homeindex");
+    router.push("/home");
   };
 
   return (
