@@ -1,8 +1,8 @@
 import express, { Request, Response } from "express";
-import fetchUser from "../../middleware/fetchUser";
-import Package from "../../models/package";
-import User from "../../models/user";
-import Wallet from "../../models/wallet";
+import fetchUser from "../middleware/fetchUser";
+import Package from "../models/package";
+import User from "../models/user";
+import Wallet from "../models/wallet";
 
 interface AuthenticatedRequest extends Request {
   user?: any;

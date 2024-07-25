@@ -1,8 +1,8 @@
 import mongoose from "mongoose";
 import express, { Application } from "express";
-import authService from "./api/routes/auth";
-import transactionService from "./api/routes/transaction";
-import packageService from "./api/routes/packages";
+import authService from "./routes/auth";
+import transactionService from "./routes/transaction";
+import packageService from "./routes/packages";
 import cors from 'cors';
 
 interface Env {
