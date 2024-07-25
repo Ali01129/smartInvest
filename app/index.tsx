@@ -1,11 +1,11 @@
-import { TouchableOpacity, Image, StyleSheet, Text, View } from "react-native";
+import { Image, StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { router } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
 import { ColorPalette } from "../constants/Colors";
-import { LinearGradient } from 'expo-linear-gradient';
 import Images from "@/constants/Images";
+import CustomSolidButton from "@/components/CustomSolidButton";
 
 const Index = () => {
   return (
@@ -18,18 +18,14 @@ const Index = () => {
       </View>
       <View style={{ width: "100%", justifyContent: "space-between", flex: 1 }}>
         <Text style={styles.text}>Your Personal crypto Wallet</Text>
-
-        <LinearGradient colors={[ColorPalette.g2, ColorPalette.secondary]}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 1, y: 0 }}
-          style={styles.gradient}
-        >
-          <TouchableOpacity onPress={() => {
+        <CustomSolidButton
+          gradientColors={[ColorPalette.g2, ColorPalette.secondary]}
+          text={"Get Started"}
+          textColor={ColorPalette.textBlack}
+          onPress={() => {
             router.push("login");
-          }}>
-            <Text style={styles.logInText}>Get Started</Text>
-          </TouchableOpacity>
-        </LinearGradient>
+          }}
+        />
       </View>
       <StatusBar backgroundColor={ColorPalette.background} style="light" />
     </SafeAreaView>
@@ -44,7 +40,8 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     backgroundColor: ColorPalette.background,
-    padding: 30,
+    padding: 16,
+    paddingBottom: 20,
   },
   text: {
     color: ColorPalette.text,
@@ -66,11 +63,4 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
   },
-  gradient: {
-    borderRadius: 16,
-    marginTop: 10,
-    padding: 15,
-    width: '100%',
-    backgroundColor: ColorPalette.secondary,
-  }
 });

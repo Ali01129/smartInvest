@@ -20,6 +20,7 @@ import Images from "@/constants/Images";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { StatusBar } from "expo-status-bar";
 
 const HomeIndex = () => {
   const [activeTab, setActiveTab] = useState("Transactions");
