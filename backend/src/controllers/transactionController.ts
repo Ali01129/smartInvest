@@ -3,6 +3,7 @@ import Wallet from '../models/wallet';
 import Transaction from '../models/transaction';
 import Stripe from 'stripe';
 import dotenv from 'dotenv';
+import User from '../models/user';
 dotenv.config();
 
 
@@ -46,9 +47,14 @@ class TransactionController {
           await senderWallet.save();
           await receiverWallet.save();
     
+          const sender=await User.findOne({_id:senderWallet.userId});
+          const receiver=await User.findOne({_id:receiverWallet.userId});
+
           const transaction = await Transaction.create({
             senderId: senderWallet.userId,
             receiverId: receiverWallet.userId,
+            senderName: sender?.username,
+            receiverName: receiver?.username,
             amount: amount,
           });
     
@@ -79,12 +85,7 @@ class TransactionController {
 
             wallet.usd += amount;
             await wallet.save();
-            const transaction = await Transaction.create({
-                senderId: wallet.userId,
-                receiverId: 'Deposit',
-                amount: amount,
-            });
-            return res.status(200).send({ status: 'success', message: 'Deposit successful', wallet, transaction });
+            return res.status(200).send({ status: 'success', message: 'Deposit successful', wallet });
         } catch (error) {
             console.error('Deposit error:', error);
             return res.status(500).send({ status: 'error', message: 'Internal server error' });
@@ -112,12 +113,7 @@ class TransactionController {
                 wallet.smartCoin += smartCoinAmount;
       
                 await wallet.save();
-                const transaction = await Transaction.create({
-                    senderId: 'Conversion from USD',
-                    receiverId: wallet.userId,
-                    amount: smartCoinAmount,
-                });
-                return res.status(200).send({ status: 'success', message: 'Conversion successful', wallet, transaction });
+                return res.status(200).send({ status: 'success', message: 'Conversion successful', wallet });
       
             } else { // smartCoin to USD conversion
                 const usdAmount = amount / CONVERSION_RATE;
@@ -128,12 +124,7 @@ class TransactionController {
                 wallet.usd += usdAmount;
       
                 await wallet.save();
-                const transaction = await Transaction.create({
-                    senderId: wallet.userId,
-                    receiverId: 'Conversion from smartCoin',
-                    amount: usdAmount,
-                });
-                return res.status(200).send({ status: 'success', message: 'Conversion successful', wallet, transaction });
+                return res.status(200).send({ status: 'success', message: 'Conversion successful', wallet });
             }
         } catch (error) {
             console.error('Conversion error:', error);
@@ -156,12 +147,7 @@ class TransactionController {
           }
           wallet.usd-=amount;
           await wallet.save();
-          const transaction=await Transaction.create({
-            senderId:wallet.userId,
-            receiverId:'Withdraw',
-            amount:amount,
-          });
-          return res.status(200).send({status:'success',message:'Withdraw successful',wallet,transaction});
+          return res.status(200).send({status:'success',message:'Withdraw successful',wallet});
         }catch(error){
           console.error('Withdraw error:',error);
           return res.status(500).send({status:'error',message:'Internal server error'});
@@ -181,16 +167,28 @@ class TransactionController {
     }
     // list by user id method
     // post Request /transaction/listbyid
-    public async list_by_user(req: AuthenticatedRequest, res: Response):Promise<Response> {
+    public async list_by_user(req: AuthenticatedRequest, res: Response): Promise<Response> {
         const user = req.user;
         try {
-            const transactions = await Transaction.find({ $or: [{ senderId: user.id }, { receiverId: user.id }] });
-            return res.status(200).send({ status: 'success', transactions });
+            const transactions = await Transaction.find(
+                { $or: [{ senderId: user.id }, { receiverId: user.id }] }
+            );
+    
+            // Customize the fields to include
+            const selectedTransactions = transactions.map(transaction => ({
+                type: transaction.senderId === user.id ? 'sent' : 'received',
+                amount: transaction.amount,
+                date: transaction.createdAt,
+                name: transaction.senderId === user.id ?transaction.senderName:transaction.receiverName,
+            }));
+    
+            return res.status(200).send({ status: 'success', transactions: selectedTransactions });
         } catch (error) {
             console.error('List transactions error:', error);
             return res.status(500).send({ status: 'error', message: 'Internal server error' });
         }
     }
+    
 }
 
 export default new TransactionController;
