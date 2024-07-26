@@ -1,27 +1,24 @@
 import {
   StyleSheet,
   Text,
-  TextInput,
   TouchableOpacity,
   View,
-  ScrollView,
 } from "react-native"; // Import ScrollView
 import React, { useState } from "react";
 import { router } from "expo-router";
-import { Fontisto } from "@expo/vector-icons";
 import { ColorPalette } from "@/constants/Colors";
 import { AntDesign } from "@expo/vector-icons";
 import { Formik, FormikHelpers } from "formik";
-
 import InputField from "@/components/inputField";
 import * as Yup from "yup";
-import { LinearGradient } from "expo-linear-gradient";
 import { useSelector, useDispatch } from "react-redux";
 import { login } from "@/actions/authActions";
 import { AppDispatch, RootState } from "@/store/store";
 import CustomSolidButton from "@/components/CustomSolidButton";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { StatusBar } from "expo-status-bar";
+
+
 
 interface FormValues {
   email: string;
@@ -36,11 +33,7 @@ const Login: React.FC = () => {
     console.log("in handle login");
     dispatch(login(email, password))
       .then(() => {
-        console.log("loading", loading);
-        console.log("error", error);
         if (!loading && !error) {
-          console.log("Login successful");
-
           router.push("/home");
         }
       })
@@ -65,7 +58,6 @@ const Login: React.FC = () => {
     values: FormValues,
     actions: FormikHelpers<FormValues>
   ) => {
-    // console.log(values);
     handleLogin(values.email, values.password);
     actions.resetForm();
   };

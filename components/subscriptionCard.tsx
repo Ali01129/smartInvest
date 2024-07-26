@@ -15,6 +15,7 @@ interface SubscriptionProps {
   profit: number;
   coins: number;
   validity: string;
+  onPress: () => void;
 }
 
 const SubscriptionCard: React.FC<SubscriptionProps> = ({
@@ -22,6 +23,7 @@ const SubscriptionCard: React.FC<SubscriptionProps> = ({
   profit,
   coins,
   validity,
+  onPress,
 }) => {
   return (
     <View style={styles.card}>
@@ -40,13 +42,16 @@ const SubscriptionCard: React.FC<SubscriptionProps> = ({
       </View>
       <View style={styles.row}>
         <Text style={styles.validity}>Validity: {validity}</Text>
-        <SubscribeButton />
+        <SubscribeButton onPress={onPress} />
       </View>
     </View>
   );
 };
 
-const SubscribeButton: React.FC = () => {
+interface SubscribeButtonProps {
+  onPress: () => void;
+}
+const SubscribeButton: React.FC<SubscribeButtonProps> = ({ onPress }) => {
   return (
     <LinearGradient
       colors={[ColorPalette.g2, ColorPalette.secondary]}
@@ -55,6 +60,7 @@ const SubscribeButton: React.FC = () => {
       style={styles.gradient}
     >
       <TouchableOpacity
+        onPress={onPress}
         style={{
           padding: 8,
           borderRadius: 8,
