@@ -22,21 +22,24 @@ export const login = (email: string, password: string) => {
         password,
       });
       console.log("response", response);
-      const token = response.data.token;
-      const user = JSON.stringify(response.data.user);
-      console.log("token", token);
-      console.log("user", JSON.stringify(user));
-      const payload = {
-        token,
-        user,
-        error: null,
-      };
+      if (response.status !== 200) {
+        dispatch(loginFailure("Invalid credentials"));
+      } else {
+        const token = response.data.token;
+        const user = JSON.stringify(response.data.user);
 
-      // for setting state
-      dispatch(loginSuccess(payload));
-      // for setting token and user in AsyncStorage
-      await AsyncStorage.setItem("token", token);
-      await AsyncStorage.setItem("user", user);
+        const payload = {
+          token,
+          user,
+          error: null,
+        };
+
+        // for setting state
+        dispatch(loginSuccess(payload));
+        // for setting token and user in AsyncStorage
+        await AsyncStorage.setItem("token", token);
+        await AsyncStorage.setItem("user", user);
+      }
     } catch (error: any) {
       console.log("error", error);
       dispatch(loginFailure(error.message));
