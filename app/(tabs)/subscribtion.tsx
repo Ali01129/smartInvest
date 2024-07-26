@@ -13,7 +13,6 @@ const Subscribtion = () => {
   const fetchSubscriptions = async () => {
     try {
       const response = await axiosInstance.get("/package");
-      console.log(response.data.packages);
       setSubscriptions(response.data.packages);
     } catch (error) {
       console.log(error);

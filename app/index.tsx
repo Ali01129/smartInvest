@@ -6,7 +6,7 @@ import { StatusBar } from "expo-status-bar";
 import { ColorPalette } from "../constants/Colors";
 import Images from "@/constants/Images";
 import CustomSolidButton from "@/components/CustomSolidButton";
-import * as Svg from 'react-native-svg';
+
 
 
 const Index = () => {
