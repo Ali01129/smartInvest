@@ -13,10 +13,10 @@ import { AntDesign } from "@expo/vector-icons";
 import { Formik, FormikHelpers } from "formik";
 import InputField from "@/components/inputField";
 import * as Yup from "yup";
-import { LinearGradient } from "expo-linear-gradient";
 import { StatusBar } from "expo-status-bar";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import CustomSolidButton from "@/components/CustomSolidButton";
+import axiosInstance from "@/utilities/axios";
 
 interface FormValues {
   email: string;
@@ -31,13 +31,18 @@ const ForgetPassword: React.FC = () => {
     email: Yup.string().email("Invalid email").required("Email is required"),
   });
 
-  const handleSubmit = (
+  const handleSubmit = async (
     values: FormValues,
     actions: FormikHelpers<FormValues>
   ) => {
-    console.log(values);
-    actions.resetForm();
-    router.push("otp");
+    try {
+      const response = await axiosInstance.post("/auth/forget-password", values);
+      console.log(response.data.packages);
+      actions.resetForm();
+      router.push("otp");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
