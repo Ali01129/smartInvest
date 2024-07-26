@@ -12,33 +12,49 @@ import InputField from "@/components/inputFieldSendCard";
 import Images from "@/constants/Images";
 import { StatusBar } from "expo-status-bar";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import axiosInstance from "@/utilities/axios";
+
+interface FormValues {
+  amount: number;
+  selectedCard: boolean;
+}
 
 // Define the validation schema using Yup
 const validationSchema = Yup.object().shape({
-  amount: Yup.string()
+  amount: Yup.number()
     .required("Amount is required")
     .min(1, "Amount must be greater than zero"),
   selectedCard: Yup.boolean().oneOf([true], "Payment method is required"),
 });
 
-const Deposit = () => {
+const Deposit: React.FC = () =>  {
+  const initialValues: FormValues = {
+    amount: 0,
+    selectedCard: false,
+  };
   const [selectedCard, setSelectedCard] = useState(false);
-
-  const handleSubmit = (
-    values: { amount: string; selectedCard: boolean },
-    actions: FormikHelpers<{ amount: string; selectedCard: boolean }>
+  
+  const handleSubmit = async (
+    values: FormValues,
+    actions: FormikHelpers<FormValues>
   ) => {
     console.log(values);
-    actions.resetForm();
-    router.push("/depositSuccessFull");
-  };
+    try {
+      const response = await axiosInstance.put("/transaction/deposit", { amount: +values.amount });
+      console.log("Hello ",response.data.wallet);
+      actions.resetForm();
+      router.push("/depositSuccessFull");
+    } catch (error) {
+      console.log(error);
+    }
+};
 
   return (
     <SafeAreaView style={styles.container}>
       <Header title="Deposit" onPress={() => router.push("home")} />
 
       <Formik
-        initialValues={{ amount: "", selectedCard: false }}
+        initialValues={initialValues}
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
@@ -74,7 +90,7 @@ const Deposit = () => {
                 onChangeText={handleChange("amount")}
                 onBlur={() => handleBlur("amount")}
                 onFocus={() => console.log("Input focused")}
-                value={values.amount.toString()}
+                value={values.amount}
                 icon={"dollar"}
                 keyType="numeric"
               />
