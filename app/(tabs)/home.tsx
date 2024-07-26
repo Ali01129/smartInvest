@@ -28,7 +28,7 @@ const Home = () => {
   const [mainImage, setMainImage] = useState(Images.amongus);
   const { token, user } = useSelector((state: RootState) => state.auth);
 
-  const images = [Images.amongus, Images.goku, Images.zoro, Images.amongus];
+  const images = [Images.amongus, Images. amongus2, Images. amongus3, Images. amongus4];
 
   useEffect(() => {
     console.log("token", token);

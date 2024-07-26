@@ -6,4 +6,7 @@ export default {
     transactionlogo: require('../assets/images/transactionlogo.png'),
     goku: require('../assets/images/goku.png'),
     deposit: require('../assets/images/deposit.gif'),
+    amongus2: require('../assets/images/main.png'),
+    amongus3: require('../assets/images/main2.png'),
+    amongus4: require('../assets/images/images.png'),
 };
