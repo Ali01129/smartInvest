@@ -13,10 +13,10 @@ const Index = () => {
   return (
     <SafeAreaView style={styles.container}>
       <View>
-        {/* <Image
+        <Image
           source={Images.onboarding}
           style={{ width: 400, height: 500, resizeMode: "contain" }}
-        /> */}
+        />
       </View>
       <View style={{ width: "100%", justifyContent: "space-between", flex: 1 }}>
         <Text style={styles.text}>Your Personal crypto Wallet</Text>
