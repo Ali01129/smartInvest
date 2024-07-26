@@ -11,10 +11,10 @@ interface TransactionDetailsModalProps {
     visible: boolean;
     onClose: () => void;
     transaction: {
-        id: string;
+        _id: string;
         date: string;
         amount: string;
-        fromTo: string;
+        name: string;
         type: string;
     } | null;
 }
@@ -49,9 +49,9 @@ const TransactionDetailsModal: React.FC<TransactionDetailsModalProps> = ({ visib
                                 <Text style={styles.title}>Transaction Details</Text>
                                 <MaterialIcons name="download-for-offline" size={24} color={ColorPalette.secondary} onPress={captureScreenshot} />
                             </View>
-                            <Text style={styles.detail}>ID: {transaction.id}</Text>
+                            <Text style={styles.detail}>ID: {transaction._id}</Text>
                             <Text style={styles.detail}>
-                                {transaction.type === 'sent' ? `To: ${transaction.fromTo}` : `From: ${transaction.fromTo}`}
+                                {transaction.type === 'sent' ? `To: ${transaction.name}` : `From: ${transaction.name}`}
                             </Text>
                             <View style={{ justifyContent: "space-between", flexDirection: "row" }}>
                                 <Text style={styles.detail}> {transaction.amount}</Text>

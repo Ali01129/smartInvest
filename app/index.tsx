@@ -7,6 +7,8 @@ import { ColorPalette } from "../constants/Colors";
 import Images from "@/constants/Images";
 import CustomSolidButton from "@/components/CustomSolidButton";
 
+
+
 const Index = () => {
   return (
     <SafeAreaView style={styles.container}>

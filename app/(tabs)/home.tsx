@@ -20,11 +20,24 @@ import Images from "@/constants/Images";
 import { StatusBar } from "expo-status-bar";
 import axiosInstance from "@/utilities/axios";
 import { formatValidity } from "@/utilities/formatValidity";
+import axios from 'axios';
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/store";
+
+// Define TypeScript interface for Transaction
+interface Transaction {
+  name: string;
+  date: string;
+  amount: number;
+  type: 'sent'|'received';
+}
 
 const Home = () => {
   const [activeTab, setActiveTab] = useState("Transactions");
   const [modalVisible, setModalVisible] = useState(false);
   const [mainImage, setMainImage] = useState(Images.amongus);
+  const { token } = useSelector((state: RootState) => state.auth);
   const [packages, setPackages] = useState<any>([]);
 
   const fetchPackages = async () => {
@@ -40,46 +53,66 @@ const Home = () => {
   };
 
   const images = [Images.amongus, Images.goku, Images.zoro, Images.amongus];
+  const [transactions, setTransactions] = useState<Transaction[]>([]);
+  const [error, setError] = useState<string | null>(null);
 
-  useFocusEffect(
-    useCallback(() => {
-      fetchPackages();
-    }, [])
-  );
+  const getData = async () => {
+    try {
+      const response = await axiosInstance.get("transaction/list_by_user", {});
+      setTransactions(response.data.transactions);
+      if (response.status === 200) {
+        const fetchedTransactions: Transaction[] = response.data.transactions;
+        if (fetchedTransactions.length === 0) {
+          setError('No transactions found.');
+          setTransactions([]);
+        } else {
+          setTransactions(fetchedTransactions);
+          setError(null);
+        }
+      }
+    } catch (error) {
+      if (axios.isAxiosError(error) && error.response?.status === 404) {
+        setError('No transactions found. (404)');
+        setTransactions([]);
+      } else {
+        setError('Error fetching transactions.');
+        setTransactions([]);
+      }
+    }
+  };
+  useEffect(() => {
+    const fetchTokenAndData = async () => {
+      try {
+        const storedToken = await AsyncStorage.getItem('token');
+        if (storedToken) {
+          await getData();
+        }
+      } catch (error) {
+        console.error('Error fetching token or data:', error);
+      }
+    };
+
+    fetchTokenAndData();
+    fetchPackages();
+  }, [token,transactions, packages]);
+
   const renderContent = () => {
-    if (activeTab === "Transactions") {
+    if (activeTab === 'Transactions') {
       return (
-        <ScrollView style={{ width: "100%", height: 150 }}>
-          <TransCard
-            name={"Ahmad"}
-            date={"10-07-2024"}
-            price={50}
-            type={"sent"}
-          />
-          <TransCard
-            name={"Huzaifa"}
-            date={"10-07-2024"}
-            price={70}
-            type={"received"}
-          />
-          <TransCard
-            name={"Ali"}
-            date={"10-07-2024"}
-            price={60}
-            type={"sent"}
-          />
-          <TransCard
-            name={"Ali"}
-            date={"10-07-2024"}
-            price={60}
-            type={"sent"}
-          />
-          <TransCard
-            name={"Ali"}
-            date={"10-07-2024"}
-            price={60}
-            type={"sent"}
-          />
+        <ScrollView style={{ width: '100%', height: 150 }}>
+          {error && <Text style={{ color: 'white', textAlign: 'center' }}>{error}</Text>}
+          {transactions.length > 0 && transactions.map((transaction, index) => {
+            const date = new Date(transaction.date).toLocaleDateString();
+            return (
+              <TransCard
+                key={index}
+                name={transaction.name}
+                date={date}
+                price={transaction.amount}
+                type={transaction.type}
+              />
+            );
+          })}
           <SizedBox height={70} />
         </ScrollView>
       );

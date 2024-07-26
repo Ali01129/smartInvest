@@ -1,4 +1,5 @@
 import {
+  Alert,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -14,6 +15,7 @@ import * as Yup from "yup";
 import { StatusBar } from "expo-status-bar";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import CustomSolidButton from "@/components/CustomSolidButton";
+import axiosInstance from "@/utilities/axios";
 
 interface FormValues {
   email: string;
@@ -41,13 +43,21 @@ const SignUp: React.FC = () => {
     phantomWallet: Yup.string().required("Phantom Wallet is required"),
   });
 
-  const handleSubmit = (
+  const handleSubmit = async (
     values: FormValues,
     actions: FormikHelpers<FormValues>
   ) => {
     console.log(values);
-    actions.resetForm();
-    router.push("/otp");
+    try {
+      const response = await axiosInstance.post("/auth/signup", values);
+      console.log(response.data.packages);
+      actions.resetForm();
+      Alert.alert("Success", "Account created successfully");
+      router.push("/otp");
+    } catch (error) {
+      Alert.alert("Error", "An error occurred");
+      console.log(error);
+    }
   };
 
   return (
