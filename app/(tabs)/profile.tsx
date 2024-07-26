@@ -12,6 +12,7 @@ import { router } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import axiosInstance from "@/utilities/axios";
 import moment from 'moment';
+import { useFocusEffect } from "expo-router";
 
 const ProfileIndex = () => {
   const [usd, setUsd] = useState("123");
@@ -27,7 +28,6 @@ const ProfileIndex = () => {
   const fetchTransactions = async () => {
     try {
       const response = await axiosInstance.get("/transaction/list_by_user");
-      console.log(response.data.transactions);
       setTransactions(response.data.transactions);
       calculateTransactionSums(response.data.transactions);
     } catch (error) {
