@@ -6,7 +6,6 @@ import CustomSolidButton from "@/components/CustomSolidButton";
 import { router } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 
-
 const depositSuccessFull = () => {
   return (
     <SafeAreaView style={styles.container}>

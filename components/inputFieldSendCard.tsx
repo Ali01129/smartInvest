@@ -8,7 +8,7 @@ interface inputFieldSendCardProps {
     onChangeText?: (text: string) => void;
     onBlur: () => void;
     onFocus: () => void;
-    value?: string;
+    value?: any;
     icon?: string;
     keyType?: KeyboardTypeOptions;
 }

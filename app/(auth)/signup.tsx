@@ -49,7 +49,7 @@ const SignUp: React.FC = () => {
   ) => {
     console.log(values);
     try {
-      const response = await axiosInstance.post("/auth/signup", values);
+      const response = await axiosInstance.post("/auth/signup", { username:values.userName, password:values.password, email:values.email, phantomWalletAddress:values.phantomWallet});
       console.log(response.data.packages);
       actions.resetForm();
       Alert.alert("Success", "Account created successfully");

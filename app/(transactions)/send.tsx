@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, View, Image, TouchableOpacity, Alert } from "react-native";
 import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ColorPalette } from "@/constants/Colors";
@@ -12,19 +12,36 @@ import SendCard from "@/components/SendCard";
 import CustomSolidButton from "@/components/CustomSolidButton";
 import { StatusBar } from "expo-status-bar";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import axiosInstance from "@/utilities/axios";
+interface FormValues {
+  address: string;
+  amount: number;
+}
 const validationSchema = Yup.object().shape({
   address: Yup.string().required("Address is required"),
-  amount: Yup.string().required("Amount is required"),
+  amount: Yup.number().required("Amount is required"),
 });
 
-const Send = () => {
-  const handleSubmit = (
-    values: { address: string; amount: string },
-    actions: FormikHelpers<{ address: string; amount: string }>
+const Send: React.FC = () =>  {
+  const initialValues: FormValues = {
+    address:'',
+    amount:0,
+  };
+  const handleSubmit = async (
+    values: FormValues,
+    actions: FormikHelpers<FormValues>
   ) => {
     console.log(values);
-    actions.resetForm();
-    router.push("/sendConfirmation");
+    try {
+      const response = await axiosInstance.post("/transaction/send", { address:values.address,amount:+values.amount});
+      console.log(response.data);
+      actions.resetForm();
+      Alert.alert("Success", "Send Successful");
+      router.push("/home");
+    } catch (error) {
+      Alert.alert("Error", "An error occurred");
+      console.log(error);
+    }
   };
 
   return (
@@ -36,7 +53,7 @@ const Send = () => {
         image={Images.amongus}
       />
       <Formik
-        initialValues={{ address: "", amount: "" }}
+        initialValues={initialValues}
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
@@ -70,7 +87,7 @@ const Send = () => {
               onChangeText={handleChange("amount")}
               onBlur={() => handleBlur("amount")}
               onFocus={() => console.log("Input focused")}
-              value={values.amount.toString()}
+              value={values.amount}
               icon={"dollar"}
               keyType="numeric"
             />

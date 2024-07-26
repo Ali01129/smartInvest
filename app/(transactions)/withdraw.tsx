@@ -4,6 +4,7 @@ import {
   TextInput,
   View,
   TouchableOpacity,
+  Alert,
 } from "react-native";
 import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -15,10 +16,16 @@ import { SendCard2 } from "@/components/SendCard";
 import Images from "@/constants/Images";
 import { Formik, FormikHelpers } from "formik";
 import * as Yup from "yup";
-import InputField from "@/components/inputFieldSendCard";
 import CustomSolidButton from "@/components/CustomSolidButton";
 import { StatusBar } from "expo-status-bar";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import axiosInstance from "@/utilities/axios";
+
+// Define the interface for form values
+interface FormValues {
+  amount: string;
+  selectedCard: boolean;
+}
 
 // Define the validation schema using Yup
 const validationSchema = Yup.object().shape({
@@ -28,16 +35,29 @@ const validationSchema = Yup.object().shape({
   selectedCard: Yup.boolean().oneOf([true], "Payment method is required"),
 });
 
-const WithDraw = () => {
+const WithDraw: React.FC = () => {
   const [selectedCard, setSelectedCard] = useState(false);
 
-  const handleSubmit = (
-    values: { amount: string; selectedCard: boolean },
-    actions: FormikHelpers<{ amount: string; selectedCard: boolean }>
+  const initialValues: FormValues = {
+    amount: "",
+    selectedCard: false,
+  };
+
+  const handleSubmit = async (
+    values: FormValues,
+    actions: FormikHelpers<FormValues>
   ) => {
     console.log(values);
-    actions.resetForm();
-    router.push("/home"); // Update this route as needed
+    try {
+      const response = await axiosInstance.post("/transaction/withdraw", { amount: +values.amount });
+      console.log(response.data);
+      actions.resetForm();
+      Alert.alert("Success", "WithDraw Successful");
+      router.push("/home");
+    } catch (error) {
+      Alert.alert("Error", "An error occurred");
+      console.log(error);
+    }
   };
 
   return (
@@ -45,7 +65,7 @@ const WithDraw = () => {
       <Header title="Withdraw" onPress={() => router.push("home")} />
 
       <Formik
-        initialValues={{ amount: "", selectedCard: false }}
+        initialValues={initialValues}
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
@@ -60,7 +80,7 @@ const WithDraw = () => {
         }) => (
           <>
             <KeyboardAwareScrollView>
-              <Text style={styles.Text}> Amount</Text>
+              <Text style={styles.Text}>Amount</Text>
               <TextInput
                 placeholder="Enter Amount"
                 placeholderTextColor={ColorPalette.textGrey}
@@ -121,7 +141,6 @@ const WithDraw = () => {
                 </TouchableOpacity>
               </View>
 
-              {/* Add SendCard2 here */}
               <View style={{ marginTop: 16 }}>
                 <SendCard2
                   BoxName="Payment Method"
