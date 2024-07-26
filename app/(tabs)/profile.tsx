@@ -1,42 +1,75 @@
-import React, { useState } from 'react';
-import { StyleSheet, Text, View, ScrollView, Dimensions, TouchableOpacity } from 'react-native';
+import React, { useEffect, useState } from "react";
+import {
+  StyleSheet,
+  Text,
+  View,
+  ScrollView,
+  Dimensions,
+  TouchableOpacity,
+  Alert,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { ColorPalette } from '@/constants/Colors';
-import { PieChart } from 'react-native-chart-kit';
+import { ColorPalette } from "@/constants/Colors";
+import { PieChart } from "react-native-chart-kit";
 import SizedBox from "@/components/sizedbox";
 import PortfolioHeader from "@/components/profileHeader";
-import TransDetailsCard from '@/components/transDetailedCard';
+import TransDetailsCard from "@/components/transDetailedCard";
 import Icon from "@expo/vector-icons/MaterialIcons";
-import TransactionDetailsModal from '@/components/transactionDetailsModal';
+import TransactionDetailsModal from "@/components/transactionDetailsModal";
 import { router } from "expo-router";
 import { StatusBar } from "expo-status-bar";
+import axiosInstance from "@/utilities/axios";
+import moment from "moment";
 
 const ProfileIndex = () => {
-  const [usd, setUsd] = useState("123");
-  const [sc, setSc] = useState("4200.00");
+  const [usd, setUsd] = useState("0");
+  const [sc, setSc] = useState("0");
+  const [transactions, setTransactions] = useState([]);
+  const [sentAmount, setSentAmount] = useState(0);
+  const [receivedAmount, setReceivedAmount] = useState(0);
 
-  const [transactions, setTransactions] = useState([
-    { id: '1', date: '2023-07-10', amount: 'SC 200', fromTo: 'John Doe', type: "sent" },
-    { id: '2', date: '2023-07-11', amount: 'SC 150', fromTo: 'Jane Smith', type: "sent" },
-    { id: '3', date: '2023-07-12', amount: 'SC 50', fromTo: 'Mike Johnson', type: "received" },
-    { id: '4', date: '2023-07-12', amount: 'SC 50', fromTo: 'Mike Johnson', type: "received" },
-    { id: '5', date: '2023-07-12', amount: 'SC 500', fromTo: 'Ali Nawaz', type: "received" },
-    { id: '6', date: '2023-07-12', amount: 'SC 50', fromTo: 'Mike Johnson', type: "received" },
-    { id: '7', date: '2023-07-12', amount: 'SC 50', fromTo: 'Mike Johnson', type: "received" },
-    { id: '8', date: '2023-07-11', amount: 'SC 50', fromTo: 'Ali Nawaz', type: "sent" },
-    { id: '9', date: '2023-07-11', amount: 'SC 150', fromTo: 'Jane Smith', type: "sent" },
-  ]);
+  useEffect(() => {
+    fetchTransactions();
+    fetchBalance();
+  }, [transactions]);
 
-  const [selectedTransaction, setSelectedTransaction] = useState<{
-    id: string;
-    date: string;
-    amount: string;
-    fromTo: string;
-    type: string;
-  } | null>(null);
+  const fetchBalance = async () => {
+    try {
+      const response = await axiosInstance.get("/wallet/info");
+      const walletData = response.data.wallet;
+      setUsd(walletData.usd);
+      setSc(walletData.smartCoin);
+    } catch (error) {
+      Alert.alert("Error", "Failed to fetch balance");
+    }
+  };
+
+  const fetchTransactions = async () => {
+    try {
+      const response = await axiosInstance.get("/transaction/list_by_user");
+      setTransactions(response.data.transactions);
+      calculateTransactionSums(response.data.transactions);
+    } catch (error) {
+      Alert.alert("Error", "Failed to fetch transactions");
+    }
+  };
+
+  const calculateTransactionSums = (transaction: any) => {
+    const sentSum = transactions
+      .filter((transaction) => transaction.type === "sent")
+      .reduce((sum, transaction) => sum + parseFloat(transaction.amount), 0);
+    const receivedSum = transactions
+      .filter((transaction) => transaction.type === "received")
+      .reduce((sum, transaction) => sum + parseFloat(transaction.amount), 0);
+
+    setSentAmount(sentSum);
+    setReceivedAmount(receivedSum);
+  };
+
+  const [selectedTransaction, setSelectedTransaction] = useState(null);
   const [isModalVisible, setModalVisible] = useState(false);
 
-  const openModal = (transaction: { id: string; date: string; amount: string; fromTo: string; type: string; }) => {
+  const openModal = (transaction: any) => {
     setSelectedTransaction(transaction);
     setModalVisible(true);
   };
@@ -46,26 +79,20 @@ const ProfileIndex = () => {
     setModalVisible(false);
   };
 
-  const sentTransactions = transactions.filter(item => item.type === 'sent');
-  const receivedTransactions = transactions.filter(item => item.type === 'received');
-
-  const sentAmount = sentTransactions.reduce((total, item) => total + parseFloat(item.amount.replace('SC ', '')), 0);
-  const receivedAmount = receivedTransactions.reduce((total, item) => total + parseFloat(item.amount.replace('SC ', '')), 0);
-
   const handlePress = () => {
-    router.navigate('/login');
+    router.navigate("/login");
   };
 
   const chartData = [
     {
-      name: 'SC Sent',
+      name: "SC Sent",
       amount: sentAmount,
       color: ColorPalette.primary,
       legendFontColor: ColorPalette.text,
       legendFontSize: 15,
     },
     {
-      name: 'SC Received',
+      name: "SC Received",
       amount: receivedAmount,
       color: ColorPalette.greyNav,
       legendFontColor: ColorPalette.text,
@@ -80,24 +107,34 @@ const ProfileIndex = () => {
       <PortfolioHeader
         title="Portfolio"
         settingsAction={handlePress}
-        usd={usd} // Example value
-        sc={sc} // Example value
+        usd={usd}
+        sc={sc}
       />
 
-      <View style={{ height: 1, backgroundColor: ColorPalette.textGrey, marginTop: 16 }} />
+      <View
+        style={{
+          height: 1,
+          backgroundColor: ColorPalette.textGrey,
+          marginTop: 16,
+        }}
+      />
 
       <View style={styles.chartContainer}>
         <View style={styles.chartHeader}>
           <Text style={styles.sectionTitle}>Transaction Summary</Text>
           <TouchableOpacity onPress={() => setChartVisible(!isChartVisible)}>
-            <Icon name={isChartVisible ? 'expand-more' : 'expand-less'} size={24} color={ColorPalette.text} />
+            <Icon
+              name={isChartVisible ? "expand-more" : "expand-less"}
+              size={24}
+              color={ColorPalette.text}
+            />
           </TouchableOpacity>
         </View>
 
         {isChartVisible && (
           <PieChart
             data={chartData}
-            width={Dimensions.get('window').width - 32}
+            width={Dimensions.get("window").width - 32}
             height={220}
             chartConfig={{
               backgroundColor: ColorPalette.background,
@@ -112,7 +149,7 @@ const ProfileIndex = () => {
               },
               propsForLabels: {
                 fontSize: 15,
-                fontWeight: 'bold',
+                fontWeight: "bold",
               },
             }}
             accessor="amount"
@@ -124,17 +161,22 @@ const ProfileIndex = () => {
       </View>
 
       {/* Transactions List */}
-      <Text style={[styles.sectionTitle, { paddingHorizontal: 16 }]}>Transactions</Text>
-      <ScrollView showsVerticalScrollIndicator={false} style={styles.scrollView}>
+      <Text style={[styles.sectionTitle, { paddingHorizontal: 16 }]}>
+        Transactions
+      </Text>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        style={styles.scrollView}
+      >
         <View style={{ paddingHorizontal: 16 }}>
           <SizedBox height={10} />
-          {transactions.map(item => (
+          {transactions.map((item) => (
             <TransDetailsCard
               key={item.id}
               id={item.id}
-              name={item.fromTo}
+              name={item.name}
               amount={item.amount}
-              date={item.date}
+              date={moment(item.date).format("HH:mm DD-MM-YYYY")}
               type={item.type}
               onPress={() => openModal(item)}
             />
@@ -151,7 +193,7 @@ const ProfileIndex = () => {
       <StatusBar backgroundColor={ColorPalette.background} style="light" />
     </SafeAreaView>
   );
-}
+};
 
 export default ProfileIndex;
 
@@ -167,17 +209,17 @@ const styles = StyleSheet.create({
   sectionTitle: {
     color: ColorPalette.text,
     fontSize: 20,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   chartContainer: {
-    alignItems: 'center',
+    alignItems: "center",
     marginVertical: 20,
   },
   chartHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    width: Dimensions.get('window').width - 32,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    width: Dimensions.get("window").width - 32,
     marginBottom: 10,
   },
 });

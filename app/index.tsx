@@ -6,17 +6,17 @@ import { StatusBar } from "expo-status-bar";
 import { ColorPalette } from "../constants/Colors";
 import Images from "@/constants/Images";
 import CustomSolidButton from "@/components/CustomSolidButton";
-import * as Svg from 'react-native-svg';
+
 
 
 const Index = () => {
   return (
     <SafeAreaView style={styles.container}>
       <View>
-        {/* <Image
+        <Image
           source={Images.onboarding}
           style={{ width: 400, height: 500, resizeMode: "contain" }}
-        /> */}
+        />
       </View>
       <View style={{ width: "100%", justifyContent: "space-between", flex: 1 }}>
         <Text style={styles.text}>Your Personal crypto Wallet</Text>

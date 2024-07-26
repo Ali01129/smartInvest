@@ -179,10 +179,11 @@ class TransactionController {
                 type: transaction.senderId === user.id ? 'sent' : 'received',
                 amount: transaction.amount,
                 date: transaction.createdAt,
-                name: transaction.senderId === user.id ?transaction.senderName:transaction.receiverName,
+                name: transaction.senderId === user.id ?transaction.receiverName:transaction.senderName,
             }));
     
-            return res.status(200).send({ status: 'success', transactions: selectedTransactions });
+            return res.status(200).send({ status: 'success', 
+                transactions: selectedTransactions.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())});
         } catch (error) {
             console.error('List transactions error:', error);
             return res.status(500).send({ status: 'error', message: 'Internal server error' });

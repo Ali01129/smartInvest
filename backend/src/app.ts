@@ -3,6 +3,7 @@ import express, { Application } from "express";
 import authService from "./routes/auth";
 import transactionService from "./routes/transaction";
 import packageService from "./routes/packages";
+import walletService from "./routes/wallet";
 import cors from "cors";
 import dotenv from "dotenv";
 dotenv.config();
@@ -34,6 +35,7 @@ app.use(express.json());
 app.use("/auth", authService);
 app.use("/transaction", transactionService);
 app.use("/package", packageService);
+app.use("/wallet", walletService);
 app.use(cors());
 
 app.listen(port, () => {
