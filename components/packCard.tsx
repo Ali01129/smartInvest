@@ -1,19 +1,28 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  Dimensions,
-} from "react-native";
+import { StyleSheet, Text, View, Dimensions } from "react-native";
 import { ColorPalette } from "@/constants/Colors";
 import { FontAwesome6 } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 const { height } = Dimensions.get("window");
+
+import { endOfMonth, differenceInDays, startOfDay } from "date-fns";
+
 interface SubscriptionProps {
   name: string;
   profit: number;
   coins: number;
   validity: string;
 }
+
+const getRemainingDaysOfMonth = () => {
+  const today = new Date();
+  const endOfThisMonth = endOfMonth(today);
+
+  // Calculate the remaining days
+  const remainingDays = differenceInDays(endOfThisMonth, startOfDay(today));
+
+  return remainingDays;
+};
+
 const PackCard: React.FC<SubscriptionProps> = ({
   name,
   profit,
@@ -51,7 +60,9 @@ const PackCard: React.FC<SubscriptionProps> = ({
               paddingHorizontal: 24,
             }}
           >
-            <Text style={{ fontWeight: "700" }}>12 days</Text>
+            <Text style={{ fontWeight: "700" }}>
+              {getRemainingDaysOfMonth()} days
+            </Text>
           </View>
         </LinearGradient>
       </View>

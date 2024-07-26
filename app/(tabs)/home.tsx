@@ -1,37 +1,70 @@
-import { Image, StyleSheet, Text, View, TouchableOpacity, ScrollView, Modal } from 'react-native';
-import React, { useEffect, useState } from 'react';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { ColorPalette } from '@/constants/Colors';
-import { FontAwesome6 } from '@expo/vector-icons';
-import { MaterialIcons } from '@expo/vector-icons';
-import { router } from 'expo-router';
-import TransCard from '@/components/transCard';
-import PackCard from '@/components/packCard';
-import SizedBox from '@/components/sizedbox';
-import Images from '@/constants/Images';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/store/store';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { StatusBar } from 'expo-status-bar';
-import axiosInstance from '@/utilities/axios';
-import axios from 'axios';
+import {
+  Image,
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  ScrollView,
+  Modal,
+} from "react-native";
+import React, { useCallback, useEffect, useState } from "react";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { ColorPalette } from "@/constants/Colors";
+import { FontAwesome6 } from "@expo/vector-icons";
+import { MaterialIcons } from "@expo/vector-icons";
+import { router, useFocusEffect } from "expo-router";
+import TransCard from "@/components/transCard";
+import PackCard from "@/components/packCard";
+import SizedBox from "@/components/sizedbox";
+import Images from "@/constants/Images";
+import { StatusBar } from "expo-status-bar";
+import axiosInstance from "@/utilities/axios";
+import { formatValidity } from "@/utilities/formatValidity";
+import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/store";
 
 // Define TypeScript interface for Transaction
 interface Transaction {
   name: string;
   date: string;
   amount: number;
-  type: 'sent'|'received';
+  type: "sent" | "received";
 }
 
-const Home: React.FC = () => {
-  const [activeTab, setActiveTab] = useState('Transactions');
+const Home = () => {
+  const [activeTab, setActiveTab] = useState("Transactions");
   const [modalVisible, setModalVisible] = useState(false);
   const [mainImage, setMainImage] = useState(Images.amongus);
   const { token } = useSelector((state: RootState) => state.auth);
-  const images = [Images.amongus, Images.amongus2, Images.amongus3, Images.amongus4];
+  const [packages, setPackages] = useState<any>([]);
+  const [amount, setAmount] = useState(0);
+  const images = [Images.amongus, Images.goku, Images.zoro, Images.amongus];
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [error, setError] = useState<string | null>(null);
+
+  const fetchPackages = async () => {
+    try {
+      const response = await axiosInstance.get("/package/subscribed");
+      const packagesSubscribed = response.data.packages;
+      console.log("Packages Subscribed:", packagesSubscribed);
+      setPackages(packagesSubscribed);
+      console.log("Packages:", packages);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const fetchAmount = async () => {
+    try {
+      const response = await axiosInstance.get("/wallet/info");
+      const walletData = response.data.wallet;
+      setAmount(walletData.usd + walletData.smartCoin * 0.5);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const getData = async () => {
     try {
@@ -40,7 +73,7 @@ const Home: React.FC = () => {
       if (response.status === 200) {
         const fetchedTransactions: Transaction[] = response.data.transactions;
         if (fetchedTransactions.length === 0) {
-          setError('No transactions found.');
+          setError("No transactions found.");
           setTransactions([]);
         } else {
           setTransactions(fetchedTransactions);
@@ -49,56 +82,74 @@ const Home: React.FC = () => {
       }
     } catch (error) {
       if (axios.isAxiosError(error) && error.response?.status === 404) {
-        setError('No transactions found. (404)');
+        setError("No transactions found. (404)");
         setTransactions([]);
       } else {
-        setError('Error fetching transactions.');
+        setError("Error fetching transactions.");
         setTransactions([]);
       }
     }
   };
-
   useEffect(() => {
     const fetchTokenAndData = async () => {
       try {
-        const storedToken = await AsyncStorage.getItem('token');
+        const storedToken = await AsyncStorage.getItem("token");
         if (storedToken) {
           await getData();
         }
       } catch (error) {
-        console.error('Error fetching token or data:', error);
+        console.error("Error fetching token or data:", error);
       }
     };
 
+    fetchAmount();
     fetchTokenAndData();
-  }, [token,transactions]);
+    fetchPackages();
+  }, [token, transactions, packages]);
 
   const renderContent = () => {
-    if (activeTab === 'Transactions') {
+    if (activeTab === "Transactions") {
       return (
-        <ScrollView style={{ width: '100%', height: 150 }}>
-          {error && <Text style={{ color: 'white', textAlign: 'center' }}>{error}</Text>}
-          {transactions.length > 0 && transactions.map((transaction, index) => {
-            const date = new Date(transaction.date).toLocaleDateString();
-            return (
-              <TransCard
-                key={index}
-                name={transaction.name}
-                date={date}
-                price={transaction.amount}
-                type={transaction.type}
-              />
-            );
-          })}
+        <ScrollView style={{ width: "100%", height: 150 }}>
+          {error && (
+            <Text style={{ color: "white", textAlign: "center" }}>{error}</Text>
+          )}
+          {transactions.length > 0 &&
+            transactions.map((transaction, index) => {
+              const date = new Date(transaction.date).toLocaleDateString();
+              return (
+                <TransCard
+                  key={index}
+                  name={transaction.name}
+                  date={date}
+                  price={transaction.amount}
+                  type={transaction.type}
+                />
+              );
+            })}
           <SizedBox height={70} />
         </ScrollView>
       );
     } else {
       return (
-        <ScrollView style={{ width: '100%', height: 350 }}>
-          <PackCard name="VIP" profit={20} coins={500} validity="4 months" />
-          <PackCard name="VIP" profit={20} coins={500} validity="4 months" />
-          <PackCard name="VIP" profit={20} coins={500} validity="4 months" />
+        <ScrollView style={{ width: "100%", height: 350 }}>
+          {/* // do mapping here */}
+          {packages &&
+            packages.map(
+              (item: any, index: any) => (
+                console.log("item", item),
+                (
+                  <PackCard
+                    key={index}
+                    name={item.name}
+                    profit={item.profit}
+                    coins={item.price}
+                    validity={formatValidity(item.validity)}
+                  />
+                )
+              )
+            )}
+
           <SizedBox height={70} />
         </ScrollView>
       );
@@ -129,7 +180,7 @@ const Home: React.FC = () => {
         <Text style={[styles.subtitle, { color: "black", fontSize: 14 }]}>
           Balance
         </Text>
-        <Text style={[styles.title, { color: "black" }]}>$500</Text>
+        <Text style={[styles.title, { color: "black" }]}>${amount}</Text>
 
         <View
           style={{
