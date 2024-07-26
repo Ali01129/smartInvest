@@ -1,4 +1,4 @@
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Alert } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ColorPalette } from "@/constants/Colors";
 import React, { useCallback, useState } from "react";
@@ -9,6 +9,7 @@ import { router } from "expo-router";
 import ConversionInputField from "@/components/conversionInputField";
 import SwapButton from "@/components/swapButton";
 import { StatusBar } from "expo-status-bar";
+import axiosInstance from "@/utilities/axios";
 
 const Conversion = () => {
   const [dollarValue, setDollarValue] = useState<string>("");
@@ -89,6 +90,21 @@ const Conversion = () => {
     [isFirstDollar, isFirstFocused, isSecondFocused, calculateValue]
   );
 
+  const handleConvert = async () => {
+    try {
+      const response = await axiosInstance.post("/transaction/convert", {
+        amount: isFirstDollar ? dollarValue : coinValue,
+        DtoSc: isFirstDollar,
+      });
+      Alert.alert("Success", response.data.message);
+      setDollarValue("");
+      setCoinValue("");
+    } catch (error) {
+      console.log(error);
+      Alert.alert("Error", "Something went wrong");
+    }
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <Header
@@ -109,7 +125,7 @@ const Conversion = () => {
         gradientColors={[ColorPalette.g2, ColorPalette.secondary]}
         text={"Convert"}
         textColor={ColorPalette.background}
-        onPress={() => { }}
+        onPress={() => handleConvert()}
       />
       <StatusBar backgroundColor={ColorPalette.background} style="light" />
     </SafeAreaView>
