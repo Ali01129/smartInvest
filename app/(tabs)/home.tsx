@@ -90,7 +90,7 @@ const Home = () => {
       }
     }
   };
-  
+
   const fetchTokenAndData = async () => {
     try {
       const storedToken = await AsyncStorage.getItem("token");
@@ -137,6 +137,7 @@ const Home = () => {
       return (
         <ScrollView style={{ width: "100%", height: 350 }}>
           {/* // do mapping here */}
+
           {packages &&
             packages.map(
               (item: any, index: any) => (
