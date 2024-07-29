@@ -1,10 +1,5 @@
-import {
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native"; // Import ScrollView
-import React, { useState } from "react";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native"; // Import ScrollView
+import React, { useEffect, useState } from "react";
 import { router } from "expo-router";
 import { ColorPalette } from "@/constants/Colors";
 import { AntDesign } from "@expo/vector-icons";
@@ -18,8 +13,6 @@ import CustomSolidButton from "@/components/CustomSolidButton";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { StatusBar } from "expo-status-bar";
 
-
-
 interface FormValues {
   email: string;
   password: string;
@@ -27,20 +20,21 @@ interface FormValues {
 
 const Login: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
-  const { loading, error } = useSelector((state: RootState) => state.auth);
+  const { loading, error, token } = useSelector((state: RootState) => state.auth);
 
   const handleLogin = (email: string, password: string) => {
     console.log("in handle login");
-    dispatch(login(email, password))
-      .then(() => {
-        if (!loading && !error) {
-          router.push("/home");
-        }
-      })
-      .catch((err) => {
-        console.log("error", err);
-      });
+    dispatch(login(email, password));
   };
+
+  useEffect(() => {
+    if (!loading && !error && token) {
+      console.log("Login successful, navigating to home");
+      router.push("/home");
+    } else if (error) {
+      console.log("Login error detected, staying on login screen");
+    }
+  }, [loading, error, token]);
 
   const initialValues: FormValues = {
     email: "",

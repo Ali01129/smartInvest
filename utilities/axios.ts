@@ -4,7 +4,7 @@ import axios from "axios";
 import { useSelector, UseSelector } from "react-redux";
 
 const axiosInstance = axios.create({
-  baseURL: "http://192.168.8.97:5000", // enter your laptop ip address and port number
+  baseURL: "http://192.168.6.66:5000", // enter your laptop ip address and port number
   headers: {
     "Content-Type": "application/json",
   },
@@ -13,7 +13,7 @@ const axiosInstance = axios.create({
 // Request Interceptor
 axiosInstance.interceptors.request.use(
   async (config) => {
-    const token = await AsyncStorage.getItem("token"); 
+    const token = await AsyncStorage.getItem("token");
 
     if (token) {
       config.headers["auth-token"] = token; // Set Authorization header if token exists

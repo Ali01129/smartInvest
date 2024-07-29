@@ -90,22 +90,25 @@ const Home = () => {
       }
     }
   };
-  useEffect(() => {
-    const fetchTokenAndData = async () => {
-      try {
-        const storedToken = await AsyncStorage.getItem("token");
-        if (storedToken) {
-          await getData();
-        }
-      } catch (error) {
-        console.error("Error fetching token or data:", error);
+  
+  const fetchTokenAndData = async () => {
+    try {
+      const storedToken = await AsyncStorage.getItem("token");
+      if (storedToken) {
+        await getData();
       }
-    };
+    } catch (error) {
+      console.error("Error fetching token or data:", error);
+    }
+  };
 
-    fetchAmount();
-    fetchTokenAndData();
-    fetchPackages();
-  }, [token, transactions, packages]);
+  useFocusEffect(
+    useCallback(() => {
+      fetchPackages();
+      fetchAmount();
+      fetchTokenAndData();
+    }, [])
+  );
 
   const renderContent = () => {
     if (activeTab === "Transactions") {
