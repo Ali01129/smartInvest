@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -16,7 +16,7 @@ import PortfolioHeader from "@/components/profileHeader";
 import TransDetailsCard from "@/components/transDetailedCard";
 import Icon from "@expo/vector-icons/MaterialIcons";
 import TransactionDetailsModal from "@/components/transactionDetailsModal";
-import { router } from "expo-router";
+import { router, useFocusEffect } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import axiosInstance from "@/utilities/axios";
 import moment from "moment";
@@ -28,10 +28,12 @@ const ProfileIndex = () => {
   const [sentAmount, setSentAmount] = useState(0);
   const [receivedAmount, setReceivedAmount] = useState(0);
 
-  useEffect(() => {
-    fetchTransactions();
-    fetchBalance();
-  }, [transactions]);
+  useFocusEffect(
+    useCallback(() => {
+      fetchTransactions();
+      fetchBalance();
+    }, [])
+  );
 
   const fetchBalance = async () => {
     try {
