@@ -32,12 +32,17 @@ const ProfileIndex = () => {
   const [receivedAmount, setReceivedAmount] = useState(0);
   const dispatch: AppDispatch = useDispatch();
 
-  useFocusEffect(
-    useCallback(() => {
-      fetchTransactions();
-      fetchBalance();
-    }, [])
-  );
+  // useFocusEffect(
+  //   useCallback(() => {
+  //     fetchTransactions();
+  //     fetchBalance();
+  //   }, [])
+  // );
+
+  useEffect(() => {
+    fetchTransactions();
+    fetchBalance();
+  }, [transactions]);
 
   const fetchBalance = async () => {
     try {

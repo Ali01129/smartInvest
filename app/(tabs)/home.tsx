@@ -60,7 +60,7 @@ const Home = () => {
     try {
       const response = await axiosInstance.get("/wallet/info");
       const walletData = response.data.wallet;
-      setAmount(walletData.usd + walletData.smartCoin * 0.5);
+      setAmount(walletData.usd + walletData.smartCoin * (1/5));
     } catch (error) {
       console.log(error);
     }
