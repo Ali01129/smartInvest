@@ -48,9 +48,9 @@ const Home = () => {
     try {
       const response = await axiosInstance.get("/package/subscribed");
       const packagesSubscribed = response.data.packages;
-      console.log("Packages Subscribed:", packagesSubscribed);
+      // console.log("Packages Subscribed:", packagesSubscribed);
       setPackages(packagesSubscribed);
-      console.log("Packages:", packages);
+      // console.log("Packages:", packages);
     } catch (error) {
       console.log(error);
     }
