@@ -60,7 +60,7 @@ const Home = () => {
     try {
       const response = await axiosInstance.get("/wallet/info");
       const walletData = response.data.wallet;
-      setAmount(walletData.usd + walletData.smartCoin * 0.5);
+      setAmount(walletData.usd + walletData.smartCoin * (1/5));
     } catch (error) {
       console.log(error);
     }
@@ -90,22 +90,25 @@ const Home = () => {
       }
     }
   };
-  useEffect(() => {
-    const fetchTokenAndData = async () => {
-      try {
-        const storedToken = await AsyncStorage.getItem("token");
-        if (storedToken) {
-          await getData();
-        }
-      } catch (error) {
-        console.error("Error fetching token or data:", error);
-      }
-    };
 
-    fetchAmount();
-    fetchTokenAndData();
-    fetchPackages();
-  }, [token, transactions, packages]);
+  const fetchTokenAndData = async () => {
+    try {
+      const storedToken = await AsyncStorage.getItem("token");
+      if (storedToken) {
+        await getData();
+      }
+    } catch (error) {
+      console.error("Error fetching token or data:", error);
+    }
+  };
+
+  useFocusEffect(
+    useCallback(() => {
+      fetchPackages();
+      fetchAmount();
+      fetchTokenAndData();
+    }, [])
+  );
 
   const renderContent = () => {
     if (activeTab === "Transactions") {
@@ -134,6 +137,7 @@ const Home = () => {
       return (
         <ScrollView style={{ width: "100%", height: 350 }}>
           {/* // do mapping here */}
+
           {packages &&
             packages.map(
               (item: any, index: any) => (

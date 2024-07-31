@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -16,10 +16,13 @@ import PortfolioHeader from "@/components/profileHeader";
 import TransDetailsCard from "@/components/transDetailedCard";
 import Icon from "@expo/vector-icons/MaterialIcons";
 import TransactionDetailsModal from "@/components/transactionDetailsModal";
-import { router } from "expo-router";
+import { router, useFocusEffect } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import axiosInstance from "@/utilities/axios";
+import { logout } from "@/actions/authActions";
 import moment from "moment";
+import { AppDispatch } from "@/store/store";
+import { useDispatch } from "react-redux";
 
 const ProfileIndex = () => {
   const [usd, setUsd] = useState("0");
@@ -27,6 +30,14 @@ const ProfileIndex = () => {
   const [transactions, setTransactions] = useState([]);
   const [sentAmount, setSentAmount] = useState(0);
   const [receivedAmount, setReceivedAmount] = useState(0);
+  const dispatch: AppDispatch = useDispatch();
+
+  // useFocusEffect(
+  //   useCallback(() => {
+  //     fetchTransactions();
+  //     fetchBalance();
+  //   }, [])
+  // );
 
   useEffect(() => {
     fetchTransactions();
@@ -80,6 +91,8 @@ const ProfileIndex = () => {
   };
 
   const handlePress = () => {
+    dispatch(logout());
+    console.log("token reset..");
     router.navigate("/login");
   };
 

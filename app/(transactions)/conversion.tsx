@@ -17,8 +17,8 @@ const Conversion = () => {
   const [isFirstDollar, setIsFirstDollar] = useState<boolean>(true);
   const [isFirstFocused, setIsFirstFocused] = useState<boolean>(false);
   const [isSecondFocused, setIsSecondFocused] = useState<boolean>(false);
-  const dollarToCoinRate = 0.22;
-  const coinToDollar = 22;
+  const dollarToCoinRate = 5;
+  const coinToDollar = 0.5;
 
   const handleNumpadPress = (button: string) => {
     if (isFirstFocused && isFirstDollar) {
