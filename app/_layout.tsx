@@ -13,11 +13,11 @@ const _layout = () => {
           options={{ headerShown: false, animation: "ios" }}
         />
         <Stack.Screen
-          name="(tabs)"
+          name="(transactions)"
           options={{ headerShown: false, animation: "ios" }}
         />
         <Stack.Screen
-          name="(transactions)"
+          name="(tabs)"
           options={{ headerShown: false, animation: "ios" }}
         />
       </Stack>

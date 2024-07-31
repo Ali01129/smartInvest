@@ -119,7 +119,7 @@ const WithDraw: React.FC = () => {
                     fontWeight: "500",
                   }}
                 >
-                 {usdAmount}
+                 {usdAmount}$
                 </Text>
                 <Text style={{ color: ColorPalette.text }}>
                   AVAILABLE BALANCE
