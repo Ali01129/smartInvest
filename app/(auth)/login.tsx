@@ -1,17 +1,17 @@
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native"; // Import ScrollView
-import React, { useEffect, useState } from "react";
-import { router } from "expo-router";
-import { ColorPalette } from "@/constants/Colors";
-import { AntDesign } from "@expo/vector-icons";
-import { Formik, FormikHelpers } from "formik";
-import InputField from "@/components/inputField";
-import * as Yup from "yup";
-import { useSelector, useDispatch } from "react-redux";
-import { login } from "@/actions/authActions";
-import { AppDispatch, RootState } from "@/store/store";
-import CustomSolidButton from "@/components/CustomSolidButton";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { StatusBar } from "expo-status-bar";
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'; // Import ScrollView
+import React, { useEffect, useState } from 'react';
+import { router } from 'expo-router';
+import { ColorPalette } from '@/constants/Colors';
+import { AntDesign } from '@expo/vector-icons';
+import { Formik, FormikHelpers } from 'formik';
+import InputField from '@/components/inputField';
+import * as Yup from 'yup';
+import { useSelector, useDispatch } from 'react-redux';
+import { login } from '@/actions/authActions';
+import { AppDispatch, RootState } from '@/store/store';
+import CustomSolidButton from '@/components/CustomSolidButton';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { StatusBar } from 'expo-status-bar';
 
 interface FormValues {
   email: string;
@@ -19,33 +19,35 @@ interface FormValues {
 }
 
 const Login: React.FC = () => {
-  const dispatch: AppDispatch = useDispatch();
-  const { loading, error, token } = useSelector((state: RootState) => state.auth);
+  const disptch: AppDispatch = useDispatch();
+  const { loading, error, token } = useSelector(
+    (state: RootState) => state.auth
+  );
 
   const handleLogin = (email: string, password: string) => {
-    console.log("in handle login");
-    dispatch(login(email, password));
+    console.log('in handle login');
+    disptch(login(email, password));
   };
 
   useEffect(() => {
     if (!loading && !error && token) {
-      console.log("Login successful, navigating to home");
-      router.push("/home");
+      console.log('Login successful, navigating to home');
+      router.push('/home');
     } else if (error) {
-      console.log("Login error detected, staying on login screen");
+      console.log('Login error detected, staying on login screen');
     }
   }, [loading, error, token]);
 
   const initialValues: FormValues = {
-    email: "",
-    password: "",
+    email: '',
+    password: '',
   };
 
   const validationSchema = Yup.object().shape({
-    email: Yup.string().email("Invalid email").required("Email is required"),
+    email: Yup.string().email('Invalid email').required('Email is required'),
     password: Yup.string()
-      .min(6, "Password must be at least 6 characters")
-      .required("Password is required"),
+      .min(6, 'Password must be at least 6 characters')
+      .required('Password is required'),
   });
 
   const handleSubmit = (
@@ -71,13 +73,13 @@ const Login: React.FC = () => {
           errors,
           touched,
         }) => (
-          <View style={{ width: "100%" }}>
+          <View style={{ width: '100%' }}>
             <View
               style={{
-                alignSelf: "flex-start",
-                flexDirection: "row",
+                alignSelf: 'flex-start',
+                flexDirection: 'row',
                 marginBottom: 50,
-                alignItems: "center",
+                alignItems: 'center',
               }}
             >
               <TouchableOpacity
@@ -86,37 +88,37 @@ const Login: React.FC = () => {
                   router.back();
                 }}
               >
-                <AntDesign name="left" size={26} color="white" />
+                <AntDesign name='left' size={26} color='white' />
               </TouchableOpacity>
               <Text style={styles.title}>Login</Text>
             </View>
 
             <InputField
-              name="Email"
-              placeholder="Enter your Email"
-              onChangeText={handleChange("email")}
-              onBlur={() => handleBlur("email")}
-              onFocus={() => console.log("Input focused")}
+              name='Email'
+              placeholder='Enter your Email'
+              onChangeText={handleChange('email')}
+              onBlur={() => handleBlur('email')}
+              onFocus={() => console.log('Input focused')}
               value={values.email}
-              icon={"email"}
+              icon={'email'}
             />
 
             {touched.email && errors.email && (
-              <Text style={{ color: "red", marginBottom: 10 }}>
+              <Text style={{ color: 'red', marginBottom: 10 }}>
                 {errors.email}
               </Text>
             )}
             <InputField
-              name="Password"
-              placeholder="Enter your Password"
-              onChangeText={handleChange("password")}
-              onBlur={() => handleBlur("password")}
-              onFocus={() => console.log("Input focused")}
+              name='Password'
+              placeholder='Enter your Password'
+              onChangeText={handleChange('password')}
+              onBlur={() => handleBlur('password')}
+              onFocus={() => console.log('Input focused')}
               value={values.password}
-              icon={"locked"}
+              icon={'locked'}
             />
             {touched.password && errors.password && (
-              <Text style={{ color: "red", marginBottom: 10 }}>
+              <Text style={{ color: 'red', marginBottom: 10 }}>
                 {errors.password}
               </Text>
             )}
@@ -124,12 +126,12 @@ const Login: React.FC = () => {
             <View>
               <Text
                 style={{
-                  color: "white",
-                  alignSelf: "flex-end",
+                  color: 'white',
+                  alignSelf: 'flex-end',
                   marginBottom: 20,
                 }}
                 onPress={() => {
-                  router.push("forgetPassword");
+                  router.push('forgetPassword');
                 }}
               >
                 Forgot Password?
@@ -137,24 +139,24 @@ const Login: React.FC = () => {
             </View>
             <CustomSolidButton
               gradientColors={[ColorPalette.g2, ColorPalette.secondary]}
-              text={loading ? "Loading..." : "Login"}
+              text={loading ? 'Loading...' : 'Login'}
               textColor={ColorPalette.textBlack}
               onPress={() => handleSubmit()}
             />
             {/* if  there is any error */}
-            {error && <Text style={{ color: "red" }}>{error}</Text>}
+            {error && <Text style={{ color: 'red' }}>{error}</Text>}
             <View>
               <Text
-                style={{ color: "white", alignSelf: "center", marginTop: 20 }}
+                style={{ color: 'white', alignSelf: 'center', marginTop: 20 }}
               >
                 Don't have an account?
                 <Text
                   style={{ color: ColorPalette.secondary }}
                   onPress={() => {
-                    router.replace("signup");
+                    router.replace('signup');
                   }}
                 >
-                  {" "}
+                  {' '}
                   Sign Up
                 </Text>
               </Text>
@@ -162,7 +164,7 @@ const Login: React.FC = () => {
           </View>
         )}
       </Formik>
-      <StatusBar backgroundColor={ColorPalette.background} style="light" />
+      <StatusBar backgroundColor={ColorPalette.background} style='light' />
     </KeyboardAwareScrollView>
   );
 };
@@ -172,7 +174,7 @@ export default Login;
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
-    alignItems: "center",
+    alignItems: 'center',
     backgroundColor: ColorPalette.background,
     padding: 16,
     paddingTop: 80,
@@ -181,26 +183,26 @@ const styles = StyleSheet.create({
     marginLeft: 15,
     color: ColorPalette.text,
     fontSize: 30,
-    fontWeight: "bold",
+    fontWeight: 'bold',
   },
   box: {
     borderWidth: 2,
-    borderColor: "grey",
+    borderColor: 'grey',
     padding: 10,
     borderRadius: 16,
     marginRight: 10,
   },
   logInText: {
     color: ColorPalette.background,
-    textAlign: "center",
+    textAlign: 'center',
     fontSize: 18,
-    fontWeight: "bold",
+    fontWeight: 'bold',
   },
   gradient: {
     borderRadius: 16,
     marginTop: 10,
     padding: 15,
-    width: "100%",
+    width: '100%',
     backgroundColor: ColorPalette.secondary,
   },
 });
