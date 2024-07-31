@@ -5,8 +5,35 @@ import Images from "@/constants/Images";
 import CustomSolidButton from "@/components/CustomSolidButton";
 import { router } from "expo-router";
 import { StatusBar } from "expo-status-bar";
+import { useEffect, useState } from "react";
+import axiosInstance from "@/utilities/axios";
+import { format } from 'date-fns';
 
-const depositSuccessFull = () => {
+const DepositSuccessFull = () => {
+  const [currentDateTime, setCurrentDateTime] = useState<string>(format(new Date(), 'PPpp'));
+  const [amount, setAmount] = useState<number | null>(null);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setCurrentDateTime(format(new Date(), 'PPpp'));
+    }, 10000000);
+
+    return () => clearInterval(intervalId); // Cleanup interval on component unmount
+  }, []);
+
+  const fetchAmount = async () => {
+    try {
+      const response = await axiosInstance.get("/wallet/info");
+      const walletData = response.data.wallet;
+      setAmount(walletData.usd + walletData.smartCoin * 0.5);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchAmount();
+  }, []);
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.Header}>
@@ -20,7 +47,7 @@ const depositSuccessFull = () => {
           style={styles.Picture}
         />
       </View>
-      <Text style={styles.AmountText}>USD 500.00</Text>
+      <Text style={styles.AmountText}>Deposited</Text>
       <View style={styles.transactionDetail}>
         <Image source={Images.transactionlogo} />
         <View style={{ marginLeft: 15 }}>
@@ -28,7 +55,7 @@ const depositSuccessFull = () => {
             Successfully paid to UXUI Partner
           </Text>
           <Text style={{ color: "#f2f2f0", fontWeight: "400" }}>
-            24 Nov 2024, 1:43 PM
+            {currentDateTime}
           </Text>
         </View>
       </View>
@@ -47,7 +74,7 @@ const depositSuccessFull = () => {
         <View>
           <Text style={styles.DetailText}>PRN23456</Text>
           <Text style={styles.DetailText}>Strip </Text>
-          <Text style={styles.DetailText}>$1000.00</Text>
+          <Text style={styles.DetailText}>{amount}</Text>
         </View>
       </View>
 
@@ -107,4 +134,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default depositSuccessFull;
+export default DepositSuccessFull;
