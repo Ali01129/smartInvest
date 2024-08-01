@@ -14,12 +14,14 @@ const TabsLayout = () => {
         tabBarLabelStyle: {
           fontSize: 10,
           position: 'relative',
-          top: Platform.OS === 'ios' ? 10 : -22, // Adjust or remove the top value
+          top: Platform.OS === 'ios' ? 15 : -10, // Adjust or remove the top value
+        },
+        tabBarIconStyle: {
+          marginTop: Platform.OS === 'ios' ? 30 : 0,
         },
         tabBarStyle: {
           backgroundColor: ColorPalette.greyNav,
           borderTopWidth: 0,
-          paddingTop: 20,
           height: 70,
           borderRadius: 10,
           overflow: 'hidden',
@@ -32,7 +34,8 @@ const TabsLayout = () => {
           shadowOffset: { width: 0, height: 2 }, // iOS
           shadowOpacity: 0.25, // iOS
           shadowRadius: 3.5, // iOS
-          margin: 16,
+          marginHorizontal: 16,
+          marginBottom: 16,
           alignContent: 'center',
           alignItems: 'center',
           alignSelf: 'center',
