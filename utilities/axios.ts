@@ -1,10 +1,9 @@
-import { RootState } from '@/store/store';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
-import { useSelector, UseSelector } from 'react-redux';
 
 const axiosInstance = axios.create({
-  baseURL: 'http://mobile.smartinvest.global', // enter your laptop ip address and port number
+  // baseURL: 'http://54.162.155.99', // enter your serve ip address
+  baseURL: 'http://localhost:5000',
   headers: {
     'Content-Type': 'application/json',
   },
