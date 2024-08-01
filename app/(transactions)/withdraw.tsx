@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   Alert,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ColorPalette } from "@/constants/Colors";
 import Header from "@/components/header";
@@ -20,6 +20,7 @@ import CustomSolidButton from "@/components/CustomSolidButton";
 import { StatusBar } from "expo-status-bar";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import axiosInstance from "@/utilities/axios";
+import { ValueSetter } from "date-fns/parse/_lib/Setter";
 
 // Define the interface for form values
 interface FormValues {
@@ -37,6 +38,7 @@ const validationSchema = Yup.object().shape({
 
 const WithDraw: React.FC = () => {
   const [selectedCard, setSelectedCard] = useState(false);
+  const [usdAmount,setUsdAmount]=useState(null);
 
   const initialValues: FormValues = {
     amount: "",
@@ -59,6 +61,19 @@ const WithDraw: React.FC = () => {
       console.log(error);
     }
   };
+  const fetchAmount = async () => {
+    try {
+      const response = await axiosInstance.get("/wallet/info");
+      const walletData = response.data.wallet;
+      setUsdAmount(walletData.usd);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchAmount();
+  }, []);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -104,7 +119,7 @@ const WithDraw: React.FC = () => {
                     fontWeight: "500",
                   }}
                 >
-                  $480.00
+                 {usdAmount}$
                 </Text>
                 <Text style={{ color: ColorPalette.text }}>
                   AVAILABLE BALANCE
