@@ -4,7 +4,7 @@ import axios from "axios";
 import { useSelector, UseSelector } from "react-redux";
 
 const axiosInstance = axios.create({
-  baseURL: "http://192.168.160.196:5000", // enter your laptop ip address and port number
+  baseURL: "http://192.168.1.2:5000", // enter your laptop ip address and port number
   headers: {
     "Content-Type": "application/json",
   },

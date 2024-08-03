@@ -5,6 +5,7 @@ interface IUser {
   email: string;
   password: string;
   referralCode?: string;
+  fcmToken?: string;
   phantomWalletAddress?: string;
   otpCode?: string;
   packagesSubscribed?: {
@@ -18,6 +19,7 @@ const UserSchema = new mongoose.Schema<IUser>({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   referralCode: { type: String, required: false },
+  fcmToken: { type: String, required: false },
   phantomWalletAddress: { type: String, unique: true, required: false },
   otpCode: { type: String, required: false },
   packagesSubscribed: {

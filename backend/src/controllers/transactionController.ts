@@ -5,6 +5,7 @@ import Stripe from "stripe";
 import dotenv from "dotenv";
 import User from "../models/user";
 import mongoose from "mongoose";
+import { sendPushNotification } from "../utils/sendNotification";
 dotenv.config();
 
 interface AuthenticatedRequest extends Request {
@@ -24,8 +25,6 @@ class TransactionController {
   ): Promise<Response> {
     const { address, amount } = req.body;
     const user = req.user;
-
- 
 
     try {
       const senderWallet = await Wallet.findOne({ userId: user.id });
@@ -63,6 +62,12 @@ class TransactionController {
         receiverName: receiver?.username,
         amount: amount,
       });
+      // this will send notification
+      await sendPushNotification(
+        receiver?.fcmToken || "",
+        "Recieved coins",
+        `You have recieved ${amount} smart coins from ${sender?.username}`
+      );
 
       return res.status(200).send({
         status: "success",
