@@ -16,6 +16,7 @@ import { StatusBar } from "expo-status-bar";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import CustomSolidButton from "@/components/CustomSolidButton";
 import axiosInstance from "@/utilities/axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 interface FormValues {
   email: string;
@@ -49,7 +50,8 @@ const SignUp: React.FC = () => {
   ) => {
     console.log(values);
     try {
-      const response = await axiosInstance.post("/auth/signup", { username:values.userName, password:values.password, email:values.email, phantomWalletAddress:values.phantomWallet});
+      const fcmToken = await AsyncStorage.getItem("fcmToken");
+      const response = await axiosInstance.post("/auth/signup", { username:values.userName, password:values.password, email:values.email, phantomWalletAddress:values.phantomWallet, fcmToken: fcmToken });
       console.log(response.data.packages);
       actions.resetForm();
       Alert.alert("Success", "Account created successfully");

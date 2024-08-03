@@ -27,7 +27,7 @@ class UserController {
     // getting username , password , email , referralCode , phantomWalletAddress from user
 
   public async signup(req: Request, res: Response): Promise<Response> {
-    const { username, password, email, referralCode, phantomWalletAddress } = req.body;
+    const { username, password, email, referralCode, fcmToken, phantomWalletAddress } = req.body;
 
     try {
       const oldUser = await User.findOne({ email });
@@ -43,6 +43,7 @@ class UserController {
         username,
         password: encryptedPassword,
         email,
+        fcmToken,
         phantomWalletAddress,
         referralCode: referralCode || undefined
       });

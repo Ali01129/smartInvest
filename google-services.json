@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "510824407934",
+    "project_id": "smart-invest-ae6be",
+    "storage_bucket": "smart-invest-ae6be.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:510824407934:android:e4893d32b874b1dd85892f",
+        "android_client_info": {
+          "package_name": "com.prime007.smartInvest"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBSyzo5R0Vud8oXK2pIx-EKc8qqH6jD5_k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
