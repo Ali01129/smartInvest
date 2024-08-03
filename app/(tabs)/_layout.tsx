@@ -1,8 +1,9 @@
-import React from "react";
-import { Image, Text, View } from "react-native";
-import { Tabs } from "expo-router";
-import { ColorPalette } from "@/constants/Colors";
-import icons from "@/constants/Icons";
+import React from 'react';
+import { Image, Platform } from 'react-native';
+import { Tabs } from 'expo-router';
+import { ColorPalette } from '@/constants/Colors';
+import icons from '@/constants/Icons';
+
 const TabsLayout = () => {
   return (
     <Tabs
@@ -12,33 +13,40 @@ const TabsLayout = () => {
         tabBarShowLabel: true,
         tabBarLabelStyle: {
           fontSize: 10,
-          position: "relative",
-          top: -12,
+          position: 'relative',
+          top: Platform.OS === 'ios' ? 15 : -10, // Adjust or remove the top value
+        },
+        tabBarIconStyle: {
+          marginTop: Platform.OS === 'ios' ? 30 : 0,
         },
         tabBarStyle: {
           backgroundColor: ColorPalette.greyNav,
           borderTopWidth: 0,
           height: 70,
           borderRadius: 10,
-          overflow: "hidden",
-          position: "absolute",
+          overflow: 'hidden',
+          position: 'absolute',
           left: 0,
           right: 0,
           bottom: 0,
           elevation: 5, // Android
-          shadowColor: "#000", // iOS
+          shadowColor: '#000', // iOS
           shadowOffset: { width: 0, height: 2 }, // iOS
           shadowOpacity: 0.25, // iOS
           shadowRadius: 3.5, // iOS
-          margin: 16,
+          marginHorizontal: 16,
+          marginBottom: 16,
+          alignContent: 'center',
+          alignItems: 'center',
+          alignSelf: 'center',
         },
       }}
     >
       <Tabs.Screen
-        name="home"
+        name='home'
         options={{
           headerShown: false,
-          tabBarLabel: "Dashboard",
+          tabBarLabel: 'Dashboard',
           tabBarIcon: ({ color, focused }) => (
             <Image
               source={focused ? icons.home : icons.homeYellow}
@@ -47,12 +55,11 @@ const TabsLayout = () => {
           ),
         }}
       />
-
       <Tabs.Screen
-        name="subscribtion"
+        name='subscribtion'
         options={{
           headerShown: false,
-          tabBarLabel: "Subscription",
+          tabBarLabel: 'Subscription',
           tabBarIcon: ({ color, focused }) => (
             <Image
               source={focused ? icons.send : icons.sendYellow}
@@ -61,14 +68,11 @@ const TabsLayout = () => {
           ),
         }}
       />
-
       <Tabs.Screen
-        name="profile"
+        name='profile'
         options={{
           headerShown: false,
-
-          tabBarLabel: "Portfolio",
-
+          tabBarLabel: 'Portfolio',
           tabBarIcon: ({ color, focused }) => (
             <Image
               source={focused ? icons.user : icons.userYellow}
@@ -80,4 +84,5 @@ const TabsLayout = () => {
     </Tabs>
   );
 };
+
 export default TabsLayout;
